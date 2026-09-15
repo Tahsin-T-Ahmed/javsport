@@ -1,7 +1,7 @@
 from datetime import datetime
 import streamlit as st
 from src.components import delay_disclaimer
-from src.components import timestamp
+from src.components import timestamp_banner
 from src.utils import format_timestamp
 
 st.set_page_config(
@@ -47,11 +47,7 @@ if "wnba_data" in st.session_state:
     timestamp_f = format_timestamp.format(st.session_state["wnba_data"]["timestamp"])
 
     with load_button_col:
-        with st.container(
-            border = True
-        ):
-
-            timestamp.render(timestamp_f)
+        timestamp_banner.render(timestamp_f)
 
     delay_disclaimer.render()
 else:

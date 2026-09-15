@@ -1,6 +1,5 @@
 from datetime import datetime
 import streamlit as st
-from src.components import timestamp
 from src.utils import format_timestamp
 
 st.set_page_config(
