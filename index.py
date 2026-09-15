@@ -1,48 +1,48 @@
 import streamlit as st
 
 home_page = st.Page(
-    page = "./pages/home-page.py",
+    page = "./pages/home_page.py",
     title = "Home",
     icon = ":material/home:"
 )
 
 mlb_page = st.Page(
-    page = "./pages/mlb-page.py",
+    page = "./pages/mlb_page.py",
     title = "MLB",
     url_path = "mlb",
     icon = ":material/sports_baseball:"
 )
 
 nba_page = st.Page(
-    page = "./pages/nba-page.py",
+    page = "./pages/nba_page.py",
     title = "NBA",
     url_path = "nba",
     icon = ":material/sports_basketball:"
 )
 
 ncaab_page = st.Page(
-    page = "./pages/ncaab-page.py",
+    page = "./pages/ncaab_page.py",
     title = "NCAAB",
     url_path = "ncaa-basketball",
     icon = ":material/sports_basketball:"
 )
 
 ncaaf_page = st.Page(
-    page = "./pages/ncaaf-page.py",
+    page = "./pages/ncaaf_page.py",
     title = "NCAAF",
     url_path = "ncaa-football",
     icon = ":material/sports_football:"
 )
 
 nfl_page = st.Page(
-    page = "./pages/nfl-page.py",
+    page = "./pages/nfl_page.py",
     title = "NFL",
     url_path = "nfl",
     icon = ":material/sports_football:"
 )
 
 wnba_page = st.Page(
-    page = "./pages/wnba-page.py",
+    page = "./pages/wnba_page.py",
     title = "WNBA",
     url_path = "wnba",
     icon = ":material/sports_basketball:"

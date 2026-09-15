@@ -31,12 +31,12 @@ with st.container(
     border = True,
     gap = "medium"
 ):
-    st.page_link("./pages/mlb-page.py", label="MLB :material/sports_baseball:")
-    st.page_link("./pages/nba-page.py", label="NBA :material/sports_basketball:")
-    st.page_link("./pages/ncaab-page.py", label="NCAAB :material/sports_basketball:")
-    st.page_link("./pages/ncaaf-page.py", label="NCAAF :material/sports_football:")
-    st.page_link("./pages/nfl-page.py", label="NFL :material/sports_football:")
-    st.page_link("./pages/wnba-page.py", label="WNBA :material/sports_basketball:")
+    st.page_link("./pages/mlb_page.py", label="MLB :material/sports_baseball:")
+    st.page_link("./pages/nba_page.py", label="NBA :material/sports_basketball:")
+    st.page_link("./pages/ncaab_page.py", label="NCAAB :material/sports_basketball:")
+    st.page_link("./pages/ncaaf_page.py", label="NCAAF :material/sports_football:")
+    st.page_link("./pages/nfl_page.py", label="NFL :material/sports_football:")
+    st.page_link("./pages/wnba_page.py", label="WNBA :material/sports_basketball:")
 
 st.markdown(
     body = "JavSport calculates wager probabiltiies for upcoming games on the :green[current day] and :orange[time]",
