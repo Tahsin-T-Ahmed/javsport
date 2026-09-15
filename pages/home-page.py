@@ -1,3 +1,4 @@
+from datetime import datetime
 import streamlit as st
 
 st.set_page_config(
@@ -31,11 +32,16 @@ with st.container(horizontal = True, horizontal_alignment = "center"):
     st.page_link("./pages/wnba-page.py", label="WNBA :material/sports_basketball:")
 
 st.markdown(
-    body = "JavSport calculates wager probabiltiies for the upcoming games on the :red[current day]",
+    body = "JavSport calculates wager probabiltiies for upcoming games on the :green[current day] and :orange[minute]",
     text_alignment = "center"
 )
 
-st.space()
+now = datetime.now()
+
+st.markdown(
+    body = f"##### Time Now: :green[{now.strftime('%Y, %B %d')}] | :orange[{now.strftime('%I:%m %p')}]",
+    text_alignment = "center"
+)
 
 st.markdown(
     body = "### :red[**WARNING:**] DATA IS TIME-SENSITIVE",
@@ -43,6 +49,6 @@ st.markdown(
 )
 
 st.markdown(
-    body = "All calculations are based on data of the moment a webpage is loaded.",
+    body = "All calculations use the data available during the moment each webpage is loaded.",
     text_alignment = "center"
 )
