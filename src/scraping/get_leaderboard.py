@@ -3,8 +3,15 @@ import pandas as pd
 
 def get_leaderboard(url:str, read_datasort:bool = False) -> pd.DataFrame:
     soup = get_soup(url)
-    headers = [cell.text.upper() for cell in soup.find_all("th")]
+    if not soup:
+        return
+
+    headers_raw = soup.find_all("th")
+    headers = [header.text.upper() for header in headers_raw]
+
     rows = soup.find_all("tr")
+    if not rows:
+        return
     
     headers[-1] = "PAST"
     
@@ -15,13 +22,19 @@ def get_leaderboard(url:str, read_datasort:bool = False) -> pd.DataFrame:
             continue
 
         cells = row.find_all("td")
+        if not cells:
+            return
 
         new_row_idx = df.shape[0]
 
         for idx, col in enumerate(headers):
             content = cells[idx].text
             if headers.index("TEAM") == idx:
-                content = cells[idx].find("a")["href"].split("/")[-1]
+                team_link = cells[idx].find("a")
+                if not team_link:
+                    return
+                
+                content = team_link["href"].split("/")[-1]
             else:
                 if read_datasort:
                     content = cells[idx]["data-sort"]

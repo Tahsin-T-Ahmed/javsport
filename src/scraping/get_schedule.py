@@ -3,8 +3,18 @@ import pandas as pd
 
 def get_schedule(url:str) -> pd.DataFrame:
     soup = get_soup(url)
-    headers = [cell.text.upper() for cell in soup.find_all("th")]
+    if not soup:
+        return
+
+    headers_raw = soup.find_all("th")
+    if not headers_raw:
+        return
+    
+    headers = [cell.text.upper() for cell in headers_raw]
+
     rows = soup.find_all("tr")
+    if not rows:
+        return
 
     headers[1] = "HOTNESS"
 
@@ -15,14 +25,20 @@ def get_schedule(url:str) -> pd.DataFrame:
             continue
 
         cells = row.find_all("td")
+        if not cells:
+            return
 
         new_row_idx = df.shape[0]
         
         for idx, header in enumerate(headers):
             content = cells[idx].text
+            
             if "MATCHUP" == header:
-                content = cells[idx].find("a")["href"].split("/")[-1]
-                # df.loc[new_row_idx, ["TEAM A", "TEAM B"]] = get_teams(content)
+                match_link = cells[idx].find("a")
+                if not match_link:
+                    return
+                
+                content = match_link["href"].split("/")[-1]
 
             df.loc[new_row_idx, header] = content.strip()
             
