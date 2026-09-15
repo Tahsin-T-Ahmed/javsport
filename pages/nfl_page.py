@@ -38,6 +38,7 @@ with moneyline_col:
 
 with load_button_col:
     load_button = st.button(
+        type = "primary",
         label = st.session_state["nfl_load_button_text"],
         width = "stretch",
         on_click = load_button_handler

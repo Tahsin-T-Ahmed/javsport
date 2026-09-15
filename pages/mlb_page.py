@@ -47,8 +47,11 @@ def load_button_handler():
         "timestamp": datetime.now()
     }
 
-with st.columns(3)[1]:
+load_button_col = st.columns([1, 2, 1])[1]
+
+with load_button_col:
     load_button = st.button(
+        type = "primary",
         label = st.session_state["mlb_load_button_text"],
         width = "stretch",
         on_click = load_button_handler
@@ -57,7 +60,7 @@ with st.columns(3)[1]:
 if "mlb_data" in st.session_state:
     timestamp_f = format_timestamp.format(st.session_state["mlb_data"]["timestamp"])
 
-    with st.columns([1,2,1])[1]:
+    with load_button_col:
         timestamp_banner.render(timestamp_f)
 
 delay_disclaimer.render()
