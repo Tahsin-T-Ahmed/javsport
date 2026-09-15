@@ -1,5 +1,8 @@
 from datetime import datetime
 import streamlit as st
+from src.components import delay_disclaimer
+from src.components import timestamp
+from src.utils import format_timestamp
 
 st.set_page_config(
     page_title = "JavSport - MLB Calculator",
@@ -52,37 +55,13 @@ with st.columns(3)[1]:
     )
 
 if "mlb_data" in st.session_state:
-    timestamp = st.session_state["mlb_data"]["timestamp"]
-    date_f = timestamp.strftime('%Y, %B %d')
-    clocktime_f = timestamp.strftime('%I:%M:%S %p')
-    timezone_f = timestamp.astimezone().tzname()
+    timestamp_f = format_timestamp.format(st.session_state["mlb_data"]["timestamp"])
 
     with st.columns([1,2,1])[1]:
         with st.container(
             border = True
         ):
 
-            st.markdown(
-                body = f"##### Button clicked on (timestamp):",
-                text_alignment = "center"
-            )
+            timestamp.render(timestamp_f)
 
-            st.markdown(
-                body = f"##### :green[{date_f}] | :orange[{clocktime_f}]",
-                text_alignment = "center"
-            )
-
-            st.markdown(
-                body = f"Time Zone: {timezone_f}",
-                text_alignment = "center"
-            )
-
-        st.markdown(
-            body = "This data is not real-time and may take a few seconds to load.",
-            text_alignment = "center"
-        )
-
-        st.markdown(
-            body = "Wager with caution, especially when live-betting.",
-            text_alignment = "center"
-        )
+delay_disclaimer.render()
