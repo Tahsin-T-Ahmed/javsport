@@ -1,9 +1,11 @@
 from bs4 import BeautifulSoup
 import requests
 
-def get_soup(url):
+def get_soup(url:str) -> BeautifulSoup:
     response = requests.get(url)
     if 200 != response.status_code:
         return
     
-    return BeautifulSoup(response.text, "html.parser")
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    return soup
