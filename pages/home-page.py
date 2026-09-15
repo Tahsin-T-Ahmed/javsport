@@ -23,7 +23,12 @@ st.markdown(
     text_alignment = "center"
 )
 
-with st.container(horizontal = True, horizontal_alignment = "center"):
+with st.container(
+    horizontal = True,
+    horizontal_alignment = "center",
+    border = True,
+    gap = "medium"
+):
     st.page_link("./pages/mlb-page.py", label="MLB :material/sports_baseball:")
     st.page_link("./pages/nba-page.py", label="NBA :material/sports_basketball:")
     st.page_link("./pages/ncaab-page.py", label="NCAAB :material/sports_basketball:")
@@ -45,6 +50,8 @@ st.markdown(
     body = f"##### Time Now: :green[{date_f}] | :orange[{clocktime_f} ({timezone_f})]",
     text_alignment = "center"
 )
+
+st.space()
 
 st.markdown(
     body = "### :red[**WARNING:**] DATA IS TIME-SENSITIVE",
