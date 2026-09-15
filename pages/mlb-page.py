@@ -1,3 +1,4 @@
+from datetime import datetime
 import streamlit as st
 
 st.set_page_config(
@@ -39,7 +40,9 @@ if "mlb_load_button_text" not in st.session_state:
 
 def load_button_handler():
     st.session_state["mlb_load_button_text"] = "Refresh MLB Wagers"
-    st.session_state["mlb_data"] = []
+    st.session_state["mlb_data"] = {
+        "timestamp": datetime.now()
+    }
 
 with st.columns(3)[1]:
     load_button = st.button(
@@ -49,4 +52,37 @@ with st.columns(3)[1]:
     )
 
 if "mlb_data" in st.session_state:
-    "MLB Data Found"
+    timestamp = st.session_state["mlb_data"]["timestamp"]
+    date_f = timestamp.strftime('%Y, %B %d')
+    clocktime_f = timestamp.strftime('%I:%M:%S %p')
+    timezone_f = timestamp.astimezone().tzname()
+
+    with st.columns([1,2,1])[1]:
+        with st.container(
+            border = True
+        ):
+
+            st.markdown(
+                body = f"##### Button clicked on (timestamp):",
+                text_alignment = "center"
+            )
+
+            st.markdown(
+                body = f"##### :green[{date_f}] | :orange[{clocktime_f}]",
+                text_alignment = "center"
+            )
+
+            st.markdown(
+                body = f"Time Zone: {timezone_f}",
+                text_alignment = "center"
+            )
+
+        st.markdown(
+            body = "This data is not real-time and may take a few seconds to load.",
+            text_alignment = "center"
+        )
+
+        st.markdown(
+            body = "Wager with caution, especially when live-betting.",
+            text_alignment = "center"
+        )
