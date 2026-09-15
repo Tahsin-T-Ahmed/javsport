@@ -1,7 +1,7 @@
 import get_soup
 import pandas as pd
 
-def get_schedule(url) -> pd.DataFrame:
+def get_schedule(url:str) -> pd.DataFrame:
     soup = get_soup(url)
     headers = [cell.text.upper() for cell in soup.find_all("th")]
     rows = soup.find_all("tr")
