@@ -1,4 +1,3 @@
-from bs4 import BeautifulSoup
 import get_soup
 
 def get_teams(match_url:str) -> list:
