@@ -58,6 +58,6 @@ st.markdown(
 )
 
 st.markdown(
-    body = "All calculations use the data available during the moment each webpage is loaded.",
+    body = 'All calculations use the data available when the "Load" button is clicked.',
     text_alignment = "center"
 )
