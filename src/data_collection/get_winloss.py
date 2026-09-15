@@ -1,4 +1,4 @@
-import get_leaderboard
+from get_leaderboard import get_leaderboard
 import pandas as pd
 
 def get_winloss(url:str) -> pd.DataFrame:
@@ -13,3 +13,8 @@ def get_winloss(url:str) -> pd.DataFrame:
     lb[["WINS", "LOSSES", "TIES"]] = lb_raw["WIN-LOSS RECORD"].str.split("-", expand = True)
 
     return lb
+
+
+
+if "__main__" == __name__:
+    print(get_leaderboard("https://www.teamrankings.com/mlb/stat/run-differential"))

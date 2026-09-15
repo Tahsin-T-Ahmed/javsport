@@ -1,4 +1,4 @@
-import get_soup
+from get_soup import get_soup
 
 def get_teams(match_url:str) -> list:
     soup = get_soup(f"{match_url}")
