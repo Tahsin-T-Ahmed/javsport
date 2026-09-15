@@ -39,7 +39,7 @@ st.markdown(
 now = datetime.now()
 date_f = now.strftime('%Y, %B %d')
 clocktime_f = now.strftime('%I:%M %p')
-timezone_f = ''.join([word[0] for word in now.astimezone().tzname().split(" ")])
+timezone_f = now.astimezone().tzname()
 
 st.markdown(
     body = f"##### Time Now: :green[{date_f}] | :orange[{clocktime_f} ({timezone_f})]",
