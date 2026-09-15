@@ -19,7 +19,7 @@ st.header(
 st.divider()
 
 st.markdown(
-    body = "Choose a **SPORT** from the top menu (press the :material/double_arrow: arrow icon if using a mobile device), or from the shortcuts below:",
+    body = "Choose a **SPORT** from the top menu (press :material/keyboard_double_arrow_right: on mobile), or from the shortcuts below:",
     text_alignment = "center"
 )
 
@@ -39,7 +39,7 @@ st.markdown(
 now = datetime.now()
 
 st.markdown(
-    body = f"##### Time Now: :green[{now.strftime('%Y, %B %d')}] | :orange[{now.strftime('%I:%m %p')}]",
+    body = f"##### Time Now: :green[{now.strftime('%Y, %B %d')}] | :orange[{now.strftime('%I:%M %p')}]",
     text_alignment = "center"
 )
 
