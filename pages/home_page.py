@@ -12,15 +12,15 @@ st.title(
     text_alignment = "center"
 )
 
-st.header(
-    body = "Bet Smarter, Not Harder",
+st.markdown(
+    body = "#### Bet Smarter, Not Harder",
     text_alignment = "center"
 )
 
 st.divider()
 
 st.markdown(
-    body = "Choose a **SPORT** from the top menu (press :material/keyboard_double_arrow_right: on mobile), or from the shortcuts below:",
+    body = "Choose a **SPORT** from the top menu (press :material/keyboard_double_arrow_right: if on mobile) or the shortcuts below:",
     text_alignment = "center"
 )
 
@@ -37,8 +37,10 @@ with st.container(
     st.page_link("./pages/nfl_page.py", label="NFL :material/sports_football:")
     st.page_link("./pages/wnba_page.py", label="WNBA :material/sports_basketball:")
 
+st.space()
+
 st.markdown(
-    body = "JavSport calculates wager probabiltiies for upcoming games on the :green[current day] and :orange[time]",
+    body = "JavSport calculates wager probabiltiies for upcoming games on the :green[current day] and :orange[time].",
     text_alignment = "center"
 )
 
@@ -53,7 +55,7 @@ st.markdown(
 st.space()
 
 st.markdown(
-    body = "### :red[**WARNING:**] DATA IS TIME-SENSITIVE",
+    body = "### :red[**WARNING:**] DATA IS TIME-SENSITIVE.",
     text_alignment = "center"
 )
 
