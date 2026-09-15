@@ -10,11 +10,11 @@ def render(timestamp_f):
         )
 
         st.markdown(
-            body = f"##### :green[{timestamp_f['date']}] | :orange[{timestamp_f['clocktime']}]",
+            body = f"##### :green[:material/date_range: {timestamp_f['date']}] | :orange[:material/schedule: {timestamp_f['clocktime']}]",
             text_alignment = "center"
         )
 
         st.markdown(
-            body = f"Time Zone: {timestamp_f['timezone']}",
+            body = f":blue[:material/globe_clock: Time Zone: {timestamp_f['timezone']}]",
             text_alignment = "center"
         )

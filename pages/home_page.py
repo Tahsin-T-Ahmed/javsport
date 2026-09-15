@@ -13,14 +13,14 @@ st.title(
 )
 
 st.markdown(
-    body = "#### Bet Smarter, Not Harder",
+    body = "#### :material/money_bag: Bet Smarter, Not Harder :material/money_bag:",
     text_alignment = "center"
 )
 
 st.divider()
 
 st.markdown(
-    body = "Choose a **SPORT** from the top menu (press :material/keyboard_double_arrow_right: if on mobile) or the shortcuts below:",
+    body = "Choose a **SPORT** from the top :material/north_west: menu (click the :material/keyboard_double_arrow_right: icon if on mobile :material/mobile_3:) or the shortcuts below :material/south::",
     text_alignment = "center"
 )
 
@@ -40,7 +40,7 @@ with st.container(
 st.space()
 
 st.markdown(
-    body = "JavSport calculates wager probabiltiies for upcoming games on the :green[current day] and :orange[time].",
+    body = "JavSport calculates wager probabiltiies for upcoming games on the :green[current day :material/date_range:] and :orange[time :material/schedule:]",
     text_alignment = "center"
 )
 
@@ -48,14 +48,14 @@ now = datetime.now()
 timestamp_f = format_timestamp.format(now)
 
 st.markdown(
-    body = f"##### Time Now: :green[{timestamp_f['date']}] | :orange[{timestamp_f['clocktime']} ({timestamp_f['timezone']})]",
+    body = f"##### Time Now: :green[:material/date_range: {timestamp_f['date']}] :orange[:material/schedule: {timestamp_f['clocktime']}] :blue[:material/globe_clock: ({timestamp_f['timezone']})]",
     text_alignment = "center"
 )
 
 st.space()
 
 st.markdown(
-    body = "### :red[**WARNING:**] DATA IS TIME-SENSITIVE.",
+    body = "### :red[:material/warning: WARNING:] DATA IS TIME-SENSITIVE.",
     text_alignment = "center"
 )
 

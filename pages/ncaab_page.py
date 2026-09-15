@@ -10,7 +10,7 @@ st.set_page_config(
 )
 
 st.header(
-    body = "JavSport - NCAA Basketball",
+    body = "JavSport - NCAA Basketball :material/sports_basketball:",
     text_alignment = "center"
 )
 
