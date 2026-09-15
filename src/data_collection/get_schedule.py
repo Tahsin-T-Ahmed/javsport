@@ -1,4 +1,4 @@
-from get_soup import get_soup
+from src.data_collection.get_soup import get_soup
 import pandas as pd
 
 def get_schedule(url:str) -> pd.DataFrame:
