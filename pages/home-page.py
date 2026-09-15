@@ -32,14 +32,17 @@ with st.container(horizontal = True, horizontal_alignment = "center"):
     st.page_link("./pages/wnba-page.py", label="WNBA :material/sports_basketball:")
 
 st.markdown(
-    body = "JavSport calculates wager probabiltiies for upcoming games on the :green[current day] and :orange[minute]",
+    body = "JavSport calculates wager probabiltiies for upcoming games on the :green[current day] and :orange[time]",
     text_alignment = "center"
 )
 
 now = datetime.now()
+date_f = now.strftime('%Y, %B %d')
+clocktime_f = now.strftime('%I:%M %p')
+timezone_f = ''.join([word[0] for word in now.astimezone().tzname().split(" ")])
 
 st.markdown(
-    body = f"##### Time Now: :green[{now.strftime('%Y, %B %d')}] | :orange[{now.strftime('%I:%M %p')}]",
+    body = f"##### Time Now: :green[{date_f}] | :orange[{clocktime_f} ({timezone_f})]",
     text_alignment = "center"
 )
 
