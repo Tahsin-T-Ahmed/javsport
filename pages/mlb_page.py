@@ -63,7 +63,7 @@ def load_button_handler():
         st.error(error)
         return
     
-    schedule = schedule_map["content"]    
+    schedule = schedule_map["content"]
     st.session_state["mlb_data"]["schedule"] = schedule
 
     atbats_pg_map = get_leaderboard(
@@ -139,7 +139,7 @@ def load_button_handler():
         return
 
     winloss = winloss_map["content"]
-    st.session_state["mlb_data"]["win_loss"] = winloss
+    st.session_state["mlb_data"]["winloss"] = winloss
 
 load_button_col = st.columns([1, 2, 1])[1]
 
