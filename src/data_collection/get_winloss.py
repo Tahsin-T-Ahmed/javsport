@@ -1,24 +1,34 @@
-from src.data_collection.get_leaderboard import get_leaderboard
 import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
+from src.data_collection.scan_table import scan_table
 
 def get_winloss(record_url:str) -> DataFrameMap:
-    record_soup = get_leaderboard(record_url)
-    if record_soup["error"]:
+    winloss_map = scan_table(record_url)
+    if winloss_map["error"]:
         return dict(
-            error = record_soup["error"],
+            error = winloss_map["error"],
             content = None
         )
 
-    record_raw = record_soup["content"]
+    winloss = winloss_map["content"]
 
-    winloss_df = pd.DataFrame({
-        "TEAM ID": record_raw["TEAM ID"]
-    })
+    winloss["TEAM ID"] = winloss["TEAM_LINK"].apply(
+        lambda link: link.split("/")[-1]
+    )
 
-    winloss_df[["WINS", "LOSSES", "TIES"]] = record_raw["WIN-LOSS RECORD"].str.split("-", expand = True)
+    winloss.rename(
+        columns = {
+            "WIN %_DATASORT": "WIN RATE"
+        },
+        inplace = True
+    )
+
+    winloss[["WINS", "LOSSES", "TIES"]] = winloss["WIN-LOSS RECORD"].str.split("-", expand = True)
+
+    desired_columns = ["TEAM", "WINS", "LOSSES", "TIES", "WIN RATE", "TEAM ID"]
+    winloss = winloss[desired_columns]
 
     return dict(
         error = None,
-        content = winloss_df
+        content = winloss
     )
