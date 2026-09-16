@@ -4,6 +4,7 @@ from src.components import delay_disclaimer
 from src.components import timestamp_banner
 from src.data_collection.get_leaderboard import get_leaderboard
 from src.data_collection.get_schedule import get_schedule
+from src.data_collection.scan_todays_table import scan_todays_table
 from src.utils import format_timestamp
 
 st.set_page_config(
@@ -29,6 +30,19 @@ def load_button_handler():
     st.session_state["ncaaf_data"] = {
         "timestamp": now
     }
+
+    schedule_soup = scan_todays_table(
+        url = "https://www.teamrankings.com/ncf/schedules/season/?week=0",
+        timestamp = now
+    )
+
+    if schedule_soup["error"]:
+        error = schedule_soup["error"]
+        st.error(error)
+        return
+
+    schedule = schedule_soup["content"]
+    st.session_state["ncaaf_data"]["schedule"] = schedule
 
 with moneyline_col:
     st.text_area(
