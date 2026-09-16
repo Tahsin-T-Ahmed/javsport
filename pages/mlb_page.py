@@ -157,9 +157,9 @@ if "mlb_data" in st.session_state:
     with load_button_col:
         timestamp_banner.render(timestamp_f)
 
-    for key in st.session_state["mlb_data"]:
+    for key, value in st.session_state["mlb_data"].items():
         key
-        st.write(st.session_state["mlb_data"][key])
+        value
 
     st.divider()
 
