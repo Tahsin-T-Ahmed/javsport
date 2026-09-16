@@ -27,6 +27,7 @@ def scan_todays_table(url: str, timestamp: datetime.datetime) -> DataFrameMap:
     headers = head.find_all("th")
 
     columns = [header.text.strip().upper() for header in headers]
+    columns[0] = "TITLE"
 
     body = head.find_next_sibling("tbody")
     if not body:
