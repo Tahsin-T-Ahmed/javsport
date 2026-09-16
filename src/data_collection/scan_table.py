@@ -56,8 +56,8 @@ def scan_table(url:str) -> DataFrameMap:
 
             table.loc[new_row_idx, column] = cell.text
 
-            if cell.has_attr("datasort"):
-                table.loc[new_row_idx, f"{column}_DATASORT"] = cell["datasort"]
+            if cell.has_attr("data-sort"):
+                table.loc[new_row_idx, f"{column}_DATASORT"] = cell["data-sort"]
             
             cell_link = cell.find("a")
             if cell_link:
