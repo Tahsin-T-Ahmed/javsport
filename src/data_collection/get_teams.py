@@ -22,7 +22,7 @@ def get_teams(match_url:str) -> ListMap:
     team_ids = [team["href"].split("/")[-1].strip() for team in team_links]
     if not team_links:
         return dict(
-            error = f"ERROR (Match-Teams): Failed to parse TEAM-IDs from team-links ({team_links}) from URL ({match_url})",
+            error = f"ERROR (Match-Teams): Failed to parse TEAM-IDs of team-links ({team_links}) from URL ({match_url})",
             content = None
         )
 
