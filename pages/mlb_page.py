@@ -49,46 +49,95 @@ def load_button_handler():
 
     now = datetime.now()
 
-    st.session_state["mlb_data"] = {
-        "timestamp": now
-    }
+    st.session_state["mlb_data"] = dict(
+        timestamp = now
+    )
 
     year, month, day = f"{now.year}", f"{now.month:02d}", f"{now.day:02d}"
 
-    schedule = get_schedule(f"https://www.teamrankings.com/mlb/schedules/?date={year}-{month}-{day}")
+    schedule_map = get_schedule(f"https://www.teamrankings.com/mlb/schedules/?date={year}-{month}-{day}")
+
+    if schedule_map["error"]:
+        error = schedule_map["error"]
+        st.error(error)
+        return
+    
+    schedule = schedule_map["content"]    
     st.session_state["mlb_data"]["schedule"] = schedule
 
-    at_bats_per_game = get_leaderboard(
+    atbats_pg_map = get_leaderboard(
         f"https://www.teamrankings.com/mlb/stat/at-bats-per-game?date={year}-{month}-{day}",
         read_datasort = True
     )
+
+    if atbats_pg_map["error"]:
+        error = atbats_pg_map["error"]
+        st.error(error)
+        return
+
+    at_bats_per_game = atbats_pg_map["content"]
     st.session_state["mlb_data"]["at_bats_per_game"] = at_bats_per_game
 
-    hits_per_game = get_leaderboard(
+    hits_pg_map = get_leaderboard(
         f"https://www.teamrankings.com/mlb/stat/hits-per-game?date={year}-{month}-{day}",
         read_datasort = True
     )
+
+    if hits_pg_map["error"]:
+        error = hits_pg_map["error"]
+        st.error(error)
+        return
+
+    hits_per_game = hits_pg_map["content"]
     st.session_state["mlb_data"]["hits_per_game"] = hits_per_game
 
-    home_runs_per_game = get_leaderboard(
+    homeruns_pg_map = get_leaderboard(
         f"https://www.teamrankings.com/mlb/stat/home-runs-per-game?date={year}-{month}-{day}",
         read_datasort = True
     )
+
+    if homeruns_pg_map["error"]:
+        error = homeruns_pg_map["error"]
+        st.error(error)
+        return
+
+    home_runs_per_game = homeruns_pg_map["content"]
     st.session_state["mlb_data"]["home_runs_per_game"] = home_runs_per_game
 
-    total_bases_per_game = get_leaderboard(
+    totalbases_pg_map = get_leaderboard(
         f"https://www.teamrankings.com/mlb/stat/total-bases-per-game?date={year}-{month}-{day}",
         read_datasort = True
     )
+
+    if totalbases_pg_map["error"]:
+        error = totalbases_pg_map["error"]
+        st.error(error)
+        return
+
+    total_bases_per_game = totalbases_pg_map["content"]
     st.session_state["mlb_data"]["total_bases_per_game"] = total_bases_per_game
 
-    walks_per_game = get_leaderboard(
+    walks_pg_map = get_leaderboard(
         f"https://www.teamrankings.com/mlb/stat/walks-per-game?date={year}-{month}-{day}",
         read_datasort = True
     )
+
+    if walks_pg_map["error"]:
+        error = walks_pg_map["error"]
+        st.error(error)
+        return
+
+    walks_per_game = walks_pg_map["content"]
     st.session_state["mlb_data"]["walks_per_game"] = walks_per_game
 
-    win_loss = get_winloss("https://www.teamrankings.com/mlb/trends/win_trends/")
+    winloss_map = get_winloss("https://www.teamrankings.com/mlb/trends/win_trends/")
+
+    if winloss_map["error"]:
+        error = winloss_map["error"]
+        st.error(error)
+        return
+
+    win_loss = winloss_map["content"]
     st.session_state["mlb_data"]["win_loss"] = win_loss
 
 load_button_col = st.columns([1, 2, 1])[1]
