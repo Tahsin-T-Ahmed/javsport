@@ -1,4 +1,3 @@
-import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.scan_table import scan_table
 
