@@ -2,6 +2,8 @@ from datetime import datetime
 import streamlit as st
 from src.components import delay_disclaimer
 from src.components import timestamp_banner
+from src.data_collection.get_leaderboard import get_leaderboard
+from src.data_collection.get_schedule import get_schedule
 from src.utils import format_timestamp
 
 st.set_page_config(
@@ -21,8 +23,11 @@ if "ncaaf_load_button_text" not in st.session_state:
 
 def load_button_handler():
     st.session_state["ncaaf_load_button_text"] = "Refresh NCAAF Wagers"
+
+    now = datetime.now()
+    
     st.session_state["ncaaf_data"] = {
-        "timestamp": datetime.now()
+        "timestamp": now
     }
 
 with moneyline_col:
@@ -51,6 +56,10 @@ if "ncaaf_data" in st.session_state:
         timestamp_banner.render(timestamp_f)
 
     delay_disclaimer.render()
+
+    for key, value in st.session_state["ncaaf_data"].items():
+        key
+        value
 else:
     with load_button_col:
         delay_disclaimer.render()
