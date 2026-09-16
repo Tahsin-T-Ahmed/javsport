@@ -3,7 +3,7 @@ import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.get_soup import get_soup
 
-def scan_table(url:str, read_datasort:bool = False) -> DataFrameMap:
+def scan_table(url:str, read_datasort:bool) -> DataFrameMap:
     soup_map = get_soup(url)
     if soup_map["error"]:
         return dict(
