@@ -54,14 +54,14 @@ def scan_table(url:str) -> DataFrameMap:
         for column_idx, column in enumerate(columns):
             cell = cells[column_idx]
 
-            table.loc[new_row_idx, column] = cell.text
+            table.loc[new_row_idx, column] = cell.text.strip()
 
             if cell.has_attr("data-sort"):
-                table.loc[new_row_idx, f"{column}_DATASORT"] = cell["data-sort"]
+                table.loc[new_row_idx, f"{column}_DATASORT"] = cell["data-sort"].strip()
             
             cell_link = cell.find("a")
             if cell_link:
-                table.loc[new_row_idx, f"{column}_LINK"] = cell_link["href"]
+                table.loc[new_row_idx, f"{column}_LINK"] = cell_link["href"].strip()
 
     return dict(
         error = None,
