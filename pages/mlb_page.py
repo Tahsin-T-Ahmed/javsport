@@ -131,18 +131,15 @@ def load_button_handler():
     walks_per_game = walks_pg_map["content"]
     st.session_state["mlb_data"]["walks_per_game"] = walks_per_game
 
-    winloss_map = get_winloss(
-        record_url = "https://www.teamrankings.com/mlb/trends/win_trends/",
-        timestamp = now
-    )
+    winloss_map = get_winloss("https://www.teamrankings.com/mlb/trends/win_trends/")
 
     if winloss_map["error"]:
         error = winloss_map["error"]
         st.error(error)
         return
 
-    win_loss = winloss_map["content"]
-    st.session_state["mlb_data"]["win_loss"] = win_loss
+    winloss = winloss_map["content"]
+    st.session_state["mlb_data"]["win_loss"] = winloss
 
 load_button_col = st.columns([1, 2, 1])[1]
 
