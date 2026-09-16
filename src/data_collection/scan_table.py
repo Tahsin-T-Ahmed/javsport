@@ -3,7 +3,7 @@ import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.get_soup import get_soup
 
-def scan_table(url:str, read_datasort:bool) -> DataFrameMap:
+def scan_table(url:str) -> DataFrameMap:
     soup_map = get_soup(url)
     if soup_map["error"]:
         return dict(
@@ -54,12 +54,10 @@ def scan_table(url:str, read_datasort:bool) -> DataFrameMap:
         for column_idx, column in enumerate(columns):
             cell = cells[column_idx]
 
-            cell_content = cell.text
-            
-            if read_datasort:
-                cell_content = cell["datasort"]
+            table.loc[new_row_idx, column] = cell.text
 
-            table.loc[new_row_idx, column] = cell_content
+            if cell.has_attr("datasort"):
+                table.loc[new_row_idx, f"{column}_DATASORT"] = cell["datasort"]
             
             cell_link = cell.find("a")
             if cell_link:
