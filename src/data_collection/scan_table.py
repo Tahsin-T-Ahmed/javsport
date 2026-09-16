@@ -53,6 +53,12 @@ def scan_table(url: str) -> DataFrameMap:
         for column_idx, column in enumerate(columns):
             cell = cells[column_idx]
 
+            if cell.has_attr("class") and "empty" in cell["class"]:
+                return dict(
+                    error = None,
+                    content = table
+                )
+
             table.loc[new_row_idx, column] = cell.text.strip()
 
             if cell.has_attr("data-sort"):
