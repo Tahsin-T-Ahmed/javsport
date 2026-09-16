@@ -30,8 +30,9 @@ def get_schedule(schedule_url: str, timestamp: datetime.datetime) -> DataFrameMa
     schedule["TIME"] = pd.to_datetime(schedule["TIME"])
 
     sport = schedule_url.split(".com/")[1].split("/")[0]
+    print(sport)
 
-    predictive_rankings_map = scan_table(f"https://www.teamrankings.com/{sport}/ranking/predictive-by-other/{date_str}")
+    predictive_rankings_map = scan_table(f"https://www.teamrankings.com/{sport}/ranking/predictive-by-other/")
     if predictive_rankings_map["error"]:
         return dict(
             error = predictive_rankings_map["error"],
