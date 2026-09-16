@@ -24,6 +24,12 @@ def get_schedule(schedule_url: str, timestamp: datetime.datetime) -> DataFrameMa
 
     schedule = schedule_map["content"]
 
+    if schedule.empty:
+        return dict(
+            error = None,
+            content = schedule
+        )
+
     schedule["MATCH ID"] = schedule["MATCHUP_LINK"].apply(lambda link: link.split("/")[-1])
 
     schedule["TIME"] = schedule["TIME"].apply(lambda row: f"{date_str} {row}")
@@ -32,7 +38,7 @@ def get_schedule(schedule_url: str, timestamp: datetime.datetime) -> DataFrameMa
     sport = schedule_url.split(".com/")[1].split("/")[0]
     print(sport)
 
-    predictive_rankings_map = scan_table(f"https://www.teamrankings.com/{sport}/ranking/predictive-by-other/")
+    predictive_rankings_map = scan_table(f"https://www.teamrankings.com/{sport}/ranking/predictive-by-other/?date={date_str}")
     if predictive_rankings_map["error"]:
         return dict(
             error = predictive_rankings_map["error"],
