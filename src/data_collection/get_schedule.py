@@ -1,69 +1,68 @@
-from src.data_collection.get_soup import get_soup
+import datetime
 import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
+from src.data_collection.scan_table import scan_table
 
-def get_schedule(schedule_url:str) -> DataFrameMap:
-    soup_map = get_soup(schedule_url)
-    if soup_map["error"]:
+def parse_team_pred_ranks(match_title: str) -> str:
+    title_terms = match_title.split(" ")
+
+    team_pred_ranks = [term[1:] for term in title_terms if "#" in term and '#' == term[0]]
+
+    return '-'.join(team_pred_ranks)
+
+
+def get_schedule(schedule_url: str, timestamp: datetime.datetime) -> DataFrameMap:
+    year, month, day = f"{timestamp.year:04d}", f"{timestamp.month:02d}", f"{timestamp.day:02d}"
+    date_str = f"{year}-{month}-{day}"
+
+    schedule_map = scan_table(f"{schedule_url}?date={date_str}")
+    if schedule_map["error"]:
         return dict(
-            error = soup_map["error"],
+            error = schedule_map["error"],
             content = None
         )
 
-    soup = soup_map["content"]
+    schedule = schedule_map["content"]
 
-    headers_raw = soup.find_all("th")
-    if not headers_raw:
-        return dict(
-            error = f"ERROR (Schedule): Failed to scan HEADERS from URL ({schedule_url})",
-            content = None
-        )    
-    headers = [cell.text.upper() for cell in headers_raw]
+    schedule["MATCH ID"] = schedule["MATCHUP_LINK"].apply(lambda link: link.split("/")[-1])
 
-    rows = soup.find_all("tr")
-    if not rows:
+    schedule["TIME"] = schedule["TIME"].apply(lambda row: f"{date_str} {row}")
+    schedule["TIME"] = pd.to_datetime(schedule["TIME"])
+
+    sport = schedule_url.split(".com/")[1].split("/")[0]
+
+    predictive_rankings_map = scan_table(f"https://www.teamrankings.com/{sport}/ranking/predictive-by-other/{date_str}")
+    if predictive_rankings_map["error"]:
         return dict(
-            error = f"ERROR (Schedule): Failed to scan ROWS from URL ({schedule_url})",
+            error = predictive_rankings_map["error"],
             content = None
         )
 
-    headers[1] = "HOTNESS"
+    predictive_rankings = predictive_rankings_map["content"]
+    predictive_rankings["TEAM ID"] = predictive_rankings["TEAM_LINK"].apply(
+        lambda link: link.split("/")[-1]
+    )
 
-    df = pd.DataFrame(columns = headers)
+    schedule["TEAM PRED RANKS"] = schedule["MATCHUP"].apply(parse_team_pred_ranks)
+    schedule[["TEAM A PRED RANK", "TEAM B PRED RANK"]] = schedule["TEAM PRED RANKS"].str.split("-", expand = True)
 
-    for row_idx, row in enumerate(rows):
-        if 0 == row_idx:
-            continue
+    schedule["TEAM A ID"] = schedule["TEAM A PRED RANK"].apply(
+        lambda pred_rank_num: predictive_rankings[
+            pred_rank_num == predictive_rankings["RANK"]
+        ]["TEAM ID"].item()
+    )
 
-        cells = row.find_all("td")
-        if not cells:
-            return dict(
-                error = f"ERROR (Schedule): Failed to scan CELLS from URL ({schedule_url})",
-                content = None
-            )
+    schedule["TEAM B ID"] = schedule["TEAM B PRED RANK"].apply(
+        lambda pred_rank_num: predictive_rankings[
+            pred_rank_num == predictive_rankings["RANK"]
+        ]["TEAM ID"].item()
+    )
 
-        new_row_idx = df.shape[0]
-        
-        for header_idx, header in enumerate(headers):
-            cell_content = cells[header_idx].text
-            
-            if "MATCHUP" == header:
-                match_link = cells[header_idx].find("a")
-                if not match_link:
-                    return dict(
-                        error = f"ERROR (Schedule): Failed to scan MATCH-LINK (#{header_idx+1}) of {cells[header_idx]} from URL ({schedule_url})",
-                        content = None
-                    )
-                
-                cell_content = match_link["href"].split("/")[-1]
+    desired_columns = ["MATCHUP", "TIME", "LOCATION", "TEAM A ID", "TEAM B ID", "MATCH ID"]
 
-            df.loc[new_row_idx, header] = cell_content.strip()
-
-    df.rename(columns = {"MATCHUP": "MATCH ID"}, inplace = True)
-
-    df["TIME"] = pd.to_datetime(df["TIME"])
+    schedule = schedule[desired_columns]
 
     return dict(
         error = None,
-        content = df
+        content = schedule
     )
