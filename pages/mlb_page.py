@@ -54,15 +54,13 @@ if "mlb_load_button_text" not in st.session_state:
 def load_button_handler():
     st.session_state["mlb_load_button_text"] = ":material/refresh: Reload MLB Wagers :material/refresh:"
 
-    now = datetime.now()
-
     st.session_state["mlb_data"] = dict(
-        timestamp = now
+        timestamp = datetime.now()
     )
 
     schedule_map = get_schedule(
         schedule_url = f"https://www.teamrankings.com/mlb/schedules/season/?week=0",
-        timestamp = now
+        timestamp = st.session_state["mlb_data"]["timestamp"]
     )
 
     if schedule_map["error"]:
@@ -78,7 +76,7 @@ def load_button_handler():
 
     atbats_pg_map = get_leaderboard(
         leaderboard_url = f"https://www.teamrankings.com/mlb/stat/at-bats-per-game",
-        timestamp = now
+        timestamp = st.session_state["mlb_data"]["timestamp"]
     )
 
     if atbats_pg_map["error"]:
@@ -91,7 +89,7 @@ def load_button_handler():
 
     hits_pg_map = get_leaderboard(
         leaderboard_url = f"https://www.teamrankings.com/mlb/stat/hits-per-game",
-        timestamp = now
+        timestamp = st.session_state["mlb_data"]["timestamp"]
     )
 
     if hits_pg_map["error"]:
@@ -104,7 +102,7 @@ def load_button_handler():
 
     homeruns_pg_map = get_leaderboard(
         leaderboard_url = f"https://www.teamrankings.com/mlb/stat/home-runs-per-game",
-        timestamp = now
+        timestamp = st.session_state["mlb_data"]["timestamp"]
     )
 
     if homeruns_pg_map["error"]:
@@ -117,7 +115,7 @@ def load_button_handler():
 
     totalbases_pg_map = get_leaderboard(
         leaderboard_url = f"https://www.teamrankings.com/mlb/stat/total-bases-per-game",
-        timestamp = now
+        timestamp = st.session_state["mlb_data"]["timestamp"]
     )
 
     if totalbases_pg_map["error"]:
@@ -130,7 +128,7 @@ def load_button_handler():
 
     walks_pg_map = get_leaderboard(
         leaderboard_url = f"https://www.teamrankings.com/mlb/stat/walks-per-game",
-        timestamp = now
+        timestamp = st.session_state["mlb_data"]["timestamp"]
     )
 
     if walks_pg_map["error"]:

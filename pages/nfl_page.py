@@ -31,15 +31,13 @@ if "nfl_load_button_text" not in st.session_state:
 def load_button_handler():
     st.session_state["nfl_load_button_text"] = ":material/refresh: Reload NFL Wagers :material/refresh:"
 
-    now = datetime.now()
-
     st.session_state["nfl_data"] = {
-        "timestamp": now
+        "timestamp": datetime.now()
     }
 
     schedule_map = get_schedule(
         schedule_url = "https://www.teamrankings.com/nfl/schedules/season/?week=0",
-        timestamp = now
+        timestamp = st.session_state["nfl_data"]["timestamp"]
     )
 
     if schedule_map["error"]:

@@ -31,15 +31,13 @@ if "wnba_load_button_text" not in st.session_state:
 def load_button_handler():
     st.session_state["wnba_load_button_text"] = ":material/refresh: Reload WNBA Wagers :material/refresh:"
 
-    now = datetime.now()
-
     st.session_state["wnba_data"] = {
-        "timestamp": now
+        "timestamp": datetime.now()
     }
 
     schedule_map = get_schedule(
         schedule_url = "https://www.teamrankings.com/wnba/schedules/season/?week=0",
-        timestamp = now
+        timestamp = st.session_state["wnba_data"]["timestamp"]
     )
 
     if schedule_map["error"]:
