@@ -4,7 +4,7 @@ from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.scan_table_at_date import scan_table_at_date
 from src.utils.parse_teams import parse_teams
 
-def get_schedule(schedule_url: str, timestamp: datetime.datetime) -> DataFrameMap:
+def make_schedule(schedule_url: str, timestamp: datetime.datetime) -> DataFrameMap:
     year, month, day = f"{timestamp.year:04d}", f"{timestamp.month:02d}", f"{timestamp.day:02d}"
     date_str = f"{year}-{month}-{day}"
 

@@ -4,7 +4,7 @@ from src.components import delay_disclaimer
 from src.components import empty_schedule_notifier
 from src.components import timestamp_banner
 from src.data_collection.make_leaderboard import make_leaderboard
-from src.data_collection.get_schedule import get_schedule
+from src.data_collection.make_schedule import make_schedule
 
 st.set_page_config(
     page_title = "JavSport - Wager WNBA",
@@ -35,7 +35,7 @@ def load_button_handler():
         timestamp = datetime.now()
     )
 
-    schedule_map = get_schedule(
+    schedule_map = make_schedule(
         schedule_url = "https://www.teamrankings.com/wnba/schedules/season/?week=0",
         timestamp = st.session_state["wnba_data"]["timestamp"]
     )

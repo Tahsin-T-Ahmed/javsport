@@ -4,8 +4,8 @@ from src.components import delay_disclaimer
 from src.components import empty_schedule_notifier
 from src.components import timestamp_banner
 from src.data_collection.make_leaderboard import make_leaderboard
-from src.data_collection.get_schedule import get_schedule
-from src.data_collection.get_winloss import get_winloss
+from src.data_collection.make_schedule import make_schedule
+from src.data_collection.make_winloss import make_winloss
 
 st.set_page_config(
     page_title = "JavSport - Wager MLB",
@@ -58,7 +58,7 @@ def load_button_handler():
         timestamp = datetime.now()
     )
 
-    schedule_map = get_schedule(
+    schedule_map = make_schedule(
         schedule_url = f"https://www.teamrankings.com/mlb/schedules/season/?week=0",
         timestamp = st.session_state["mlb_data"]["timestamp"]
     )
@@ -139,7 +139,7 @@ def load_button_handler():
     walks_per_game = walks_pg_map["content"]
     st.session_state["mlb_data"]["walks_per_game"] = walks_per_game
 
-    winloss_map = get_winloss("https://www.teamrankings.com/mlb/trends/win_trends/")
+    winloss_map = make_winloss("https://www.teamrankings.com/mlb/trends/win_trends/")
 
     if winloss_map["error"]:
         error = winloss_map["error"]
