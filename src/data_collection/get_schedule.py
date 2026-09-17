@@ -2,30 +2,7 @@ import datetime
 import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.scan_table_at_date import scan_table_at_date
-
-def parse_teams(title: str) -> str:
-    title_splitter = None
-    if "@" in title:
-        title_splitter = "@"
-    elif "at" in title:
-        title_splitter = "at"
-    elif "vs." in title:
-        title_splitter = "vs."
-    elif "vs" in title:
-        title_splitter = "vs"
-    else:
-        return dict(
-            error = f"ERROR (Teams-Parser): No valid OPPONENT-INDICATOR found in match title ({title})",
-            content = None
-        )
-
-    title_terms = title.split(title_splitter)
-
-    teams = [term.strip() for term in title_terms]
-    teams_string = '-'.join(teams)
-
-    return teams_string
-
+from src.utils.parse_teams import parse_teams
 
 def get_schedule(schedule_url: str, timestamp: datetime.datetime) -> DataFrameMap:
     year, month, day = f"{timestamp.year:04d}", f"{timestamp.month:02d}", f"{timestamp.day:02d}"
