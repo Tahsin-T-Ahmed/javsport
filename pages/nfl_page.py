@@ -30,6 +30,19 @@ def load_button_handler():
         "timestamp": now
     }
 
+    schedule_map = get_schedule(
+        schedule_url = "https://www.teamrankings.com/nfl/schedules/season/?week=0",
+        timestamp = now
+    )
+
+    if schedule_map["error"]:
+        error = schedule_map["error"]
+        st.error(error)
+        return
+
+    schedule = schedule_map["content"]
+    st.session_state["nfl_data"]["schedule"] = schedule
+
 with moneyline_col:
     st.text_area(
         "Enter Moneyline Data:",

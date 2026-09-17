@@ -31,7 +31,7 @@ def load_button_handler():
     }
 
     schedule_map = get_schedule(
-        schedule_url = "https://www.teamrankings.com/wnba/schedules/",
+        schedule_url = "https://www.teamrankings.com/wnba/schedules/season/?week=0",
         timestamp = now
     )
 

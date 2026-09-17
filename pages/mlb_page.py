@@ -54,7 +54,7 @@ def load_button_handler():
     )
 
     schedule_map = get_schedule(
-        schedule_url = f"https://www.teamrankings.com/mlb/schedules/",
+        schedule_url = f"https://www.teamrankings.com/mlb/schedules/season/?week=0",
         timestamp = now
     )
 
