@@ -23,14 +23,14 @@ nba_page = st.Page(
 ncaab_page = st.Page(
     page = "./pages/ncaab_page.py",
     title = "NCAAB",
-    url_path = "ncaa-basketball",
+    url_path = "ncaab",
     icon = ":material/sports_basketball:"
 )
 
 ncaaf_page = st.Page(
     page = "./pages/ncaaf_page.py",
     title = "NCAAF",
-    url_path = "ncaa-football",
+    url_path = "ncaaf",
     icon = ":material/sports_football:"
 )
 

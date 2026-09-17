@@ -7,7 +7,7 @@ from src.data_collection.get_schedule import get_schedule
 from src.utils import format_timestamp
 
 st.set_page_config(
-    page_title = "JavSport - WNBA Calculator",
+    page_title = "JavSport - Wager WNBA",
     layout = "wide"
 )
 
@@ -16,13 +16,20 @@ st.header(
     text_alignment = "center"
 )
 
+st.markdown(
+    body = "#### Women's National Basketball Association", 
+    text_alignment = "center"
+)
+
+st.divider()
+
 moneyline_col, load_button_col = st.columns(2)
 
 if "wnba_load_button_text" not in st.session_state:
-    st.session_state["wnba_load_button_text"] = "Load WNBA Wagers"
+    st.session_state["wnba_load_button_text"] = ":material/touch_app: Load WNBA Wagers :material/touch_app:"
 
 def load_button_handler():
-    st.session_state["wnba_load_button_text"] = "Refresh WNBA Wagers"
+    st.session_state["wnba_load_button_text"] = ":material/refresh: Reload WNBA Wagers :material/refresh:"
 
     now = datetime.now()
 
@@ -55,6 +62,11 @@ with moneyline_col:
     )
 
 with load_button_col:
+    if "wnba_data" not in st.session_state:
+        st.markdown(
+            body = "Click below to see today's predictions",
+            text_alignment = "center"
+        )
     load_button = st.button(
         type = "primary",
         label = st.session_state["wnba_load_button_text"],

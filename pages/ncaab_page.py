@@ -7,22 +7,29 @@ from src.data_collection.get_schedule import get_schedule
 from src.utils import format_timestamp
 
 st.set_page_config(
-    page_title = "JavSport - NCAAB Calculator",
+    page_title = "JavSport - Wager NCAAB",
     layout = "wide"
 )
 
 st.header(
-    body = "JavSport - NCAA Basketball :material/sports_basketball:",
+    body = "JavSport - NCAAB :material/sports_basketball:",
     text_alignment = "center"
 )
+
+st.markdown(
+    body = "#### NCAA Basketball", 
+    text_alignment = "center"
+)
+
+st.divider()
 
 moneyline_col, load_button_col = st.columns(2)
 
 if "ncaab_load_button_text" not in st.session_state:
-    st.session_state["ncaab_load_button_text"] = "Load NCAAB Wagers"
+    st.session_state["ncaab_load_button_text"] = ":material/touch_app: Load NCAAB Wagers :material/touch_app:"
 
 def load_button_handler():
-    st.session_state["ncaab_load_button_text"] = "Refresh NCAAB Wagers"
+    st.session_state["ncaab_load_button_text"] = ":material/refresh: Reload NCAAB Wagers :material/refresh:"
 
     now = datetime.now()
 
@@ -55,6 +62,12 @@ with moneyline_col:
     )
 
 with load_button_col:
+    if "ncaab_data" not in st.session_state:
+        st.markdown(
+            body = "Click below to see today's predictions",
+            text_alignment = "center"
+        )
+
     load_button = st.button(
         type = "primary",
         label = st.session_state["ncaab_load_button_text"],

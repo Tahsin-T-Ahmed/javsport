@@ -8,7 +8,7 @@ from src.data_collection.get_winloss import get_winloss
 from src.utils import format_timestamp
 
 st.set_page_config(
-    page_title = "JavSport - MLB Calculator",
+    page_title = "JavSport - Wager MLB",
     layout = "wide"
 )
 
@@ -16,6 +16,13 @@ st.header(
     body = "JavSport - MLB :material/sports_baseball:", 
     text_alignment = "center"
 )
+
+st.markdown(
+    body = "#### Major League Baseball", 
+    text_alignment = "center"
+)
+
+st.divider()
 
 moneyline_col, siera_col = st.columns(2)
 
@@ -42,10 +49,10 @@ with siera_col:
     )
 
 if "mlb_load_button_text" not in st.session_state:
-    st.session_state["mlb_load_button_text"] = "Load MLB Wagers"
+    st.session_state["mlb_load_button_text"] = ":material/touch_app: Load MLB Wagers :material/touch_app:"
 
 def load_button_handler():
-    st.session_state["mlb_load_button_text"] = "Refresh MLB Wagers"
+    st.session_state["mlb_load_button_text"] = ":material/refresh: Reload MLB Wagers :material/refresh:"
 
     now = datetime.now()
 
@@ -144,6 +151,12 @@ def load_button_handler():
 load_button_col = st.columns([1, 2, 1])[1]
 
 with load_button_col:
+    if "mlb_data" not in st.session_state:
+        st.markdown(
+            body = "Click below to see today's predictions",
+            text_alignment = "center"
+        )
+        
     load_button = st.button(
         type = "primary",
         label = st.session_state["mlb_load_button_text"],

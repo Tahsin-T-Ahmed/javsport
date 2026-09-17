@@ -7,7 +7,7 @@ from src.data_collection.get_schedule import get_schedule
 from src.utils import format_timestamp
 
 st.set_page_config(
-    page_title = "JavSport - NFL Calculator",
+    page_title = "JavSport - Wager NFL",
     layout = "wide"
 )
 
@@ -16,13 +16,20 @@ st.header(
     text_alignment = "center"
 )
 
+st.markdown(
+    body = "#### National Football League", 
+    text_alignment = "center"
+)
+
+st.divider()
+
 moneyline_col, load_button_col = st.columns(2)
 
 if "nfl_load_button_text" not in st.session_state:
-    st.session_state["nfl_load_button_text"] = "Load NFL Wagers"
+    st.session_state["nfl_load_button_text"] = ":material/touch_app: Load NFL Wagers :material/touch_app:"
 
 def load_button_handler():
-    st.session_state["nfl_load_button_text"] = "Refresh NFL Wagers"
+    st.session_state["nfl_load_button_text"] = ":material/refresh: Reload NFL Wagers :material/refresh:"
 
     now = datetime.now()
 
@@ -55,6 +62,11 @@ with moneyline_col:
     )
 
 with load_button_col:
+    if "nfl_data" not in st.session_state:
+        st.markdown(
+            body = "Click below to see today's predictions",
+            text_alignment = "center"
+        )
     load_button = st.button(
         type = "primary",
         label = st.session_state["nfl_load_button_text"],
