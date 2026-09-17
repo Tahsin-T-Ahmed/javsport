@@ -8,8 +8,5 @@ class JavSportDataMap(TypedDict):
 class DataFrameMap(JavSportDataMap):
     content: pd.DataFrame | None
 
-class ListMap(JavSportDataMap):
-    content: list | None
-
 class SoupMap(JavSportDataMap):
     content: BeautifulSoup | None

@@ -1,9 +1,9 @@
 import datetime
 import pandas as pd
-from src.data_collection.data_maps import DataFrameMap, ListMap
+from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.scan_table_at_date import scan_table_at_date
 
-def parse_teams(title: str) -> ListMap:
+def parse_teams(title: str) -> str:
     title_splitter = None
     if "@" in title:
         title_splitter = "@"
@@ -22,8 +22,9 @@ def parse_teams(title: str) -> ListMap:
     title_terms = title.split(title_splitter)
 
     teams = [term.strip() for term in title_terms]
+    teams_string = '-'.join(teams)
 
-    return '-'.join(teams)
+    return teams_string
 
 
 def get_schedule(schedule_url: str, timestamp: datetime.datetime) -> DataFrameMap:
