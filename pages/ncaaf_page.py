@@ -5,7 +5,6 @@ from src.components import empty_schedule_notifier
 from src.components import timestamp_banner
 from src.data_collection.get_leaderboard import get_leaderboard
 from src.data_collection.get_schedule import get_schedule
-from src.utils.format_timestamp import format_timestamp
 
 st.set_page_config(
     page_title = "JavSport - Wager NCAAF",
@@ -79,10 +78,10 @@ with load_button_col:
     )
 
 if "ncaaf_data" in st.session_state:
-    timestamp_f = format_timestamp(st.session_state["ncaaf_data"]["timestamp"])
-
     with load_button_col:
-        timestamp_banner.render(timestamp_f)
+        timestamp_banner.render(
+            timestamp = st.session_state["ncaaf_data"]["timestamp"]
+        )
 
     delay_disclaimer.render()
 

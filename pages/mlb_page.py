@@ -6,7 +6,6 @@ from src.components import timestamp_banner
 from src.data_collection.get_leaderboard import get_leaderboard
 from src.data_collection.get_schedule import get_schedule
 from src.data_collection.get_winloss import get_winloss
-from src.utils.format_timestamp import format_timestamp
 
 st.set_page_config(
     page_title = "JavSport - Wager MLB",
@@ -169,10 +168,10 @@ with load_button_col:
     )
 
 if "mlb_data" in st.session_state:
-    timestamp_f = format_timestamp(st.session_state["mlb_data"]["timestamp"])
-
     with load_button_col:
-        timestamp_banner.render(timestamp_f)
+        timestamp_banner.render(
+            timestamp = st.session_state["mlb_data"]["timestamp"]
+        )
 
     if st.session_state["mlb_data"]["schedule"].empty:
         empty_schedule_notifier.render(

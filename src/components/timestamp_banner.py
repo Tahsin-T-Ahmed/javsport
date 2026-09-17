@@ -1,6 +1,10 @@
+from datetime import datetime
+from src.utils.format_timestamp import format_timestamp
 import streamlit as st
 
-def render(timestamp_f):
+def render(timestamp: datetime.datetime):
+    timestamp_f = format_timestamp(timestamp)
+    
     with st.container(
         border = True
     ):
