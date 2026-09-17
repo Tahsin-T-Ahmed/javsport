@@ -1,7 +1,7 @@
 import datetime
 import pandas as pd
 from src.data_collection.data_maps import DataFrameMap, ListMap
-from src.data_collection.scan_todays_table import scan_todays_table
+from src.data_collection.scan_table_at_date import scan_table_at_date
 
 def parse_teams(title: str) -> ListMap:
     title_splitter = None
@@ -30,7 +30,7 @@ def get_schedule(schedule_url: str, timestamp: datetime.datetime) -> DataFrameMa
     year, month, day = f"{timestamp.year:04d}", f"{timestamp.month:02d}", f"{timestamp.day:02d}"
     date_str = f"{year}-{month}-{day}"
 
-    schedule_map = scan_todays_table(
+    schedule_map = scan_table_at_date(
         url = schedule_url,
         timestamp = timestamp
     )
