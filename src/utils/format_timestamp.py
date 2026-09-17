@@ -1,22 +1,11 @@
 from datetime import datetime
+from src.utils.get_date_ordinal_suffix import get_date_ordinal_suffix
 
-def format(timestamp):
+def format_timestamp(timestamp) -> dict:
     date = timestamp.strftime('%Y, %B %d')
     clocktime = timestamp.strftime('%I:%M:%S %p')
     timezone = timestamp.astimezone().tzname()
-    
-    ordinal_suffix = None
-    day_of_month = timestamp.day
-
-    match(timestamp.day):
-        case 1 | 21: 
-            ordinal_suffix = "st"
-        case 2 | 22:
-            ordinal_suffix = "nd"
-        case 3 | 23:
-            ordinal_suffix = "rd"
-        case _:
-            ordinal_suffix = "th"
+    ordinal_suffix = get_date_ordinal_suffix(timestamp.day)
 
     return {
         "date": f"{date}{ordinal_suffix}",
