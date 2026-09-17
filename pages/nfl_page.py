@@ -46,10 +46,7 @@ def load_button_handler():
     st.session_state["nfl"]["data"] = sport_data_map["content"]
 
 with moneyline_col:
-    st.text_area(
-        "Enter Moneyline Data:",
-        key = "nfl_moneyline_data"
-    )
+    st.text_area("Enter Moneyline Data:")
     
     st.button(
         label = "Parse Moneyline Data",

@@ -23,9 +23,7 @@ st.divider()
 moneyline_col, siera_col = st.columns(2)
 
 with moneyline_col:
-    st.text_area(
-        "Enter Moneyline Data:"
-    )
+    st.text_area("Enter Moneyline Data:")
     
     st.button(
         label = "Parse Moneyline Data",
@@ -33,9 +31,7 @@ with moneyline_col:
     )
 
 with siera_col:
-    st.text_area(
-        "Enter SIERA Data:"
-    )
+    st.text_area("Enter SIERA Data:")
     
     st.button(
         label = "Parse SIERA Data",

@@ -47,10 +47,7 @@ def load_button_handler():
         return
 
 with moneyline_col:
-    st.text_area(
-        "Enter Moneyline Data:",
-        key = "ncaab_moneyline_data"
-    )
+    st.text_area("Enter Moneyline Data:")
     
     st.button(
         label = "Parse Moneyline Data",
