@@ -9,16 +9,29 @@ def render(timestamp: datetime.datetime):
         border = True
     ):
         st.markdown(
-            body = f"##### Button clicked on (timestamp):",
-            text_alignment = "center"
+            body = f"##### Loaded on (TIMESTAMP):",
+            text_alignment = "center",
+            anchors = False
         )
 
-        st.markdown(
-            body = f"##### :green[:material/date_range: {timestamp_f['date']}] | :orange[:material/schedule: {timestamp_f['clocktime']}]",
-            text_alignment = "center"
-        )
+        lcol, rcol = st.columns([1, 3, 2, 1])[1:3]
+
+        with lcol:
+            st.markdown(
+                f"##### :green[:material/date_range: {timestamp_f['date']}]",
+                text_alignment = "center",
+                anchors = False
+            )
+
+        with rcol:
+            st.markdown(
+                f"##### :orange[:material/schedule: {timestamp_f['clocktime']}]",
+                text_alignment = "center",
+                anchors = False
+            )
 
         st.markdown(
-            body = f":blue[:material/globe_clock: Time Zone: {timestamp_f['timezone']}]",
-            text_alignment = "center"
+            body = f"###### :blue[:material/globe_clock: Time Zone: {timestamp_f['timezone']}]",
+            text_alignment = "center",
+            anchors = False
         )
