@@ -1,6 +1,6 @@
 import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
-from src.data_collection.get_soup import get_soup
+from src.data_collection.scrapers.get_soup import get_soup
 
 def scan_table(url: str) -> DataFrameMap:
     soup_map = get_soup(url)

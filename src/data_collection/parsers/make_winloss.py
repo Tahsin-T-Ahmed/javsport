@@ -1,5 +1,5 @@
 from src.data_collection.data_maps import DataFrameMap
-from src.data_collection.scan_table import scan_table
+from src.data_collection.scrapers.scan_table import scan_table
 
 def make_winloss(record_url: str) -> DataFrameMap:
     winloss_map = scan_table(record_url)

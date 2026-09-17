@@ -1,6 +1,6 @@
 from datetime import datetime
 from src.data_collection.data_maps import DataFrameMap
-from src.data_collection.scan_table import scan_table
+from src.data_collection.scrapers.scan_table import scan_table
 
 def make_leaderboard(leaderboard_url: str, timestamp: datetime.datetime) -> DataFrameMap:
     year, month, day = f"{timestamp.year:04d}", f"{timestamp.month:02d}", f"{timestamp.day:02d}"

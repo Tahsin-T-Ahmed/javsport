@@ -3,9 +3,9 @@ import streamlit as st
 from src.components import delay_disclaimer
 from src.components import empty_schedule_notifier
 from src.components import timestamp_banner
-from src.data_collection.make_leaderboard import make_leaderboard
-from src.data_collection.make_schedule import make_schedule
-from src.data_collection.make_winloss import make_winloss
+from src.data_collection.parsers.make_leaderboard import make_leaderboard
+from src.data_collection.parsers.make_schedule import make_schedule
+from src.data_collection.parsers.make_winloss import make_winloss
 
 st.set_page_config(
     page_title = "JavSport - Wager MLB",
