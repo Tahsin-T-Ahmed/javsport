@@ -1,6 +1,6 @@
 from datetime import datetime
 import streamlit as st
-from src.utils import format_timestamp
+from src.utils.format_timestamp import format_timestamp
 
 st.set_page_config(
     page_title = "JavSport - Better Sports Better",
@@ -45,7 +45,7 @@ st.markdown(
 )
 
 now = datetime.now()
-timestamp_f = format_timestamp.format(now)
+timestamp_f = format_timestamp(now)
 
 st.markdown(
     body = f"##### Time Now: :green[:material/date_range: {timestamp_f['date']}] :orange[:material/schedule: {timestamp_f['clocktime']}] :blue[:material/globe_clock: ({timestamp_f['timezone']})]",

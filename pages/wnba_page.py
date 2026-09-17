@@ -1,10 +1,11 @@
 from datetime import datetime
 import streamlit as st
 from src.components import delay_disclaimer
+from src.components import empty_schedule_notifier
 from src.components import timestamp_banner
 from src.data_collection.get_leaderboard import get_leaderboard
 from src.data_collection.get_schedule import get_schedule
-from src.utils import format_timestamp
+from src.utils.format_timestamp import format_timestamp
 
 st.set_page_config(
     page_title = "JavSport - Wager WNBA",
@@ -50,6 +51,9 @@ def load_button_handler():
     schedule = schedule_map["content"]
     st.session_state["wnba_data"]["schedule"] = schedule
 
+    if schedule.empty:
+        return
+
 with moneyline_col:
     st.text_area(
         "Enter Moneyline Data:",
@@ -75,14 +79,21 @@ with load_button_col:
     )
 
 if "wnba_data" in st.session_state:
-    timestamp_f = format_timestamp.format(st.session_state["wnba_data"]["timestamp"])
+    timestamp_f = format_timestamp(st.session_state["wnba_data"]["timestamp"])
 
     with load_button_col:
         timestamp_banner.render(timestamp_f)
 
-    for key, value in st.session_state["wnba_data"].items():
-        key
-        value
+    if st.session_state["wnba_data"]["schedule"].empty:
+        empty_schedule_notifier.render(
+            sport_name = "Women's NBA",
+            timestamp = st.session_state["wnba_data"]["timestamp"]
+        )
+
+    else:
+        for key, value in st.session_state["wnba_data"].items():
+            key
+            value
 
     delay_disclaimer.render()
 else:
