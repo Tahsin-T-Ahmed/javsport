@@ -11,10 +11,6 @@ def get_winloss(record_url: str) -> DataFrameMap:
 
     winloss = winloss_map["content"]
 
-    winloss["TEAM ID"] = winloss["TEAM_LINK"].apply(
-        lambda link: link.split("/")[-1]
-    )
-
     winloss.rename(
         columns = {
             "WIN %_DATASORT": "WIN RATE"
@@ -24,7 +20,7 @@ def get_winloss(record_url: str) -> DataFrameMap:
 
     winloss[["WINS", "LOSSES", "TIES"]] = winloss["WIN-LOSS RECORD"].str.split("-", expand = True)
 
-    desired_columns = ["TEAM", "WINS", "LOSSES", "TIES", "WIN RATE", "TEAM ID"]
+    desired_columns = ["TEAM", "WINS", "LOSSES", "TIES", "WIN RATE"]
     winloss = winloss[desired_columns]
 
     return dict(

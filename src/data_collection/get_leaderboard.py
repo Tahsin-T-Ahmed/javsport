@@ -15,10 +15,6 @@ def get_leaderboard(leaderboard_url: str, timestamp: datetime.datetime) -> DataF
 
     leaderboard = leaderboard_map["content"]
 
-    leaderboard["TEAM ID"] = leaderboard["TEAM_LINK"].apply(
-        lambda link: link.split("/")[-1]
-    )
-
     leaderboard.drop(
         columns = [
             *leaderboard.columns[:9],
@@ -32,7 +28,7 @@ def get_leaderboard(leaderboard_url: str, timestamp: datetime.datetime) -> DataF
     leaderboard.rename(
         columns = {
             leaderboard.columns[1]: "NOW",
-            leaderboard.columns[-2]: "PAST"
+            leaderboard.columns[-1]: "PAST"
         },
         inplace = True
     )
