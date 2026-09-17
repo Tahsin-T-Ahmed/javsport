@@ -25,19 +25,14 @@ st.divider()
 
 moneyline_col, load_button_col = st.columns(2)
 
-if "nba_load_button_text" not in st.session_state:
-    st.session_state["nba_load_button_text"] = ":material/touch_app: Load NBA Wagers :material/touch_app:"
-
 def load_button_handler():
-    st.session_state["nba_load_button_text"] = ":material/refresh: Reload NBA Wagers :material/refresh:"
-
-    st.session_state["nba_data"] = dict(
+    st.session_state["nba"] = dict(
         timestamp = datetime.now()
     )
 
     schedule_map = make_schedule(
         schedule_url = "https://www.teamrankings.com/nba/schedules/season/?week=0",
-        timestamp = st.session_state["nba_data"]["timestamp"]
+        timestamp = st.session_state["nba"]["timestamp"]
     )
 
     if schedule_map["error"]:
@@ -46,7 +41,7 @@ def load_button_handler():
         return
 
     schedule = schedule_map["content"]
-    st.session_state["nba_data"]["schedule"] = schedule
+    st.session_state["nba"]["schedule"] = schedule
 
     if schedule.empty:
         return
@@ -63,33 +58,38 @@ with moneyline_col:
     )
 
 with load_button_col:
-    if "nba_data" not in st.session_state:
+    if "nba" not in st.session_state:
         st.markdown(
             body = "Click below to see today's predictions",
             text_alignment = "center"
         )
 
+    load_button_label = ":material/touch_app: Load NBA Wagers :material/touch_app:"
+
+    if "nba" in st.session_state:
+        load_button_label = ":material/refresh: Reload NBA Wagers :material/refresh:"
+
     load_button = st.button(
         type = "primary",
-        label = st.session_state["nba_load_button_text"],
+        label = load_button_label,
         width = "stretch",
         on_click = load_button_handler
     )
 
-if "nba_data" in st.session_state:
+if "nba" in st.session_state:
     with load_button_col:
         timestamp_banner.render(
-            timestamp = st.session_state["nba_data"]["timestamp"]
+            timestamp = st.session_state["nba"]["timestamp"]
         )
 
-    if st.session_state["nba_data"]["schedule"].empty:
+    if st.session_state["nba"]["schedule"].empty:
         empty_schedule_notifier.render(
             sport_name = "NBA",
-            timestamp = st.session_state["nba_data"]["timestamp"]
+            timestamp = st.session_state["nba"]["timestamp"]
         )
 
     else:
-        for key, value in st.session_state["nba_data"].items():
+        for key, value in st.session_state["nba"].items():
             key
             value
 

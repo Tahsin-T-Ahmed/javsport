@@ -25,19 +25,14 @@ st.divider()
 
 moneyline_col, load_button_col = st.columns(2)
 
-if "ncaab_load_button_text" not in st.session_state:
-    st.session_state["ncaab_load_button_text"] = ":material/touch_app: Load NCAAB Wagers :material/touch_app:"
-
 def load_button_handler():
-    st.session_state["ncaab_load_button_text"] = ":material/refresh: Reload NCAAB Wagers :material/refresh:"
-
-    st.session_state["ncaab_data"] = dict(
+    st.session_state["ncaab"] = dict(
         timestamp = datetime.now()
     )
 
     schedule_map = make_schedule(
         schedule_url = "https://www.teamrankings.com/ncb/schedules/season/?week=0",
-        timestamp = st.session_state["ncaab_data"]["timestamp"]
+        timestamp = st.session_state["ncaab"]["timestamp"]
     )
 
     if schedule_map["error"]:
@@ -46,7 +41,7 @@ def load_button_handler():
         return
 
     schedule = schedule_map["content"]
-    st.session_state["ncaab_data"]["schedule"] = schedule
+    st.session_state["ncaab"]["schedule"] = schedule
 
     if schedule.empty:
         return
@@ -63,32 +58,37 @@ with moneyline_col:
     )
 
 with load_button_col:
-    if "ncaab_data" not in st.session_state:
+    if "ncaab" not in st.session_state:
         st.markdown(
             body = "Click below to see today's predictions",
             text_alignment = "center"
         )
 
+    load_button_label = ":material/touch_app: Load NCAAB Wagers :material/touch_app:"
+
+    if "ncaab" in st.session_state:
+        load_button_label = ":material/refresh: Reload NCAAB Wagers :material/refresh:"
+
     load_button = st.button(
         type = "primary",
-        label = st.session_state["ncaab_load_button_text"],
+        label = load_button_label,
         width = "stretch",
         on_click = load_button_handler
     )
 
-if "ncaab_data" in st.session_state:
+if "ncaab" in st.session_state:
     with load_button_col:
         timestamp_banner.render(
-            timestamp = st.session_state["ncaab_data"]["timestamp"]
+            timestamp = st.session_state["ncaab"]["timestamp"]
         )
 
-    if st.session_state["ncaab_data"]["schedule"].empty:
+    if st.session_state["ncaab"]["schedule"].empty:
         empty_schedule_notifier.render(
             sport_name = "College Basketball",
-            timestamp = st.session_state["ncaab_data"]["timestamp"]
+            timestamp = st.session_state["ncaab"]["timestamp"]
         )
     else:
-        for key, value in st.session_state["ncaab_data"].items():
+        for key, value in st.session_state["ncaab"].items():
             key
             value
 

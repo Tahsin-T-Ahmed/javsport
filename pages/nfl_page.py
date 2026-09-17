@@ -25,19 +25,14 @@ st.divider()
 
 moneyline_col, load_button_col = st.columns(2)
 
-if "nfl_load_button_text" not in st.session_state:
-    st.session_state["nfl_load_button_text"] = ":material/touch_app: Load NFL Wagers :material/touch_app:"
-
 def load_button_handler():
-    st.session_state["nfl_load_button_text"] = ":material/refresh: Reload NFL Wagers :material/refresh:"
-
-    st.session_state["nfl_data"] = dict(
+    st.session_state["nfl"] = dict(
         timestamp = datetime.now()
     )
 
     schedule_map = make_schedule(
         schedule_url = "https://www.teamrankings.com/nfl/schedules/season/?week=0",
-        timestamp = st.session_state["nfl_data"]["timestamp"]
+        timestamp = st.session_state["nfl"]["timestamp"]
     )
 
     if schedule_map["error"]:
@@ -46,13 +41,13 @@ def load_button_handler():
         return
 
     schedule = schedule_map["content"]
-    st.session_state["nfl_data"]["schedule"] = schedule
+    st.session_state["nfl"]["schedule"] = schedule
 
     if schedule.empty:
         return
 
     leaderboards_map = get_leaderboards(
-        timestamp = st.session_state["nfl_data"]["timestamp"],
+        timestamp = st.session_state["nfl"]["timestamp"],
         leaderboard_urls_dict = dict(
             plays_per_game = "https://www.teamrankings.com/nfl/stat/plays-per-game",
             yards_per_game = "https://www.teamrankings.com/nfl/stat/yards-per-game",
@@ -67,7 +62,7 @@ def load_button_handler():
         return
 
     leaderboards = leaderboards_map["content"]
-    st.session_state["nfl_data"]["leaderboards"] = leaderboards
+    st.session_state["nfl"]["leaderboards"] = leaderboards
 
 with moneyline_col:
     st.text_area(
@@ -81,33 +76,38 @@ with moneyline_col:
     )
 
 with load_button_col:
-    if "nfl_data" not in st.session_state:
+    if "nfl" not in st.session_state:
         st.markdown(
             body = "Click below to see today's predictions",
             text_alignment = "center"
         )
+
+    load_button_label = ":material/touch_app: Load NFL Wagers :material/touch_app:"
+
+    if "nfl" in st.session_state:
+        load_button_label = ":material/refresh: Reload NFL Wagers :material/refresh:"
         
     load_button = st.button(
         type = "primary",
-        label = st.session_state["nfl_load_button_text"],
+        label = load_button_label,
         width = "stretch",
         on_click = load_button_handler
     )
 
-if "nfl_data" in st.session_state:
+if "nfl" in st.session_state:
     with load_button_col:
         timestamp_banner.render(
-            timestamp = st.session_state["nfl_data"]["timestamp"]
+            timestamp = st.session_state["nfl"]["timestamp"]
         )
 
-    if st.session_state["nfl_data"]["schedule"].empty:
+    if st.session_state["nfl"]["schedule"].empty:
         empty_schedule_notifier.render(
             sport_name = "NFL",
-            timestamp = st.session_state["nfl_data"]["timestamp"]
+            timestamp = st.session_state["nfl"]["timestamp"]
         )
 
     else:
-        for key, value in st.session_state["nfl_data"].items():
+        for key, value in st.session_state["nfl"].items():
             key
 
             if isinstance(value, dict):

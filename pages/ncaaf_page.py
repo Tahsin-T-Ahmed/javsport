@@ -25,19 +25,14 @@ st.divider()
 
 moneyline_col, load_button_col = st.columns(2)
 
-if "ncaaf_load_button_text" not in st.session_state:
-    st.session_state["ncaaf_load_button_text"] = ":material/touch_app: Load NCAAF Wagers :material/touch_app:"
-
-def load_button_handler():
-    st.session_state["ncaaf_load_button_text"] = ":material/refresh: Reload NCAAF Wagers :material/refresh:"
-    
-    st.session_state["ncaaf_data"] = dict(
+def load_button_handler():    
+    st.session_state["ncaaf"] = dict(
         timestamp = datetime.now()
     )
 
     schedule_soup = make_schedule(
         schedule_url = "https://www.teamrankings.com/ncf/schedules/season/?week=0",
-        timestamp = st.session_state["ncaaf_data"]["timestamp"]
+        timestamp = st.session_state["ncaaf"]["timestamp"]
     )
 
     if schedule_soup["error"]:
@@ -46,7 +41,7 @@ def load_button_handler():
         return
 
     schedule = schedule_soup["content"]
-    st.session_state["ncaaf_data"]["schedule"] = schedule
+    st.session_state["ncaaf"]["schedule"] = schedule
 
     if schedule.empty:
         return
@@ -63,35 +58,40 @@ with moneyline_col:
     )
 
 with load_button_col:
-    if "ncaaf_data" not in st.session_state:
+    if "ncaaf" not in st.session_state:
         st.markdown(
             body = "Click below to see today's predictions",
             text_alignment = "center"
         )
+
+    load_button_label = ":material/touch_app: Load NCAAF Wagers :material/touch_app:"
+
+    if "ncaaf" in st.session_state:
+        load_button_label = ":material/refresh: Reload NCAAF Wagers :material/refresh:"
         
     load_button = st.button(
         type = "primary",
-        label = st.session_state["ncaaf_load_button_text"],
+        label = load_button_label,
         width = "stretch",
         on_click = load_button_handler
     )
 
-if "ncaaf_data" in st.session_state:
+if "ncaaf" in st.session_state:
     with load_button_col:
         timestamp_banner.render(
-            timestamp = st.session_state["ncaaf_data"]["timestamp"]
+            timestamp = st.session_state["ncaaf"]["timestamp"]
         )
 
     delay_disclaimer.render()
 
-    if st.session_state["ncaaf_data"]["schedule"].empty:
+    if st.session_state["ncaaf"]["schedule"].empty:
         empty_schedule_notifier.render(
             sport_name = "College Football",
-            timestamp = st.session_state["ncaaf_data"]["timestamp"]
+            timestamp = st.session_state["ncaaf"]["timestamp"]
         )
         
     else:
-        for key, value in st.session_state["ncaaf_data"].items():
+        for key, value in st.session_state["ncaaf"].items():
             key
             value
 else:

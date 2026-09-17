@@ -47,19 +47,14 @@ with siera_col:
         width = "stretch"
     )
 
-if "mlb_load_button_text" not in st.session_state:
-    st.session_state["mlb_load_button_text"] = ":material/touch_app: Load MLB Wagers :material/touch_app:"
-
 def load_button_handler():
-    st.session_state["mlb_load_button_text"] = ":material/refresh: Reload MLB Wagers :material/refresh:"
-
-    st.session_state["mlb_data"] = dict(
+    st.session_state["mlb"] = dict(
         timestamp = datetime.now()
     )
 
     schedule_map = make_schedule(
         schedule_url = f"https://www.teamrankings.com/mlb/schedules/season/?week=0",
-        timestamp = st.session_state["mlb_data"]["timestamp"]
+        timestamp = st.session_state["mlb"]["timestamp"]
     )
 
     if schedule_map["error"]:
@@ -68,13 +63,13 @@ def load_button_handler():
         return
     
     schedule = schedule_map["content"]
-    st.session_state["mlb_data"]["schedule"] = schedule
+    st.session_state["mlb"]["schedule"] = schedule
 
     if schedule.empty:
         return
 
     leaderboards_map = get_leaderboards(
-        timestamp = st.session_state["mlb_data"]["timestamp"],
+        timestamp = st.session_state["mlb"]["timestamp"],
         leaderboard_urls_dict = dict(
             at_bats_per_game = "https://www.teamrankings.com/mlb/stat/at-bats-per-game",
             hits_per_game = "https://www.teamrankings.com/mlb/stat/hits-per-game",
@@ -90,38 +85,45 @@ def load_button_handler():
         return
 
     leaderboards = leaderboards_map["content"]
-    st.session_state["mlb_data"]["leaderboards"] = leaderboards
+    st.session_state["mlb"]["leaderboards"] = leaderboards
 
 load_button_col = st.columns([1, 2, 1])[1]
 
 with load_button_col:
-    if "mlb_data" not in st.session_state:
+    if "mlb" not in st.session_state:
         st.markdown(
             body = "Click below to see today's predictions",
             text_alignment = "center"
         )
+
+    load_button_label = ":material/touch_app: Load MLB Wagers :material/touch_app:"
+
+    if "mlb" in st.session_state:
+        load_button_label = ":material/refresh: Reload MLB Wagers :material/refresh:"
     
     load_button = st.button(
         type = "primary",
-        label = st.session_state["mlb_load_button_text"],
+        label = load_button_label,
         width = "stretch",
         on_click = load_button_handler
     )
 
-if "mlb_data" in st.session_state:
+st.session_state
+
+if "mlb" in st.session_state:
     with load_button_col:
         timestamp_banner.render(
-            timestamp = st.session_state["mlb_data"]["timestamp"]
+            timestamp = st.session_state["mlb"]["timestamp"]
         )
 
-    if st.session_state["mlb_data"]["schedule"].empty:
+    if st.session_state["mlb"]["schedule"].empty:
         empty_schedule_notifier.render(
             sport_name = "MLB",
-            timestamp = st.session_state["mlb_data"]["timestamp"]
+            timestamp = st.session_state["mlb"]["timestamp"]
         )
 
     else:
-        for key, value in st.session_state["mlb_data"].items():
+        for key, value in st.session_state["mlb"].items():
             key
 
             if isinstance(value, dict):
