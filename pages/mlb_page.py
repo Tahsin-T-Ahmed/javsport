@@ -1,10 +1,7 @@
 from datetime import datetime
 import streamlit as st
-from src.components import delay_disclaimer
-from src.components import empty_schedule_notifier
-from src.components import timestamp_banner
-from src.data_collection.parsers.make_schedule import make_schedule
-from src.services.get_leaderboards import get_leaderboards
+from src.components import delay_disclaimer, empty_schedule_notifier, timestamp_banner
+from src.services.get_sport_data import get_sport_data
 
 st.set_page_config(
     page_title = "JavSport - Wager MLB",
@@ -27,8 +24,7 @@ moneyline_col, siera_col = st.columns(2)
 
 with moneyline_col:
     st.text_area(
-        "Enter Moneyline Data:",
-        key = "mlb_moneyline_data"
+        "Enter Moneyline Data:"
     )
     
     st.button(
@@ -38,8 +34,7 @@ with moneyline_col:
 
 with siera_col:
     st.text_area(
-        "Enter SIERA Data:",
-        key = "mlb_siera_data"
+        "Enter SIERA Data:"
     )
     
     st.button(
@@ -52,24 +47,9 @@ def load_button_handler():
         timestamp = datetime.now()
     )
 
-    schedule_map = make_schedule(
-        schedule_url = f"https://www.teamrankings.com/mlb/schedules/season/?week=0",
-        timestamp = st.session_state["mlb"]["timestamp"]
-    )
-
-    if schedule_map["error"]:
-        error = schedule_map["error"]
-        st.error(error)
-        return
-    
-    schedule = schedule_map["content"]
-    st.session_state["mlb"]["schedule"] = schedule
-
-    if schedule.empty:
-        return
-
-    leaderboards_map = get_leaderboards(
+    sport_data_map = get_sport_data(
         timestamp = st.session_state["mlb"]["timestamp"],
+        schedule_url = "https://www.teamrankings.com/mlb/schedules/season/?week=0",
         leaderboard_urls_dict = dict(
             at_bats_per_game = "https://www.teamrankings.com/mlb/stat/at-bats-per-game",
             hits_per_game = "https://www.teamrankings.com/mlb/stat/hits-per-game",
@@ -80,12 +60,11 @@ def load_button_handler():
         winloss_url = "https://www.teamrankings.com/mlb/trends/win_trends/"
     )
 
-    if leaderboards_map["error"]:
-        st.error(leaderboards_map["error"])
+    if sport_data_map["error"]:
+        st.error(sport_data_map["error"])
         return
 
-    leaderboards = leaderboards_map["content"]
-    st.session_state["mlb"]["leaderboards"] = leaderboards
+    st.session_state["mlb"]["data"] = sport_data_map["content"]
 
 load_button_col = st.columns([1, 2, 1])[1]
 
@@ -108,22 +87,20 @@ with load_button_col:
         on_click = load_button_handler
     )
 
-st.session_state
-
 if "mlb" in st.session_state:
     with load_button_col:
         timestamp_banner.render(
             timestamp = st.session_state["mlb"]["timestamp"]
         )
 
-    if st.session_state["mlb"]["schedule"].empty:
+    if st.session_state["mlb"]["data"]["schedule"].empty:
         empty_schedule_notifier.render(
             sport_name = "MLB",
             timestamp = st.session_state["mlb"]["timestamp"]
         )
 
     else:
-        for key, value in st.session_state["mlb"].items():
+        for key, value in st.session_state["mlb"]["data"].items():
             key
 
             if isinstance(value, dict):

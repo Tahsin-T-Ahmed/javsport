@@ -1,10 +1,7 @@
 from datetime import datetime
 import streamlit as st
-from src.components import delay_disclaimer
-from src.components import empty_schedule_notifier
-from src.components import timestamp_banner
-from src.data_collection.parsers.make_schedule import make_schedule
-from src.services.get_leaderboards import get_leaderboards
+from src.components import delay_disclaimer, empty_schedule_notifier, timestamp_banner
+from src.services.get_sport_data import get_sport_data
 
 st.set_page_config(
     page_title = "JavSport - Wager NFL",
@@ -30,24 +27,9 @@ def load_button_handler():
         timestamp = datetime.now()
     )
 
-    schedule_map = make_schedule(
-        schedule_url = "https://www.teamrankings.com/nfl/schedules/season/?week=0",
-        timestamp = st.session_state["nfl"]["timestamp"]
-    )
-
-    if schedule_map["error"]:
-        error = schedule_map["error"]
-        st.error(error)
-        return
-
-    schedule = schedule_map["content"]
-    st.session_state["nfl"]["schedule"] = schedule
-
-    if schedule.empty:
-        return
-
-    leaderboards_map = get_leaderboards(
+    sport_data_map = get_sport_data(
         timestamp = st.session_state["nfl"]["timestamp"],
+        schedule_url = "https://www.teamrankings.com/nfl/schedules/season/?week=0",
         leaderboard_urls_dict = dict(
             plays_per_game = "https://www.teamrankings.com/nfl/stat/plays-per-game",
             yards_per_game = "https://www.teamrankings.com/nfl/stat/yards-per-game",
@@ -57,12 +39,11 @@ def load_button_handler():
         )
     )
 
-    if leaderboards_map["error"]:
-        st.error(leaderboards_map["error"])
+    if sport_data_map["error"]:
+        st.error(sport_data_map["error"])
         return
 
-    leaderboards = leaderboards_map["content"]
-    st.session_state["nfl"]["leaderboards"] = leaderboards
+    st.session_state["nfl"]["data"] = sport_data_map["content"]
 
 with moneyline_col:
     st.text_area(
@@ -100,14 +81,14 @@ if "nfl" in st.session_state:
             timestamp = st.session_state["nfl"]["timestamp"]
         )
 
-    if st.session_state["nfl"]["schedule"].empty:
+    if st.session_state["nfl"]["data"]["schedule"].empty:
         empty_schedule_notifier.render(
             sport_name = "NFL",
             timestamp = st.session_state["nfl"]["timestamp"]
         )
 
     else:
-        for key, value in st.session_state["nfl"].items():
+        for key, value in st.session_state["nfl"]["data"].items():
             key
 
             if isinstance(value, dict):
