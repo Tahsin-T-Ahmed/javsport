@@ -4,7 +4,6 @@ from src.components import delay_disclaimer
 from src.components import timestamp_banner
 from src.data_collection.get_leaderboard import get_leaderboard
 from src.data_collection.get_schedule import get_schedule
-from src.data_collection.scan_todays_table import scan_todays_table
 from src.utils import format_timestamp
 
 st.set_page_config(
@@ -38,8 +37,8 @@ def load_button_handler():
         "timestamp": now
     }
 
-    schedule_soup = scan_todays_table(
-        url = "https://www.teamrankings.com/ncf/schedules/season/?week=0",
+    schedule_soup = get_schedule(
+        schedule_url = "https://www.teamrankings.com/ncf/schedules/season/?week=0",
         timestamp = now
     )
 
