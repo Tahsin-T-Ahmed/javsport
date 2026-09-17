@@ -3,7 +3,7 @@ import streamlit as st
 from src.components import delay_disclaimer
 from src.components import empty_schedule_notifier
 from src.components import timestamp_banner
-from src.data_collection.get_leaderboard import get_leaderboard
+from src.data_collection.make_leaderboard import make_leaderboard
 from src.data_collection.get_schedule import get_schedule
 from src.data_collection.get_winloss import get_winloss
 
@@ -74,7 +74,7 @@ def load_button_handler():
     if schedule.empty:
         return
 
-    atbats_pg_map = get_leaderboard(
+    atbats_pg_map = make_leaderboard(
         leaderboard_url = f"https://www.teamrankings.com/mlb/stat/at-bats-per-game",
         timestamp = st.session_state["mlb_data"]["timestamp"]
     )
@@ -87,7 +87,7 @@ def load_button_handler():
     at_bats_per_game = atbats_pg_map["content"]
     st.session_state["mlb_data"]["at_bats_per_game"] = at_bats_per_game
 
-    hits_pg_map = get_leaderboard(
+    hits_pg_map = make_leaderboard(
         leaderboard_url = f"https://www.teamrankings.com/mlb/stat/hits-per-game",
         timestamp = st.session_state["mlb_data"]["timestamp"]
     )
@@ -100,7 +100,7 @@ def load_button_handler():
     hits_per_game = hits_pg_map["content"]
     st.session_state["mlb_data"]["hits_per_game"] = hits_per_game
 
-    homeruns_pg_map = get_leaderboard(
+    homeruns_pg_map = make_leaderboard(
         leaderboard_url = f"https://www.teamrankings.com/mlb/stat/home-runs-per-game",
         timestamp = st.session_state["mlb_data"]["timestamp"]
     )
@@ -113,7 +113,7 @@ def load_button_handler():
     home_runs_per_game = homeruns_pg_map["content"]
     st.session_state["mlb_data"]["home_runs_per_game"] = home_runs_per_game
 
-    totalbases_pg_map = get_leaderboard(
+    totalbases_pg_map = make_leaderboard(
         leaderboard_url = f"https://www.teamrankings.com/mlb/stat/total-bases-per-game",
         timestamp = st.session_state["mlb_data"]["timestamp"]
     )
@@ -126,7 +126,7 @@ def load_button_handler():
     total_bases_per_game = totalbases_pg_map["content"]
     st.session_state["mlb_data"]["total_bases_per_game"] = total_bases_per_game
 
-    walks_pg_map = get_leaderboard(
+    walks_pg_map = make_leaderboard(
         leaderboard_url = f"https://www.teamrankings.com/mlb/stat/walks-per-game",
         timestamp = st.session_state["mlb_data"]["timestamp"]
     )

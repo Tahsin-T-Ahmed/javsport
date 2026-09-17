@@ -3,7 +3,7 @@ import streamlit as st
 from src.components import delay_disclaimer
 from src.components import empty_schedule_notifier
 from src.components import timestamp_banner
-from src.data_collection.get_leaderboard import get_leaderboard
+from src.data_collection.make_leaderboard import make_leaderboard
 from src.data_collection.get_schedule import get_schedule
 
 st.set_page_config(
@@ -50,6 +50,71 @@ def load_button_handler():
 
     if schedule.empty:
         return
+
+    plays_pg_map = make_leaderboard(
+        leaderboard_url = "https://www.teamrankings.com/nfl/stat/plays-per-game",
+        timestamp = st.session_state["nfl_data"]["timestamp"]
+    )
+
+    if plays_pg_map["error"]:
+        error = plays_pg_map["error"]
+        st.error(error)
+        return
+
+    plays_per_game = plays_pg_map["content"]
+    st.session_state["nfl_data"]["plays_per_game"] = plays_per_game
+
+    yards_pg_map = make_leaderboard(
+        leaderboard_url = "https://www.teamrankings.com/nfl/stat/yards-per-game",
+        timestamp = st.session_state["nfl_data"]["timestamp"]
+    )
+
+    if yards_pg_map["error"]:
+        error = yards_pg_map["error"]
+        st.error(error)
+        return
+
+    yards_per_game = yards_pg_map["content"]
+    st.session_state["nfl_data"]["yards_per_game"] = yards_per_game
+
+    firstdowns_pg_map = make_leaderboard(
+        leaderboard_url = "https://www.teamrankings.com/nfl/stat/first-downs-per-game",
+        timestamp = st.session_state["nfl_data"]["timestamp"]
+    )
+
+    if firstdowns_pg_map["error"]:
+        error = firstdowns_pg_map["error"]
+        st.error(error)
+        return
+
+    first_downs_per_game = firstdowns_pg_map["content"]
+    st.session_state["nfl_data"]["first_downs_per_game"] = first_downs_per_game
+
+    opp_penalties_pg_map = make_leaderboard(
+        leaderboard_url = "https://www.teamrankings.com/nfl/stat/opponent-penalties-per-game",
+        timestamp = st.session_state["nfl_data"]["timestamp"]
+    )
+
+    if opp_penalties_pg_map["error"]:
+        error = opp_penalties_pg_map["error"]
+        st.error(error)
+        return
+
+    opponent_penalties_per_game = opp_penalties_pg_map["content"]
+    st.session_state["nfl_data"]["opponent_penalties_per_game"] = opponent_penalties_per_game
+
+    touchdowns_pg_map = make_leaderboard(
+        leaderboard_url = "https://www.teamrankings.com/nfl/stat/touchdowns-per-game",
+        timestamp = st.session_state["nfl_data"]["timestamp"]
+    )
+
+    if touchdowns_pg_map["error"]:
+        error = touchdowns_pg_map["error"]
+        st.error(error)
+        return
+
+    touchdowns_per_game = touchdowns_pg_map["content"]
+    st.session_state["nfl_data"]["touchdowns_per_game"] = touchdowns_per_game
 
 with moneyline_col:
     st.text_area(

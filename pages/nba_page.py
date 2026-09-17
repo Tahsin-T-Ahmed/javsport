@@ -3,7 +3,7 @@ import streamlit as st
 from src.components import delay_disclaimer
 from src.components import empty_schedule_notifier
 from src.components import timestamp_banner
-from src.data_collection.get_leaderboard import get_leaderboard
+from src.data_collection.make_leaderboard import make_leaderboard
 from src.data_collection.get_schedule import get_schedule
 
 st.set_page_config(
