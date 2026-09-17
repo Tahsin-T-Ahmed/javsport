@@ -3,9 +3,8 @@ import streamlit as st
 from src.components import delay_disclaimer
 from src.components import empty_schedule_notifier
 from src.components import timestamp_banner
-from src.data_collection.parsers.make_leaderboard import make_leaderboard
 from src.data_collection.parsers.make_schedule import make_schedule
-from src.data_collection.parsers.make_winloss import make_winloss
+from src.services.get_leaderboards import get_leaderboards
 
 st.set_page_config(
     page_title = "JavSport - Wager MLB",
@@ -74,80 +73,24 @@ def load_button_handler():
     if schedule.empty:
         return
 
-    atbats_pg_map = make_leaderboard(
-        leaderboard_url = f"https://www.teamrankings.com/mlb/stat/at-bats-per-game",
-        timestamp = st.session_state["mlb_data"]["timestamp"]
+    leaderboards_map = get_leaderboards(
+        timestamp = st.session_state["mlb_data"]["timestamp"],
+        leaderboard_urls_dict = dict(
+            at_bats_per_game = "https://www.teamrankings.com/mlb/stat/at-bats-per-game",
+            hits_per_game = "https://www.teamrankings.com/mlb/stat/hits-per-game",
+            home_runs_per_game = "https://www.teamrankings.com/mlb/stat/home-runs-per-game",
+            total_bases_per_game = "https://www.teamrankings.com/mlb/stat/total-bases-per-game",
+            walks_per_game = "https://www.teamrankings.com/mlb/stat/walks-per-game"
+        ),
+        winloss_url = "https://www.teamrankings.com/mlb/trends/win_trends/"
     )
 
-    if atbats_pg_map["error"]:
-        error = atbats_pg_map["error"]
-        st.error(error)
+    if leaderboards_map["error"]:
+        st.error(leaderboards_map["error"])
         return
 
-    at_bats_per_game = atbats_pg_map["content"]
-    st.session_state["mlb_data"]["at_bats_per_game"] = at_bats_per_game
-
-    hits_pg_map = make_leaderboard(
-        leaderboard_url = f"https://www.teamrankings.com/mlb/stat/hits-per-game",
-        timestamp = st.session_state["mlb_data"]["timestamp"]
-    )
-
-    if hits_pg_map["error"]:
-        error = hits_pg_map["error"]
-        st.error(error)
-        return
-
-    hits_per_game = hits_pg_map["content"]
-    st.session_state["mlb_data"]["hits_per_game"] = hits_per_game
-
-    homeruns_pg_map = make_leaderboard(
-        leaderboard_url = f"https://www.teamrankings.com/mlb/stat/home-runs-per-game",
-        timestamp = st.session_state["mlb_data"]["timestamp"]
-    )
-
-    if homeruns_pg_map["error"]:
-        error = homeruns_pg_map["error"]
-        st.error(error)
-        return
-
-    home_runs_per_game = homeruns_pg_map["content"]
-    st.session_state["mlb_data"]["home_runs_per_game"] = home_runs_per_game
-
-    totalbases_pg_map = make_leaderboard(
-        leaderboard_url = f"https://www.teamrankings.com/mlb/stat/total-bases-per-game",
-        timestamp = st.session_state["mlb_data"]["timestamp"]
-    )
-
-    if totalbases_pg_map["error"]:
-        error = totalbases_pg_map["error"]
-        st.error(error)
-        return
-
-    total_bases_per_game = totalbases_pg_map["content"]
-    st.session_state["mlb_data"]["total_bases_per_game"] = total_bases_per_game
-
-    walks_pg_map = make_leaderboard(
-        leaderboard_url = f"https://www.teamrankings.com/mlb/stat/walks-per-game",
-        timestamp = st.session_state["mlb_data"]["timestamp"]
-    )
-
-    if walks_pg_map["error"]:
-        error = walks_pg_map["error"]
-        st.error(error)
-        return
-
-    walks_per_game = walks_pg_map["content"]
-    st.session_state["mlb_data"]["walks_per_game"] = walks_per_game
-
-    winloss_map = make_winloss("https://www.teamrankings.com/mlb/trends/win_trends/")
-
-    if winloss_map["error"]:
-        error = winloss_map["error"]
-        st.error(error)
-        return
-
-    winloss = winloss_map["content"]
-    st.session_state["mlb_data"]["winloss"] = winloss
+    leaderboards = leaderboards_map["content"]
+    st.session_state["mlb_data"]["leaderboards"] = leaderboards
 
 load_button_col = st.columns([1, 2, 1])[1]
 
@@ -180,6 +123,13 @@ if "mlb_data" in st.session_state:
     else:
         for key, value in st.session_state["mlb_data"].items():
             key
+
+            if isinstance(value, dict):
+                for k2, v2 in value.items():
+                    k2
+                    v2
+                continue
+
             value
 
     st.divider()
