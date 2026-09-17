@@ -6,7 +6,7 @@ from src.data_collection.parsers.make_winloss import make_winloss
 def get_leaderboards(
     timestamp: datetime.datetime,
     leaderboard_urls_dict: dict,
-    winloss_url = None
+    winloss_url: str | None = None
 ) -> DictMap:
     leaderboards_dict = dict()
 
