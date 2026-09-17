@@ -12,12 +12,12 @@ st.set_page_config(
 )
 
 st.header(
-    body = "JavSport - WNBA :material/sports_basketball:",
+    body = "JavSport - WNBA",
     text_alignment = "center"
 )
 
 st.markdown(
-    body = "#### Women's National Basketball Association", 
+    body = "#### :material/sports_basketball: Women's NBA :material/sports_basketball:",
     text_alignment = "center"
 )
 
@@ -31,9 +31,9 @@ if "wnba_load_button_text" not in st.session_state:
 def load_button_handler():
     st.session_state["wnba_load_button_text"] = ":material/refresh: Reload WNBA Wagers :material/refresh:"
 
-    st.session_state["wnba_data"] = {
-        "timestamp": datetime.now()
-    }
+    st.session_state["wnba_data"] = dict(
+        timestamp = datetime.now()
+    )
 
     schedule_map = get_schedule(
         schedule_url = "https://www.teamrankings.com/wnba/schedules/season/?week=0",
@@ -68,6 +68,7 @@ with load_button_col:
             body = "Click below to see today's predictions",
             text_alignment = "center"
         )
+        
     load_button = st.button(
         type = "primary",
         label = st.session_state["wnba_load_button_text"],

@@ -13,12 +13,12 @@ st.set_page_config(
 )
 
 st.header(
-    body = "JavSport - MLB :material/sports_baseball:", 
+    body = "JavSport - MLB",
     text_alignment = "center"
 )
 
 st.markdown(
-    body = "#### Major League Baseball", 
+    body = "#### :material/sports_baseball: Pro Baseball :material/sports_baseball:",
     text_alignment = "center"
 )
 
@@ -157,7 +157,7 @@ with load_button_col:
             body = "Click below to see today's predictions",
             text_alignment = "center"
         )
-        
+    
     load_button = st.button(
         type = "primary",
         label = st.session_state["mlb_load_button_text"],

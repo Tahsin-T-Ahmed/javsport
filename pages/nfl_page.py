@@ -12,12 +12,12 @@ st.set_page_config(
 )
 
 st.header(
-    body = "JavSport - NFL :material/sports_football:",
+    body = "JavSport - NFL",
     text_alignment = "center"
 )
 
 st.markdown(
-    body = "#### National Football League", 
+    body = "#### :material/sports_football: Pro Football :material/sports_football:",
     text_alignment = "center"
 )
 
@@ -31,9 +31,9 @@ if "nfl_load_button_text" not in st.session_state:
 def load_button_handler():
     st.session_state["nfl_load_button_text"] = ":material/refresh: Reload NFL Wagers :material/refresh:"
 
-    st.session_state["nfl_data"] = {
-        "timestamp": datetime.now()
-    }
+    st.session_state["nfl_data"] = dict(
+        timestamp = datetime.now()
+    )
 
     schedule_map = get_schedule(
         schedule_url = "https://www.teamrankings.com/nfl/schedules/season/?week=0",
@@ -68,6 +68,7 @@ with load_button_col:
             body = "Click below to see today's predictions",
             text_alignment = "center"
         )
+        
     load_button = st.button(
         type = "primary",
         label = st.session_state["nfl_load_button_text"],

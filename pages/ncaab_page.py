@@ -12,12 +12,12 @@ st.set_page_config(
 )
 
 st.header(
-    body = "JavSport - NCAAB :material/sports_basketball:",
+    body = "JavSport - NCAAB",
     text_alignment = "center"
 )
 
 st.markdown(
-    body = "#### NCAA Basketball", 
+    body = "#### :material/sports_basketball: College Basketball :material/sports_basketball:",
     text_alignment = "center"
 )
 
@@ -31,9 +31,9 @@ if "ncaab_load_button_text" not in st.session_state:
 def load_button_handler():
     st.session_state["ncaab_load_button_text"] = ":material/refresh: Reload NCAAB Wagers :material/refresh:"
 
-    st.session_state["ncaab_data"] = {
-        "timestamp": datetime.now()
-    }
+    st.session_state["ncaab_data"] = dict(
+        timestamp = datetime.now()
+    )
 
     schedule_map = get_schedule(
         schedule_url = "https://www.teamrankings.com/ncb/schedules/season/?week=0",

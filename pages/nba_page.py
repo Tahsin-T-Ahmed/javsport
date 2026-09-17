@@ -12,12 +12,12 @@ st.set_page_config(
 )
 
 st.header(
-    body = "JavSport - NBA :material/sports_basketball:",
+    body = "JavSport - NBA",
     text_alignment = "center"
 )
 
 st.markdown(
-    body = "#### National Basketball Association", 
+    body = "#### :material/sports_basketball: Pro Basketball :material/sports_basketball:",
     text_alignment = "center"
 )
 
@@ -31,9 +31,9 @@ if "nba_load_button_text" not in st.session_state:
 def load_button_handler():
     st.session_state["nba_load_button_text"] = ":material/refresh: Reload NBA Wagers :material/refresh:"
 
-    st.session_state["nba_data"] = {
-        "timestamp": datetime.now()
-    }
+    st.session_state["nba_data"] = dict(
+        timestamp = datetime.now()
+    )
 
     schedule_map = get_schedule(
         schedule_url = "https://www.teamrankings.com/nba/schedules/season/?week=0",
