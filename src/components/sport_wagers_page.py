@@ -83,7 +83,8 @@ def render(
             with view_tabs[1]:
                 st.markdown(
                     body = f"#### SCHEDULE ({st.session_state[sport_key]['data']['schedule'].shape[0]} games)",
-                    text_alignment = "center"
+                    text_alignment = "center",
+                    anchors = False
                 )
 
                 st.dataframe(
@@ -91,18 +92,25 @@ def render(
                     hide_index = True
                 )
 
+                st.divider()
+
                 st.markdown(
                     body = "#### LEADERBOARDS",
-                    text_alignment = "center"
+                    text_alignment = "center",
+                    anchors = False
                 )
 
                 for lb_key, leaderboard in st.session_state[sport_key]["data"]["leaderboards"].items():
-                    st.write(f"{lb_key.upper()}:")
+                    with st.expander(
+                        f"{' '.join([term.capitalize() for term in lb_key.split('_')])}",
+                        expanded = True,
+                        type = "compact"
+                    ):
 
-                    st.dataframe(
-                        data = leaderboard,
-                        hide_index = True
-                    )
+                        st.dataframe(
+                            data = leaderboard,
+                            hide_index = True
+                        )
 
     load_button_label = f":material/touch_app: Load {sport_title} Wagers :material/touch_app:"
 
