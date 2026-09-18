@@ -9,18 +9,20 @@ st.set_page_config(
 
 st.title(
     body = "JavSport", 
-    text_alignment = "center"
+    text_alignment = "center",
+    anchor = False
 )
 
 st.markdown(
     body = "#### :material/money_bag: Bet Smarter, Not Harder :material/money_bag:",
-    text_alignment = "center"
+    text_alignment = "center",
+    anchors = False
 )
 
 st.divider()
 
 st.markdown(
-    body = "Choose a **SPORT** from the top :material/north_west: menu (click the :material/keyboard_double_arrow_right: icon if on mobile :material/mobile_3:) or the shortcuts below :material/south::",
+    body = "Choose a **SPORT** from the top-left :material/north_west: menu or the shortcuts below :material/south::",
     text_alignment = "center"
 )
 
@@ -37,8 +39,6 @@ with st.container(
     st.page_link("./pages/nfl_page.py", label="NFL :material/sports_football:")
     st.page_link("./pages/wnba_page.py", label="WNBA :material/sports_basketball:")
 
-st.space()
-
 st.markdown(
     body = "JavSport calculates wager probabiltiies for upcoming games on the :green[current day :material/date_range:] and :orange[time :material/schedule:]",
     text_alignment = "center"
@@ -47,19 +47,31 @@ st.markdown(
 now = datetime.now()
 timestamp_f = format_timestamp(now)
 
-st.markdown(
-    body = f"##### Time Now: :green[:material/date_range: {timestamp_f['date']}] :orange[:material/schedule: {timestamp_f['clocktime']}] :blue[:material/globe_clock: ({timestamp_f['timezone']})]",
-    text_alignment = "center"
-)
+with st.container(horizontal=True, horizontal_alignment="center"):
+    st.markdown(
+        body = f"##### :green[:material/date_range: {timestamp_f['date']}]",
+        anchors = False
+    )
+
+    st.markdown(
+        body = f"##### :orange[:material/schedule: {timestamp_f['clocktime']}]",
+        anchors = False
+    )
+
+    st.markdown(
+        body = f"##### :blue[:material/globe_clock: {timestamp_f['timezone']}]",
+        anchors = False
+    )
 
 st.space()
 
 st.markdown(
-    body = "### :red[:material/warning: WARNING:] DATA IS TIME-SENSITIVE.",
-    text_alignment = "center"
+    body = "### :red[:material/warning: WARNING:] DATA IS TIME-SENSITIVE",
+    text_alignment = "center",
+    anchors = False
 )
 
 st.markdown(
-    body = 'All calculations use the data available when the "Load" button is clicked.',
+    body = 'All calculations use the data available when the "Load" button is clicked',
     text_alignment = "center"
 )
