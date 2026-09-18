@@ -65,11 +65,20 @@ with st.container(horizontal=True, horizontal_alignment="center"):
 
 st.space()
 
-st.markdown(
-    body = "### :red[:material/warning: WARNING:] DATA IS TIME-SENSITIVE",
-    text_alignment = "center",
-    anchors = False
-)
+with st.container(
+    horizontal = True,
+    horizontal_alignment = "center",
+    gap = "xsmall"
+):
+    st.markdown(
+        body = "### :red[:material/warning: WARNING:]",
+        anchors = False
+    )
+
+    st.markdown(
+        body = "### DATA IS TIME-SENSITIVE",
+        anchors = False
+    )
 
 st.markdown(
     body = 'All calculations use the data available when the "Load" button is clicked',
