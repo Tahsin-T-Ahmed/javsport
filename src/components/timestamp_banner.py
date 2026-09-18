@@ -2,14 +2,17 @@ from datetime import datetime
 from src.utils.format_timestamp import format_timestamp
 import streamlit as st
 
-def render(timestamp: datetime.datetime):
+def render(
+    timestamp: datetime.datetime,
+    header: str = "TIMESTAMP:"
+):
     timestamp_f = format_timestamp(timestamp)
     
     with st.container(
         border = True
     ):
         st.markdown(
-            body = f"##### Loaded on (TIMESTAMP):",
+            body = f"##### {header}",
             text_alignment = "center",
             anchors = False
         )

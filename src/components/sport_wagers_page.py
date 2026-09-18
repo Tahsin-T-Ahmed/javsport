@@ -65,7 +65,8 @@ def render(
         )
     else:
         timestamp_banner.render(
-            timestamp = st.session_state[sport_key]["timestamp"]
+            timestamp = st.session_state[sport_key]["timestamp"],
+            header = "Loaded on (TIMESTAMP):"
         )
 
         if st.session_state[sport_key]["data"]["schedule"].empty:
