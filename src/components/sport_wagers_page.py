@@ -78,20 +78,35 @@ def render(
                 timestamp = st.session_state[sport_key]["timestamp"]
             )
         else:
-            for key, value in st.session_state[sport_key]["data"].items():
-                st.write(f"{key.upper()}:")
+            view_tabs = st.tabs(["Results", "Data"])
 
-                if isinstance(value, dict):
-                    for k2, v2 in value.items():
-                        st.caption(f"{k2}:")
-                        st.write(v2)
-                    continue
+            with view_tabs[1]:
+                st.markdown(
+                    body = "#### SCHEDULE",
+                    text_alignment = "center"
+                )
 
-                st.write(value)
+                st.write(st.session_state[sport_key]["data"]["schedule"])
+
+                st.markdown(
+                    body = "#### LEADERBOARDS",
+                    text_alignment = "center"
+                )
+
+                for key, value in st.session_state[sport_key]["data"]["leaderboards"].items():
+                    st.write(f"{key.upper()}:")
+
+                    if isinstance(value, dict):
+                        for k2, v2 in value.items():
+                            st.caption(f"{k2}:")
+                            st.write(v2)
+                        continue
+
+                    st.write(value)
 
     load_button_label = f":material/touch_app: Load {sport_title} Wagers :material/touch_app:"
 
-    if sport_key in st.session_state:
+    if sport_key in st.session_state and "data" in st.session_state[sport_key]:
         load_button_label = f":material/refresh: Reload {sport_title} Wagers :material/refresh:"
 
     st.button(
