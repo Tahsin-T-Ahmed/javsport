@@ -1,17 +1,17 @@
 from datetime import datetime
 from src.data_collection.data_maps import DictMap
 from src.data_collection.parsers.make_leaderboard import make_leaderboard
-from src.data_collection.parsers.make_winloss import make_winloss
+from src.data_collection.parsers.make_win_trends import make_win_trends
 
 def get_leaderboards(
     timestamp: datetime.datetime,
     leaderboard_urls_dict: dict,
-    winloss_url: str | None = None
+    win_trends_url: str | None = None
 ) -> DictMap:
     leaderboards_dict = dict()
 
-    if winloss_url:
-        wl_map = make_winloss(winloss_url)
+    if win_trends_url:
+        wl_map = make_win_trends(win_trends_url)
 
         if wl_map["error"]:
             return dict(
@@ -19,9 +19,9 @@ def get_leaderboards(
                 content = None
             )
 
-        winloss = wl_map["content"]
+        win_trends = wl_map["content"]
         
-        leaderboards_dict["winloss"] = winloss
+        leaderboards_dict["win_trends"] = win_trends
 
     for leaderboard_key, leaderboard_url in leaderboard_urls_dict.items():
         leaderboard_map = make_leaderboard(

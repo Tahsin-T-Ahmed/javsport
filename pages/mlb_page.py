@@ -12,5 +12,5 @@ sport_wagers_page.render(
         total_bases_per_game = "https://www.teamrankings.com/mlb/stat/total-bases-per-game",
         walks_per_game = "https://www.teamrankings.com/mlb/stat/walks-per-game"
     ),
-    winloss_url = "https://www.teamrankings.com/mlb/trends/win_trends/"
+    win_trends_url = "https://www.teamrankings.com/mlb/trends/win_trends/"
 )

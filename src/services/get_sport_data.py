@@ -7,7 +7,7 @@ def get_sport_data(
     timestamp: datetime.datetime,
     schedule_url: str,
     leaderboard_urls_dict: dict,
-    winloss_url: str | None = None
+    win_trends_url: str | None = None
 ) -> DictMap:
     sport_data_dict = dict()
 
@@ -28,7 +28,7 @@ def get_sport_data(
     leaderboards_map = get_leaderboards(
         timestamp = timestamp,
         leaderboard_urls_dict = leaderboard_urls_dict,
-        winloss_url = winloss_url
+        win_trends_url = win_trends_url
     )
 
     if leaderboards_map["error"]:

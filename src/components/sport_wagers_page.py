@@ -8,7 +8,7 @@ def load_button_handler(
     timestamp: datetime.datetime | None,
     schedule_url: str,
     leaderboard_urls_dict: dict,
-    winloss_url: str | None = None
+    win_trends_url: str | None = None
 ):
     if not timestamp:
         timestamp = datetime.now()
@@ -19,7 +19,7 @@ def load_button_handler(
         timestamp = st.session_state[sport_key]["timestamp"],
         schedule_url = schedule_url,
         leaderboard_urls_dict = leaderboard_urls_dict,
-        winloss_url = winloss_url
+        win_trends_url = win_trends_url
     )
 
     if sport_data_map["error"]:
@@ -34,7 +34,7 @@ def render(
     sport_icon: str,
     schedule_url: str,
     leaderboard_urls_dict: dict,
-    winloss_url: str | None = None,
+    win_trends_url: str | None = None,
     timestamp: datetime.datetime | None = None
 ):
     sport_title, sport_key = sport_name.upper(), sport_name.lower()
@@ -114,7 +114,7 @@ def render(
         label = load_button_label,
         width = "stretch",
         on_click = load_button_handler,
-        args = [sport_key, timestamp, schedule_url, leaderboard_urls_dict, winloss_url]
+        args = [sport_key, timestamp, schedule_url, leaderboard_urls_dict, win_trends_url]
     )
 
     delay_disclaimer.render()
