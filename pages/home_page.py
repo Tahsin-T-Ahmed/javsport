@@ -40,7 +40,7 @@ with st.container(
     st.page_link("./pages/wnba_page.py", label="WNBA :material/sports_basketball:")
 
 st.markdown(
-    body = "JavSport calculates wager probabiltiies for upcoming games on the :green[current day :material/date_range:] and :orange[time :material/schedule:]",
+    body = "JavSport calculates wagers for upcoming games on the :green[current day :material/date_range:] and :orange[time :material/schedule:]",
     text_alignment = "center"
 )
 
