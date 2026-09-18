@@ -13,9 +13,7 @@ def load_button_handler(
     if not timestamp:
         timestamp = datetime.now()
     
-    st.session_state[sport_key] = dict(
-        timestamp = timestamp
-    )
+    st.session_state[sport_key]["timestamp"] = timestamp
 
     sport_data_map = get_sport_data(
         timestamp = st.session_state[sport_key]["timestamp"],
@@ -59,6 +57,11 @@ def render(
     st.divider()
 
     if sport_key not in st.session_state:
+        st.session_state[sport_key] = dict()
+
+    if "data" not in st.session_state[sport_key]:
+        st.session_state[sport_key] = dict()
+        
         st.markdown(
             body = "Click below to see today's predictions",
             text_alignment = "center"
