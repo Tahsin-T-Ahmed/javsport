@@ -9,6 +9,7 @@ sport_wagers_page.render(
         field_goals_attempted = "https://www.teamrankings.com/nba/stat/field-goals-attempted-per-game",
         field_goals_made = "https://www.teamrankings.com/nba/stat/field-goals-made-per-game",
         free_throws_made = "https://www.teamrankings.com/nba/stat/free-throws-made-per-game",
-        three_pointers_made = "https://www.teamrankings.com/nba/stat/three-pointers-made-per-game"
+        three_pointers_made = "https://www.teamrankings.com/nba/stat/three-pointers-made-per-game",
+        points_per_game = "https://www.teamrankings.com/nba/stat/points-per-game"
     )
 )
