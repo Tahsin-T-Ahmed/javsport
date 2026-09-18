@@ -59,7 +59,13 @@ def scan_table(url: str) -> DataFrameMap:
                     content = table
                 )
 
-            table.loc[new_row_idx, column] = cell.text.strip()
+            cell_text = cell.text.strip()
+
+            if "--" == cell_text:
+                table.loc[new_row_idx, column] = None
+                continue
+            else:
+                table.loc[new_row_idx, column] = cell_text
 
             if cell.has_attr("data-sort"):
                 table.loc[new_row_idx, f"{column}_DATASORT"] = cell["data-sort"].strip()
