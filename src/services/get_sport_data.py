@@ -24,6 +24,12 @@ def get_sport_data(
 
     schedule = schedule_map["content"]
     sport_data_dict["schedule"] = schedule
+
+    if schedule.empty:
+        return dict(
+            error = None,
+            content = sport_data_dict
+        )
     
     leaderboards_map = get_leaderboards(
         timestamp = timestamp,
