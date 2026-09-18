@@ -24,21 +24,12 @@ def get_sport_data(
 
     schedule = schedule_map["content"]
     sport_data_dict["schedule"] = schedule
-
-    leaderboards_map = None
-
-    if winloss_url:
-        leaderboards_map = get_leaderboards(
-            timestamp = timestamp,
-            leaderboard_urls_dict = leaderboard_urls_dict,
-            winloss_url = winloss_url
-        )
     
-    else:
-        leaderboards_map = get_leaderboards(
-            leaderboard_urls_dict = leaderboard_urls_dict,
-            timestamp = timestamp
-        )
+    leaderboards_map = get_leaderboards(
+        timestamp = timestamp,
+        leaderboard_urls_dict = leaderboard_urls_dict,
+        winloss_url = winloss_url
+    )
 
     if leaderboards_map["error"]:
         return dict(
