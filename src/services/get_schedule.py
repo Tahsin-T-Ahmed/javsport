@@ -8,18 +8,18 @@ def get_schedule(
 ) -> DictMap:
     schedule_dict = dict()
 
-    schedule_map = make_schedule(
+    schedule_raw_map = make_schedule(
         schedule_url = schedule_url,
         timestamp = timestamp
     )
 
-    if schedule_map["error"]:
+    if schedule_raw_map["error"]:
         return dict(
-            error = schedule_map["error"],
+            error = schedule_raw_map["error"],
             content = None
         )
 
-    schedule = schedule_map["content"]
+    schedule = schedule_raw_map["content"]
     schedule_dict["data"] = schedule
 
     if schedule.empty:
@@ -33,4 +33,7 @@ def get_schedule(
 
     schedule_dict["display"] = schedule_display
 
-    return schedule_dict
+    return dict(
+        error = None,
+        content = schedule_dict
+    )
