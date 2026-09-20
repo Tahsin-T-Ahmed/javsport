@@ -82,6 +82,12 @@ def render(
         else:
             view_tabs = st.tabs(["Results", "Data"])
 
+            with view_tabs[0]:
+                moneyline_data = st.file_uploader(
+                    label = "Upload Moneyline Data:",
+                    type = "mhtml"
+                )
+
             with view_tabs[1]:
                 st.markdown(
                     body = f"#### SCHEDULE ({st.session_state[sport_key]['data']['schedule'].shape[0]} games)",
