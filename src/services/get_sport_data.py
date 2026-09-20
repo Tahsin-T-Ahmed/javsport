@@ -30,6 +30,11 @@ def get_sport_data(
             error = None,
             content = sport_data_dict
         )
+
+    schedule_display = schedule.copy()
+    schedule_display["TIME"] = schedule_display["TIME"].dt.strftime("%I:%m %p")
+
+    sport_data_dict["schedule_display"] = schedule_display
     
     leaderboards_map = get_leaderboards(
         timestamp = timestamp,

@@ -96,7 +96,7 @@ def render(
                 )
 
                 st.dataframe(
-                    data = st.session_state[sport_key]["data"]["schedule"],
+                    data = st.session_state[sport_key]["data"]["schedule_display"],
                     hide_index = True
                 )
 
