@@ -14,7 +14,7 @@ def get_schedule(
     )
 
     if schedule_raw_map["error"]:
-        return dict(
+        return DictMap(
             error = schedule_raw_map["error"],
             content = None
         )
@@ -23,7 +23,7 @@ def get_schedule(
     schedule_dict["data"] = schedule
 
     if schedule.empty:
-        return dict(
+        return DictMap(
             error = None,
             content = schedule_dict
         )
@@ -33,7 +33,7 @@ def get_schedule(
 
     schedule_dict["display"] = schedule_display
 
-    return dict(
+    return DictMap(
         error = None,
         content = schedule_dict
     )

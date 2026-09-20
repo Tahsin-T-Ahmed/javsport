@@ -3,10 +3,13 @@ import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.scrapers.get_soup import get_soup
 
-def scan_table_at_date(url: str, timestamp: datetime.datetime) -> DataFrameMap:
+def scan_table_at_date(
+    url: str,
+    timestamp: datetime.datetime
+) -> DataFrameMap:
     soup_map = get_soup(url)
     if soup_map["error"]:
-        return dict(
+        return DataFrameMap(
             error = soup_map["error"],
             conent = None
         )
@@ -17,7 +20,7 @@ def scan_table_at_date(url: str, timestamp: datetime.datetime) -> DataFrameMap:
 
     todays_cell = soup.find("th", string=date_str)
     if not todays_cell:
-        return dict(
+        return DataFrameMap(
             error = None,
             content = pd.DataFrame()
         )
@@ -31,14 +34,14 @@ def scan_table_at_date(url: str, timestamp: datetime.datetime) -> DataFrameMap:
 
     body = head.find_next_sibling("tbody")
     if not body:
-        return dict(
+        return DataFrameMap(
             error = f"ERROR (TableArray-Scan): Failed to scan BODY for head ({head}) from URL ({url})",
             content = None
         )
 
     rows = body.find_all("tr")
     if not rows:
-        return dict(
+        return DataFrameMap(
             error = f"ERROR (TableArray-Scan): Failed to scan ROWS in body ({body}) from URL ({url})",
             content = None
         )
@@ -48,7 +51,7 @@ def scan_table_at_date(url: str, timestamp: datetime.datetime) -> DataFrameMap:
     for row in rows:
         cells = row.find_all("td")
         if not cells:
-            return dict(
+            return DataFrameMap(
                 error = f"ERROR (TableArray-Scan): Failed to scan CELLS of row ({row}) from URL ({url})",
                 content = None
             )
@@ -59,7 +62,7 @@ def scan_table_at_date(url: str, timestamp: datetime.datetime) -> DataFrameMap:
             cell = cells[column_idx]
 
             if cell.has_attr("class") and "empty" in cell["class"]:
-                return dict(
+                return DataFrameMap(
                     error = None,
                     content = table
                 )
@@ -73,7 +76,7 @@ def scan_table_at_date(url: str, timestamp: datetime.datetime) -> DataFrameMap:
             if cell_link:
                 table.loc[new_row_idx, f"{column}_LINK"] = cell_link["href"].strip()        
 
-    return dict(
+    return DataFrameMap(
         error = None,
         content = table
     )

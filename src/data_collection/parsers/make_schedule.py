@@ -4,7 +4,10 @@ from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.scrapers.scan_table_at_date import scan_table_at_date
 from src.data_collection.parsers.parse_teams import parse_teams
 
-def make_schedule(schedule_url: str, timestamp: datetime.datetime) -> DataFrameMap:
+def make_schedule(
+    schedule_url: str,
+    timestamp: datetime.datetime
+) -> DataFrameMap:
     year, month, day = f"{timestamp.year:04d}", f"{timestamp.month:02d}", f"{timestamp.day:02d}"
     date_str = f"{year}-{month}-{day}"
 
@@ -13,7 +16,7 @@ def make_schedule(schedule_url: str, timestamp: datetime.datetime) -> DataFrameM
         timestamp = timestamp
     )
     if schedule_map["error"]:
-        return dict(
+        return DataFrameMap(
             error = schedule_map["error"],
             content = None
         )
@@ -21,7 +24,7 @@ def make_schedule(schedule_url: str, timestamp: datetime.datetime) -> DataFrameM
     schedule = schedule_map["content"]
 
     if schedule.empty:
-        return dict(
+        return DataFrameMap(
             error = None,
             content = schedule
         )
@@ -33,7 +36,7 @@ def make_schedule(schedule_url: str, timestamp: datetime.datetime) -> DataFrameM
 
     schedule = schedule[["TITLE", "TIME", "TEAM A", "TEAM B"]]
 
-    return dict(
+    return DataFrameMap(
         error = None,
         content = schedule
     )

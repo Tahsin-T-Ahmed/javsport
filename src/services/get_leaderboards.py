@@ -14,7 +14,7 @@ def get_leaderboards(
         wl_map = make_win_trends(win_trends_url)
 
         if wl_map["error"]:
-            return dict(
+            return DictMap(
                 error = wl_map["error"],
                 content = None
             )
@@ -30,7 +30,7 @@ def get_leaderboards(
         )
 
         if leaderboard_map["error"]:
-            return dict(
+            return DictMap(
                 error = leaderboard_map["error"],
                 content = None
             )
@@ -39,7 +39,7 @@ def get_leaderboards(
 
         leaderboards_dict[leaderboard_key] = leaderboard
 
-    return dict(
+    return DictMap(
         error = None,
         content = leaderboards_dict
     )

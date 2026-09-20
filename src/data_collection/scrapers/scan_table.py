@@ -5,7 +5,7 @@ from src.data_collection.scrapers.get_soup import get_soup
 def scan_table(url: str) -> DataFrameMap:
     soup_map = get_soup(url)
     if soup_map["error"]:
-        return dict(
+        return DataFrameMap(
             error = soup_map["error"],
             content = None
         )
@@ -14,14 +14,14 @@ def scan_table(url: str) -> DataFrameMap:
 
     datatable = soup.select("table.datatable")[0]
     if not datatable:
-        return dict(
+        return DataFrameMap(
             error = f"ERROR (Table-Scan): Failed to scan DATATABLE from URL ({url})",
             content = None
         )
 
     headers = datatable.find_all("th")
     if not headers:
-        return dict(
+        return DataFrameMap(
             error = f"Error (Table-Scan): Failed to scan HEADERS from URL ({url})",
             content = None
         )
@@ -32,7 +32,7 @@ def scan_table(url: str) -> DataFrameMap:
 
     rows = datatable.find_all("tr")
     if not rows:
-        return dict(
+        return DataFrameMap(
             error = f"ERROR (Table-Scan): Failed to scan ROWS from URL ({url})",
             content = None
         )
@@ -43,7 +43,7 @@ def scan_table(url: str) -> DataFrameMap:
 
         cells = row.find_all("td")
         if not cells:
-            return dict(
+            return DataFrameMap(
                 error = f"ERROR (Table-Scan): Failed to scan CELLS of row ({row}) from URL ({url})",
                 content = None
             )
@@ -54,7 +54,7 @@ def scan_table(url: str) -> DataFrameMap:
             cell = cells[column_idx]
 
             if cell.has_attr("class") and "empty" in cell["class"]:
-                return dict(
+                return DataFrameMap(
                     error = None,
                     content = table
                 )
@@ -74,7 +74,7 @@ def scan_table(url: str) -> DataFrameMap:
             if cell_link:
                 table.loc[new_row_idx, f"{column}_LINK"] = cell_link["href"].strip()
 
-    return dict(
+    return DataFrameMap(
         error = None,
         content = table
     )

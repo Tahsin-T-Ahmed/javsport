@@ -4,7 +4,7 @@ from src.data_collection.scrapers.scan_table import scan_table
 def make_win_trends(record_url: str) -> DataFrameMap:
     wintrends_map = scan_table(record_url)
     if wintrends_map["error"]:
-        return dict(
+        return DataFrameMap(
             error = wintrends_map["error"],
             content = None
         )
@@ -23,7 +23,7 @@ def make_win_trends(record_url: str) -> DataFrameMap:
     desired_columns = ["TEAM", "WINS", "LOSSES", "TIES", "WIN RATE"]
     win_trends = win_trends[desired_columns]
 
-    return dict(
+    return DataFrameMap(
         error = None,
         content = win_trends
     )
