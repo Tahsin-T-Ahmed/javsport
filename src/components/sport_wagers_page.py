@@ -1,6 +1,7 @@
 from datetime import datetime
 from src.components import delay_disclaimer, empty_schedule_notifier, timestamp_banner
-from src.services.get_sport_data import get_sport_data
+from src.services.get_leaderboards import get_leaderboards
+from src.services.get_schedule import get_schedule
 import streamlit as st
 
 def load_button_handler(
@@ -15,18 +16,31 @@ def load_button_handler(
     
     st.session_state[sport_key]["timestamp"] = timestamp
 
-    sport_data_map = get_sport_data(
-        timestamp = st.session_state[sport_key]["timestamp"],
+    schedule_dict_map = get_schedule(
         schedule_url = schedule_url,
+        timestamp = timestamp
+    )
+
+    if schedule_dict_map["error"]:
+        st.error(schedule_dict_map["error"])
+        return
+
+    st.session_state[sport_key]["schedule"] = schedule_dict_map["content"]
+
+    if st.session_state[sport_key]["schedule"]["data"].empty:
+        return
+
+    leaderboards_map = get_leaderboards(
         leaderboard_urls_dict = leaderboard_urls_dict,
+        timestamp = timestamp,
         win_trends_url = win_trends_url
     )
 
-    if sport_data_map["error"]:
-        st.error(sport_data_map["error"])
+    if leaderboards_map["error"]:
+        st.error(leaderboards_map["error"])
         return
 
-    st.session_state[sport_key]["data"] = sport_data_map["content"]
+    st.session_state[sport_key]["leaderboards"] = leaderboards_map["content"]
 
 def render(
     sport_name: str,
@@ -61,7 +75,7 @@ def render(
     if sport_key not in st.session_state:
         st.session_state[sport_key] = dict()
 
-    if "data" not in st.session_state[sport_key]:
+    if "schedule" not in st.session_state[sport_key]:
         st.session_state[sport_key] = dict()
         
         st.markdown(
@@ -74,7 +88,7 @@ def render(
             header = "Loaded on (TIMESTAMP):"
         )
 
-        if st.session_state[sport_key]["data"]["schedule"].empty:
+        if st.session_state[sport_key]["schedule"]["data"].empty:
             empty_schedule_notifier.render(
                 sport_name = sport_title,
                 timestamp = st.session_state[sport_key]["timestamp"]
@@ -90,13 +104,13 @@ def render(
 
             with view_tabs[1]:
                 st.markdown(
-                    body = f"#### SCHEDULE ({st.session_state[sport_key]['data']['schedule'].shape[0]} games)",
+                    body = f"#### SCHEDULE ({st.session_state[sport_key]['schedule']['data'].shape[0]} games)",
                     text_alignment = "center",
                     anchors = False
                 )
 
                 st.dataframe(
-                    data = st.session_state[sport_key]["data"]["schedule_display"],
+                    data = st.session_state[sport_key]["schedule"]["display"],
                     hide_index = True
                 )
 
@@ -108,7 +122,7 @@ def render(
                     anchors = False
                 )
 
-                for lb_key, leaderboard in st.session_state[sport_key]["data"]["leaderboards"].items():
+                for lb_key, leaderboard in st.session_state[sport_key]["leaderboards"].items():
                     with st.expander(
                         f"{' '.join([term.capitalize() for term in lb_key.split('_')])}",
                         expanded = True,
@@ -122,7 +136,7 @@ def render(
 
     load_button_label = f":material/touch_app: Load {sport_title} Wagers :material/touch_app:"
 
-    if sport_key in st.session_state and "data" in st.session_state[sport_key]:
+    if sport_key in st.session_state and "schedule" in st.session_state[sport_key]:
         load_button_label = f":material/refresh: Reload {sport_title} Wagers :material/refresh:"
 
     st.button(
