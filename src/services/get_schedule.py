@@ -29,7 +29,7 @@ def get_schedule(
         )
 
     schedule_display = schedule.copy()
-    schedule_display["TIME"] = schedule_display["TIME"].dt.strftime("%I:%m %p")
+    schedule_display["TIME"] = schedule_display["TIME"].dt.strftime("%I:%M %p")
 
     schedule_dict["display"] = schedule_display
 
