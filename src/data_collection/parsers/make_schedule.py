@@ -32,7 +32,11 @@ def make_schedule(
     schedule["TIME"] = schedule["TIME"].apply(lambda row: f"{date_str} {row}")
     schedule["TIME"] = pd.to_datetime(schedule["TIME"])
 
-    schedule[["TEAM A", "TEAM B"]] = schedule["TITLE"].apply(parse_teams).str.split("-", expand = True)
+    schedule["TEAMS PARSED"] = schedule["TITLE"].apply(
+        lambda col: parse_teams(col)["content"]
+    )
+
+    schedule[["TEAM A", "TEAM B"]] = schedule["TEAMS PARSED"].str.split("-", expand=True)
 
     schedule = schedule[["TITLE", "TIME", "TEAM A", "TEAM B"]]
 

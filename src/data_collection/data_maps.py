@@ -13,3 +13,6 @@ class DictMap(JavSportDataMap):
 
 class SoupMap(JavSportDataMap):
     content: BeautifulSoup | None
+
+class StringMap(JavSportDataMap):
+    content = str | None

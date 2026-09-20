@@ -1,3 +1,5 @@
+from src.data_collection.data_maps import StringMap
+
 def parse_teams(title: str) -> str:
     title_splitter = None
     if "@" in title:
@@ -9,7 +11,7 @@ def parse_teams(title: str) -> str:
     elif "vs" in title:
         title_splitter = "vs"
     else:
-        return dict(
+        return StringMap(
             error = f"ERROR (Teams-Parser): No valid OPPONENT-INDICATOR found in match title ({title})",
             content = None
         )
@@ -19,4 +21,7 @@ def parse_teams(title: str) -> str:
     teams = [term.strip() for term in title_terms]
     teams_string = '-'.join(teams)
 
-    return teams_string
+    return StringMap(
+        error = None,
+        content = teams_string
+    )
