@@ -1,6 +1,6 @@
 from src.data_collection.data_maps import StringMap
 
-def parse_teams(title: str) -> str:
+def parse_teams(title: str) -> StringMap:
     title_splitter = None
     if "@" in title:
         title_splitter = "@"
