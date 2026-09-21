@@ -6,7 +6,7 @@ import streamlit as st
 
 def load_button_handler(
     sport_key: str,
-    timestamp: datetime.datetime | None,
+    timestamp: datetime.datetime | None,    # for testing purposes
     schedule_url: str,
     leaderboard_urls_dict: dict,
     win_trends_url: str | None = None
@@ -103,8 +103,12 @@ def render(
                 )
 
             with view_tabs[1]:
+                game_pluralized = "game"
+                if st.session_state[sport_key]["schedule"]["data"].shape[0] > 1:
+                    game_pluralized = "games"
+
                 st.markdown(
-                    body=f"#### SCHEDULE ({st.session_state[sport_key]['schedule']['data'].shape[0]} games)",
+                    body=f"#### SCHEDULE ({st.session_state[sport_key]['schedule']['data'].shape[0]} {game_pluralized})",
                     text_alignment="center",
                     anchors=False
                 )
