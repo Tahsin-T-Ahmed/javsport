@@ -1,5 +1,5 @@
 from datetime import datetime
-from src.components import delay_disclaimer, empty_schedule_notifier, table_list, timestamp_banner
+from src.components import delay_disclaimer, empty_schedule_notifier, schedule_banner, table_list, timestamp_banner
 from src.services.get_leaderboards import get_leaderboards
 from src.services.get_schedule import get_schedule
 import streamlit as st
@@ -103,19 +103,8 @@ def render(
                 )
 
             with view_tabs[1]:
-                game_pluralized = "game"
-                if st.session_state[sport_key]["schedule"]["data"].shape[0] > 1:
-                    game_pluralized = "games"
-
-                st.markdown(
-                    body=f"#### SCHEDULE ({st.session_state[sport_key]['schedule']['data'].shape[0]} {game_pluralized})",
-                    text_alignment="center",
-                    anchors=False
-                )
-
-                st.dataframe(
-                    data=st.session_state[sport_key]["schedule"]["display"],
-                    hide_index=True
+                schedule_banner.render(
+                    schedule_df=st.session_state[sport_key]["schedule"]["display"]
                 )
 
                 st.divider()
