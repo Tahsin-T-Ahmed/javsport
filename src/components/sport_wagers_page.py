@@ -1,5 +1,5 @@
 from datetime import datetime
-from src.components import delay_disclaimer, empty_schedule_notifier, timestamp_banner
+from src.components import delay_disclaimer, empty_schedule_notifier, table_list, timestamp_banner
 from src.services.get_leaderboards import get_leaderboards
 from src.services.get_schedule import get_schedule
 import streamlit as st
@@ -120,23 +120,12 @@ def render(
 
                 st.divider()
 
-                st.markdown(
-                    body="#### LEADERBOARDS",
-                    text_alignment="center",
-                    anchors=False
+                table_list.render(
+                    title="LEADERBOARDS",
+                    table_dict=st.session_state[sport_key]["leaderboards"],
+                    collapse=True,
+                    hide_index=True
                 )
-
-                for lb_key, leaderboard in st.session_state[sport_key]["leaderboards"].items():
-                    with st.expander(
-                        f"{' '.join([term.capitalize() for term in lb_key.split('_')])}",
-                        expanded=True,
-                        type="compact"
-                    ):
-
-                        st.dataframe(
-                            data=leaderboard,
-                            hide_index=True
-                        )
 
     load_button_label = f":material/touch_app: Load {sport_title} Wagers :material/touch_app:"
 
