@@ -35,7 +35,7 @@ def get_schedule(
         axis=1
     )
 
-    schedule_display.drop(columns=["TEAM B IS HOME"], inplace=True)
+    schedule_display.drop(columns=["TITLE", "TEAM B IS HOME"], inplace=True)
 
     schedule_dict["display"] = schedule_display
 
