@@ -23,6 +23,9 @@ def make_win_trends(record_url: str) -> DataFrameMap:
     desired_columns = ["TEAM", "WINS", "LOSSES", "TIES", "WIN RATE"]
     win_trends = win_trends[desired_columns]
 
+    numeric_columns = win_trends.columns.drop("TEAM")
+    win_trends[numeric_columns] = win_trends[numeric_columns].astype(float)
+
     return DataFrameMap(
         error=None,
         content=win_trends

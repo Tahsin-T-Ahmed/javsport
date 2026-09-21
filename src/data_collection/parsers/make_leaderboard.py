@@ -35,6 +35,9 @@ def make_leaderboard(
         },
         inplace=True
     )
+
+    numeric_columns = leaderboard.columns.drop("TEAM")
+    leaderboard[numeric_columns] = leaderboard[numeric_columns].astype(float)
     
     return DataFrameMap(
         error=None,
