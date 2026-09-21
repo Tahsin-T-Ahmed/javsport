@@ -11,5 +11,6 @@ sport_wagers_page.render(
         plays_per_game="https://www.teamrankings.com/nfl/stat/plays-per-game",
         touchdowns_per_game="https://www.teamrankings.com/nfl/stat/touchdowns-per-game",
         yards_per_game="https://www.teamrankings.com/nfl/stat/yards-per-game"
-    )
+    ),
+    win_trends_url="https://www.teamrankings.com/nfl/trends/win_trends/"
 )

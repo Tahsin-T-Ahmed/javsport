@@ -10,5 +10,6 @@ sport_wagers_page.render(
         plays_per_game="https://www.teamrankings.com/college-football/stat/plays-per-game",
         touchdowns_per_game="https://www.teamrankings.com/college-football/stat/offensive-touchdowns-per-game",
         yards_per_game="https://www.teamrankings.com/college-football/stat/yards-per-game"
-    )
+    ),
+    win_trends_url="https://www.teamrankings.com/ncf/trends/win_trends/"
 )

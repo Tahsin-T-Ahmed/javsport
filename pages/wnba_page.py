@@ -11,5 +11,6 @@ sport_wagers_page.render(
         free_throws_made="https://www.teamrankings.com/wnba/stat/free-throws-made-per-game",
         three_pointers_made="https://www.teamrankings.com/wnba/stat/three-pointers-made-per-game",
         points_per_game="https://www.teamrankings.com/wnba/stat/points-per-game"
-    )
+    ),
+    win_trends_url="https://www.teamrankings.com/wnba/trends/win_trends/"
 )
