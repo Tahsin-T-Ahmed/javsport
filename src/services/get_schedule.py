@@ -9,14 +9,14 @@ def get_schedule(
     schedule_dict = dict()
 
     schedule_raw_map = make_schedule(
-        schedule_url = schedule_url,
-        timestamp = timestamp
+        schedule_url=schedule_url,
+        timestamp=timestamp
     )
 
     if schedule_raw_map["error"]:
         return DictMap(
-            error = schedule_raw_map["error"],
-            content = None
+            error=schedule_raw_map["error"],
+            content=None
         )
 
     schedule = schedule_raw_map["content"]
@@ -24,15 +24,15 @@ def get_schedule(
 
     if schedule.empty:
         return DictMap(
-            error = None,
-            content = schedule_dict
+            error=None,
+            content=schedule_dict
         )
 
     schedule_display = schedule.copy()
     schedule_display["TIME"] = schedule_display["TIME"].dt.strftime("%I:%M %p")
     schedule_display["HOME TEAM"] = schedule_display.apply(
-        func = lambda row: row["TEAM B"] if row["TEAM B IS HOME"] else None,
-        axis = 1
+        func=lambda row: row["TEAM B"] if row["TEAM B IS HOME"] else None,
+        axis=1
     )
 
     schedule_display.drop(columns=["TEAM B IS HOME"], inplace=True)
@@ -40,6 +40,6 @@ def get_schedule(
     schedule_dict["display"] = schedule_display
 
     return DictMap(
-        error = None,
-        content = schedule_dict
+        error=None,
+        content=schedule_dict
     )

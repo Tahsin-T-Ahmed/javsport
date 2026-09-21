@@ -10,8 +10,8 @@ def scan_table_at_date(
     soup_map = get_soup(url)
     if soup_map["error"]:
         return DataFrameMap(
-            error = soup_map["error"],
-            conent = None
+            error=soup_map["error"],
+            conent=None
         )
 
     soup = soup_map["content"]
@@ -21,8 +21,8 @@ def scan_table_at_date(
     todays_cell = soup.find("th", string=date_str)
     if not todays_cell:
         return DataFrameMap(
-            error = None,
-            content = pd.DataFrame()
+            error=None,
+            content=pd.DataFrame()
         )
 
     head = todays_cell.parent.parent
@@ -35,25 +35,25 @@ def scan_table_at_date(
     body = head.find_next_sibling("tbody")
     if not body:
         return DataFrameMap(
-            error = f"ERROR (TableArray-Scan): Failed to scan BODY for head ({head}) from URL ({url})",
-            content = None
+            error=f"ERROR (TableArray-Scan): Failed to scan BODY for head ({head}) from URL ({url})",
+            content=None
         )
 
     rows = body.find_all("tr")
     if not rows:
         return DataFrameMap(
-            error = f"ERROR (TableArray-Scan): Failed to scan ROWS in body ({body}) from URL ({url})",
-            content = None
+            error=f"ERROR (TableArray-Scan): Failed to scan ROWS in body ({body}) from URL ({url})",
+            content=None
         )
 
-    table = pd.DataFrame(columns = columns)
+    table = pd.DataFrame(columns=columns)
 
     for row in rows:
         cells = row.find_all("td")
         if not cells:
             return DataFrameMap(
-                error = f"ERROR (TableArray-Scan): Failed to scan CELLS of row ({row}) from URL ({url})",
-                content = None
+                error=f"ERROR (TableArray-Scan): Failed to scan CELLS of row ({row}) from URL ({url})",
+                content=None
             )
 
         new_row_idx = table.shape[0]
@@ -63,8 +63,8 @@ def scan_table_at_date(
 
             if cell.has_attr("class") and "empty" in cell["class"]:
                 return DataFrameMap(
-                    error = None,
-                    content = table
+                    error=None,
+                    content=table
                 )
 
             table.loc[new_row_idx, column] = cell.text.strip()
@@ -77,6 +77,6 @@ def scan_table_at_date(
                 table.loc[new_row_idx, f"{column}_LINK"] = cell_link["href"].strip()        
 
     return DataFrameMap(
-        error = None,
-        content = table
+        error=None,
+        content=table
     )

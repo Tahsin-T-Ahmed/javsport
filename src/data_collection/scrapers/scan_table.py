@@ -6,8 +6,8 @@ def scan_table(url: str) -> DataFrameMap:
     soup_map = get_soup(url)
     if soup_map["error"]:
         return DataFrameMap(
-            error = soup_map["error"],
-            content = None
+            error=soup_map["error"],
+            content=None
         )
 
     soup = soup_map["content"]
@@ -15,26 +15,26 @@ def scan_table(url: str) -> DataFrameMap:
     datatable = soup.select("table.datatable")[0]
     if not datatable:
         return DataFrameMap(
-            error = f"ERROR (Table-Scan): Failed to scan DATATABLE from URL ({url})",
-            content = None
+            error=f"ERROR (Table-Scan): Failed to scan DATATABLE from URL ({url})",
+            content=None
         )
 
     headers = datatable.find_all("th")
     if not headers:
         return DataFrameMap(
-            error = f"Error (Table-Scan): Failed to scan HEADERS from URL ({url})",
-            content = None
+            error=f"Error (Table-Scan): Failed to scan HEADERS from URL ({url})",
+            content=None
         )
 
     columns = [header.text.upper() for header in headers]
 
-    table = pd.DataFrame(columns = columns)
+    table = pd.DataFrame(columns=columns)
 
     rows = datatable.find_all("tr")
     if not rows:
         return DataFrameMap(
-            error = f"ERROR (Table-Scan): Failed to scan ROWS from URL ({url})",
-            content = None
+            error=f"ERROR (Table-Scan): Failed to scan ROWS from URL ({url})",
+            content=None
         )
 
     for row_idx, row in enumerate(rows):
@@ -44,8 +44,8 @@ def scan_table(url: str) -> DataFrameMap:
         cells = row.find_all("td")
         if not cells:
             return DataFrameMap(
-                error = f"ERROR (Table-Scan): Failed to scan CELLS of row ({row}) from URL ({url})",
-                content = None
+                error=f"ERROR (Table-Scan): Failed to scan CELLS of row ({row}) from URL ({url})",
+                content=None
             )
 
         new_row_idx = table.shape[0]
@@ -55,8 +55,8 @@ def scan_table(url: str) -> DataFrameMap:
 
             if cell.has_attr("class") and "empty" in cell["class"]:
                 return DataFrameMap(
-                    error = None,
-                    content = table
+                    error=None,
+                    content=table
                 )
 
             cell_text = cell.text.strip()
@@ -75,6 +75,6 @@ def scan_table(url: str) -> DataFrameMap:
                 table.loc[new_row_idx, f"{column}_LINK"] = cell_link["href"].strip()
 
     return DataFrameMap(
-        error = None,
-        content = table
+        error=None,
+        content=table
     )

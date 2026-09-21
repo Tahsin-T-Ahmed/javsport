@@ -12,21 +12,21 @@ def make_schedule(
     date_str = f"{year}-{month}-{day}"
 
     schedule_map = scan_table_at_date(
-        url = schedule_url,
-        timestamp = timestamp
+        url=schedule_url,
+        timestamp=timestamp
     )
     if schedule_map["error"]:
         return DataFrameMap(
-            error = schedule_map["error"],
-            content = None
+            error=schedule_map["error"],
+            content=None
         )
 
     schedule = schedule_map["content"]
 
     if schedule.empty:
         return DataFrameMap(
-            error = None,
-            content = schedule
+            error=None,
+            content=schedule
         )
 
     schedule["TIME"] = schedule["TIME"].apply(lambda row: f"{date_str} {row}")
@@ -41,11 +41,11 @@ def make_schedule(
     schedule = schedule[["TITLE", "TIME", "TEAM A", "TEAM B"]]
 
     schedule["TEAM B IS HOME"] = schedule.apply(
-        func = lambda row: True if "@" in row["TITLE"] or " at " in row["TITLE"] else False,
-        axis = 1
+        func=lambda row: True if "@" in row["TITLE"] or " at " in row["TITLE"] else False,
+        axis=1
     )
 
     return DataFrameMap(
-        error = None,
-        content = schedule
+        error=None,
+        content=schedule
     )

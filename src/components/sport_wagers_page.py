@@ -17,8 +17,8 @@ def load_button_handler(
     st.session_state[sport_key]["timestamp"] = timestamp
 
     schedule_dict_map = get_schedule(
-        schedule_url = schedule_url,
-        timestamp = timestamp
+        schedule_url=schedule_url,
+        timestamp=timestamp
     )
 
     if schedule_dict_map["error"]:
@@ -31,9 +31,9 @@ def load_button_handler(
         return
 
     leaderboards_map = get_leaderboards(
-        leaderboard_urls_dict = leaderboard_urls_dict,
-        timestamp = timestamp,
-        win_trends_url = win_trends_url
+        leaderboard_urls_dict=leaderboard_urls_dict,
+        timestamp=timestamp,
+        win_trends_url=win_trends_url
     )
 
     if leaderboards_map["error"]:
@@ -54,20 +54,20 @@ def render(
     sport_title, sport_key = sport_name.upper(), sport_name.lower()
 
     st.set_page_config(
-        page_title = f"JavSport - Wager {sport_title}",
-        layout = "centered"
+        page_title=f"JavSport - Wager {sport_title}",
+        layout="centered"
     )
 
     st.header(
-        body = f"JavSport - {sport_title}",
-        text_alignment = "center",
-        anchor = False
+        body=f"JavSport - {sport_title}",
+        text_alignment="center",
+        anchor=False
     )
 
     st.markdown(
-        body = f"#### {sport_icon} {sport_subheader} {sport_icon}",
-        text_alignment = "center",
-        anchors = False
+        body=f"#### {sport_icon} {sport_subheader} {sport_icon}",
+        text_alignment="center",
+        anchors=False
     )
 
     st.divider()
@@ -79,59 +79,59 @@ def render(
         st.session_state[sport_key] = dict()
         
         st.markdown(
-            body = "Click below to see today's predictions",
-            text_alignment = "center"
+            body="Click below to see today's predictions",
+            text_alignment="center"
         )
     else:
         timestamp_banner.render(
-            timestamp = st.session_state[sport_key]["timestamp"],
-            header = "Loaded on (TIMESTAMP):"
+            timestamp=st.session_state[sport_key]["timestamp"],
+            header="Loaded on (TIMESTAMP):"
         )
 
         if st.session_state[sport_key]["schedule"]["data"].empty:
             empty_schedule_notifier.render(
-                sport_name = sport_title,
-                timestamp = st.session_state[sport_key]["timestamp"]
+                sport_name=sport_title,
+                timestamp=st.session_state[sport_key]["timestamp"]
             )
         else:
             view_tabs = st.tabs(["Results", "Data"])
 
             with view_tabs[0]:
                 moneyline_data = st.file_uploader(
-                    label = "Upload Moneyline Data:",
-                    type = "mhtml"
+                    label="Upload Moneyline Data:",
+                    type="mhtml"
                 )
 
             with view_tabs[1]:
                 st.markdown(
-                    body = f"#### SCHEDULE ({st.session_state[sport_key]['schedule']['data'].shape[0]} games)",
-                    text_alignment = "center",
-                    anchors = False
+                    body=f"#### SCHEDULE ({st.session_state[sport_key]['schedule']['data'].shape[0]} games)",
+                    text_alignment="center",
+                    anchors=False
                 )
 
                 st.dataframe(
-                    data = st.session_state[sport_key]["schedule"]["display"],
-                    hide_index = True
+                    data=st.session_state[sport_key]["schedule"]["display"],
+                    hide_index=True
                 )
 
                 st.divider()
 
                 st.markdown(
-                    body = "#### LEADERBOARDS",
-                    text_alignment = "center",
-                    anchors = False
+                    body="#### LEADERBOARDS",
+                    text_alignment="center",
+                    anchors=False
                 )
 
                 for lb_key, leaderboard in st.session_state[sport_key]["leaderboards"].items():
                     with st.expander(
                         f"{' '.join([term.capitalize() for term in lb_key.split('_')])}",
-                        expanded = True,
-                        type = "compact"
+                        expanded=True,
+                        type="compact"
                     ):
 
                         st.dataframe(
-                            data = leaderboard,
-                            hide_index = True
+                            data=leaderboard,
+                            hide_index=True
                         )
 
     load_button_label = f":material/touch_app: Load {sport_title} Wagers :material/touch_app:"
@@ -140,11 +140,11 @@ def render(
         load_button_label = f":material/refresh: Reload {sport_title} Wagers :material/refresh:"
 
     st.button(
-        type = "primary",
-        label = load_button_label,
-        width = "stretch",
-        on_click = load_button_handler,
-        args = [sport_key, timestamp, schedule_url, leaderboard_urls_dict, win_trends_url]
+        type="primary",
+        label=load_button_label,
+        width="stretch",
+        on_click=load_button_handler,
+        args=[sport_key, timestamp, schedule_url, leaderboard_urls_dict, win_trends_url]
     )
 
     delay_disclaimer.render()

@@ -12,31 +12,31 @@ def make_leaderboard(
     leaderboard_map = scan_table(f"{leaderboard_url}?date={date_str}")
     if leaderboard_map["error"]:
         return DataFrameMap(
-            error = leaderboard_map["error"],
-            content = None
+            error=leaderboard_map["error"],
+            content=None
         )
 
     leaderboard = leaderboard_map["content"]
 
     leaderboard.drop(
-        columns = [
+        columns=[
             *leaderboard.columns[:9],
             leaderboard.columns[10]
         ],
-        inplace = True
+        inplace=True
     )
 
     leaderboard.columns = [column.replace("_DATASORT", "") for column in leaderboard.columns]
 
     leaderboard.rename(
-        columns = {
+        columns={
             leaderboard.columns[1]: "NOW",
             leaderboard.columns[-1]: "PAST"
         },
-        inplace = True
+        inplace=True
     )
     
     return DataFrameMap(
-        error = None,
-        content = leaderboard
+        error=None,
+        content=leaderboard
     )

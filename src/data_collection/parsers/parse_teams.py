@@ -12,8 +12,8 @@ def parse_teams(title: str) -> StringMap:
         title_splitter = "vs"
     else:
         return StringMap(
-            error = f"ERROR (Teams-Parser): No valid OPPONENT-INDICATOR found in match title ({title})",
-            content = None
+            error=f"ERROR (Teams-Parser): No valid OPPONENT-INDICATOR found in match title ({title})",
+            content=None
         )
 
     title_terms = title.split(title_splitter)
@@ -22,6 +22,6 @@ def parse_teams(title: str) -> StringMap:
     teams_string = '-'.join(teams)
 
     return StringMap(
-        error = None,
-        content = teams_string
+        error=None,
+        content=teams_string
     )
