@@ -40,6 +40,11 @@ def make_schedule(
 
     schedule = schedule[["TITLE", "TIME", "TEAM A", "TEAM B"]]
 
+    schedule["TEAM B IS HOME"] = schedule.apply(
+        func = lambda row: True if "@" in row["TITLE"] or " at " in row["TITLE"] else False,
+        axis = 1
+    )
+
     return DataFrameMap(
         error = None,
         content = schedule
