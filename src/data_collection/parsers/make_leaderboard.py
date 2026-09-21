@@ -28,14 +28,6 @@ def make_leaderboard(
 
     leaderboard.columns = [column.replace("_DATASORT", "") for column in leaderboard.columns]
 
-    leaderboard.rename(
-        columns={
-            leaderboard.columns[1]: "NOW",
-            leaderboard.columns[-1]: "PAST"
-        },
-        inplace=True
-    )
-
     numeric_columns = leaderboard.columns.drop("TEAM")
     leaderboard[numeric_columns] = leaderboard[numeric_columns].astype(float)
     
