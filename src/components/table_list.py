@@ -1,5 +1,4 @@
 from src.components import header, table
-import streamlit as st
 
 def render(
     dataframes_dict: dict,

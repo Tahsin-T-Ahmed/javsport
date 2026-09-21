@@ -1,6 +1,5 @@
 import pandas as pd
 from src.components import header, table
-import streamlit as st
 
 def render(
     schedule_df: pd.DataFrame
