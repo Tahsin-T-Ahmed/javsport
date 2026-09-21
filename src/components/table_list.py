@@ -9,9 +9,9 @@ def render(
     if title:
         header.render(title)
     
-    for df_key, df in dataframes_dict.items():        
+    for df_key, df in dataframes_dict.items():
         table.render(
-            data=df,
+            data=df.round(2),
             label=f"{' '.join([term.capitalize() for term in df_key.split('_')])}",
             collapse=collapse,
             hide_index=hide_index
