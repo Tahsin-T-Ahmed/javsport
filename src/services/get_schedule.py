@@ -30,6 +30,12 @@ def get_schedule(
 
     schedule_display = schedule.copy()
     schedule_display["TIME"] = schedule_display["TIME"].dt.strftime("%I:%M %p")
+    schedule_display["HOME TEAM"] = schedule_display.apply(
+        func = lambda row: row["TEAM B"] if row["TEAM B IS HOME"] else None,
+        axis = 1
+    )
+
+    schedule_display.drop(columns=["TEAM B IS HOME"], inplace=True)
 
     schedule_dict["display"] = schedule_display
 
