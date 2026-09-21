@@ -9,6 +9,7 @@ sport_wagers_page.render(
         at_bats_per_game="https://www.teamrankings.com/mlb/stat/at-bats-per-game",
         hits_per_game="https://www.teamrankings.com/mlb/stat/hits-per-game",
         home_runs_per_game="https://www.teamrankings.com/mlb/stat/home-runs-per-game",
+        runs_per_game="https://www.teamrankings.com/mlb/stat/runs-per-game",
         total_bases_per_game="https://www.teamrankings.com/mlb/stat/total-bases-per-game",
         walks_per_game="https://www.teamrankings.com/mlb/stat/walks-per-game"
     ),

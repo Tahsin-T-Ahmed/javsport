@@ -8,6 +8,7 @@ sport_wagers_page.render(
     leaderboard_urls_dict=dict(
         opponent_penalties_per_game="https://www.teamrankings.com/college-football/stat/opponent-penalties-per-game",
         plays_per_game="https://www.teamrankings.com/college-football/stat/plays-per-game",
+        points_per_game="https://www.teamrankings.com/college-football/stat/points-per-game",
         touchdowns_per_game="https://www.teamrankings.com/college-football/stat/offensive-touchdowns-per-game",
         yards_per_game="https://www.teamrankings.com/college-football/stat/yards-per-game"
     ),

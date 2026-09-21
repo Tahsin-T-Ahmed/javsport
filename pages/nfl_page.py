@@ -9,6 +9,7 @@ sport_wagers_page.render(
         first_downs_per_game="https://www.teamrankings.com/nfl/stat/first-downs-per-game",
         opponent_penalties_per_game="https://www.teamrankings.com/nfl/stat/opponent-penalties-per-game",
         plays_per_game="https://www.teamrankings.com/nfl/stat/plays-per-game",
+        points_per_game="https://www.teamrankings.com/nfl/stat/points-per-game",
         touchdowns_per_game="https://www.teamrankings.com/nfl/stat/touchdowns-per-game",
         yards_per_game="https://www.teamrankings.com/nfl/stat/yards-per-game"
     ),
