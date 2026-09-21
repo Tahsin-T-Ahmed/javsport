@@ -1,19 +1,18 @@
 import pandas as pd
+from src.components import header, table
 import streamlit as st
 
 def render(
     schedule_df: pd.DataFrame
-):    
-    st.markdown(
-        body=f"#### SCHEDULE",
-        text_alignment="center",
-        anchors=False
-    )
+):
+    header.render(text="SCHEDULE")
 
     n_games = schedule_df.shape[0]
-    st.caption(f"{n_games} game{'s' if 1 != n_games else ''} scheduled")
+    schedule_caption = f"{n_games} game{'s' if 1 != n_games else ''} scheduled"
 
-    st.dataframe(
+    table.render(
         data=schedule_df,
-        hide_index=True
+        label=schedule_caption,
+        hide_index=True,
+        collapse=True
     )

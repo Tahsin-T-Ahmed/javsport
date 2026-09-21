@@ -111,7 +111,7 @@ def render(
 
                 table_list.render(
                     title="LEADERBOARDS",
-                    table_dict=st.session_state[sport_key]["leaderboards"],
+                    dataframes_dict=st.session_state[sport_key]["leaderboards"],
                     collapse=True,
                     hide_index=True
                 )
