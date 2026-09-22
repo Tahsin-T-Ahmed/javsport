@@ -1,5 +1,12 @@
 import datetime
-from src.components import delay_disclaimer, empty_schedule_notifier, schedule_banner, table_list, timestamp_banner
+from src.components import (
+    delay_disclaimer,
+    empty_schedule_notifier,
+    page_header_banner,
+    schedule_banner,
+    table_list,
+    timestamp_banner
+)
 from src.services.get_leaderboards import get_leaderboards
 from src.services.get_schedule import get_schedule
 import streamlit as st
@@ -121,24 +128,16 @@ def render(
         layout="centered"
     )
 
-    st.header(
-        body=f"JavSport - {sport_title}",
-        text_alignment="center",
-        anchor=False
+    page_header_banner.render(
+        sport_title=sport_title,
+        sport_subheader=sport_subheader,
+        sport_icon=sport_icon
     )
-
-    st.markdown(
-        body=f"#### {sport_icon} {sport_subheader} {sport_icon}",
-        text_alignment="center",
-        anchors=False
-    )
-
-    st.divider()
 
     if sport_key not in st.session_state:
         st.session_state[sport_key] = dict()
 
-    if "schedule" not in st.session_state[sport_key]:        
+    if "schedule" not in st.session_state[sport_key]:
         st.markdown(
             body="Click below to see today's predictions",
             text_alignment="center"
