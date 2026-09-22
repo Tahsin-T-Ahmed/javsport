@@ -4,6 +4,41 @@ from src.services.get_leaderboards import get_leaderboards
 from src.services.get_schedule import get_schedule
 import streamlit as st
 
+def handle_data_loaded(
+    sport_key: str,
+    sport_title: str
+):
+    if st.session_state[sport_key]["schedule"]["data"].empty:
+        empty_schedule_notifier.render(
+            sport_name=sport_title,
+            timestamp=st.session_state[sport_key]["timestamp"]
+        )
+
+        return
+    
+    view_tabs = st.tabs(["Results", "Data"])
+
+    with view_tabs[0]:
+        moneyline_data = st.file_uploader(
+            label="Upload Moneyline Data:",
+            type="mhtml"
+        )
+
+    with view_tabs[1]:
+        schedule_banner.render(
+            schedule_df=st.session_state[sport_key]["schedule"]["display"]
+        )
+
+        if "leaderboards" not in st.session_state[sport_key]:
+            return
+
+        table_list.render(
+            title="LEADERBOARDS",
+            dataframes_dict=st.session_state[sport_key]["leaderboards"],
+            collapse=True,
+            hide_index=True
+        )
+
 def load_button_handler(
     sport_key: str,
     timestamp: datetime.datetime | None,    # for testing purposes
@@ -86,33 +121,10 @@ def render(
             header="Loaded on (TIMESTAMP):"
         )
 
-        if st.session_state[sport_key]["schedule"]["data"].empty:
-            empty_schedule_notifier.render(
-                sport_name=sport_title,
-                timestamp=st.session_state[sport_key]["timestamp"]
-            )
-        else:
-            view_tabs = st.tabs(["Results", "Data"])
-
-            with view_tabs[0]:
-                moneyline_data = st.file_uploader(
-                    label="Upload Moneyline Data:",
-                    type="mhtml"
-                )
-
-            with view_tabs[1]:
-                schedule_banner.render(
-                    schedule_df=st.session_state[sport_key]["schedule"]["display"]
-                )
-
-                st.divider()
-
-                table_list.render(
-                    title="LEADERBOARDS",
-                    dataframes_dict=st.session_state[sport_key]["leaderboards"],
-                    collapse=True,
-                    hide_index=True
-                )
+        handle_data_loaded(
+            sport_key=sport_key,
+            sport_title=sport_title
+        )
 
     load_button_label = f":material/touch_app: Load {sport_title} Wagers :material/touch_app:"
 
