@@ -18,7 +18,7 @@ sport_wagers_page.render(
             name="Moneyline",
             type="mhtml",
             label_urls_dict={
-                "Odds": "https://www.teamrankings.com/nba/odds/"
+                "Moneyline": "https://www.teamrankings.com/nba/odds/"
             }
         ),
     ]
