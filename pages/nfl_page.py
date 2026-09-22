@@ -13,5 +13,14 @@ sport_wagers_page.render(
         touchdowns_per_game="https://www.teamrankings.com/nfl/stat/touchdowns-per-game",
         yards_per_game="https://www.teamrankings.com/nfl/stat/yards-per-game"
     ),
-    win_trends_url="https://www.teamrankings.com/nfl/trends/win_trends/"
+    win_trends_url="https://www.teamrankings.com/nfl/trends/win_trends/",
+    required_files_list=[
+        dict(
+            name="Moneyline",
+            type="mhtml",
+            label_urls_dict={
+                "Odds": "https://www.teamrankings.com/nfl/odds/"
+            }
+        )
+    ]
 )

@@ -4,9 +4,29 @@ from src.services.get_leaderboards import get_leaderboards
 from src.services.get_schedule import get_schedule
 import streamlit as st
 
+def handle_upload(
+    file_name: str,
+    file_type: str,
+    sport_key: str,
+    sport_title: str | None = None,
+    label_urls_dict: dict | None = None
+):
+    with st.container(border=True):
+        file = st.file_uploader(
+            label=f"Upload {file_name}:",
+            type=file_type
+        )
+        if label_urls_dict:
+            for key, url in label_urls_dict.items():
+                st.write(f"[{sport_title if sport_title else ''} {key}]({url})")
+
+        if file is not None:
+            st.write(file)
+
 def handle_data_loaded(
     sport_key: str,
-    sport_title: str
+    sport_title: str,
+    required_files_list: list[dict] | None = None
 ):
     if st.session_state[sport_key]["schedule"]["data"].empty:
         empty_schedule_notifier.render(
@@ -19,25 +39,32 @@ def handle_data_loaded(
     view_tabs = st.tabs(["Results", "Data"])
 
     with view_tabs[0]:
-        moneyline_data = st.file_uploader(
-            label="Upload Moneyline Data:",
-            type="mhtml"
-        )
+        if required_files_list:
+            for required_file in required_files_list:
+                handle_upload(
+                    file_name=required_file["name"],
+                    file_type=required_file["type"],
+                    sport_key=sport_key,
+                    sport_title=sport_title,
+                    label_urls_dict=required_file["label_urls_dict"]
+                )
+        else:
+            st.session_state[sport_key]["file_requirements"] = dict(
+                fulfilled=True
+            )
 
     with view_tabs[1]:
         schedule_banner.render(
             schedule_df=st.session_state[sport_key]["schedule"]["display"]
         )
 
-        if "leaderboards" not in st.session_state[sport_key]:
-            return
-
-        table_list.render(
-            title="LEADERBOARDS",
-            dataframes_dict=st.session_state[sport_key]["leaderboards"],
-            collapse=True,
-            hide_index=True
-        )
+        if "leaderboards" in st.session_state[sport_key]:
+            table_list.render(
+                title="LEADERBOARDS",
+                dataframes_dict=st.session_state[sport_key]["leaderboards"],
+                collapse=True,
+                hide_index=True
+            )
 
 def load_button_handler(
     sport_key: str,
@@ -84,7 +111,8 @@ def render(
     schedule_url: str,
     leaderboard_urls_dict: dict,
     win_trends_url: str | None = None,
-    timestamp: datetime.datetime | None = None
+    timestamp: datetime.datetime | None = None,
+    required_files_list: list[dict] | None = None
 ):
     sport_title, sport_key = sport_name.upper(), sport_name.lower()
 
@@ -123,7 +151,8 @@ def render(
 
         handle_data_loaded(
             sport_key=sport_key,
-            sport_title=sport_title
+            sport_title=sport_title,
+            required_files_list=required_files_list
         )
 
     load_button_label = f":material/touch_app: Load {sport_title} Wagers :material/touch_app:"

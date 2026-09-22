@@ -12,5 +12,14 @@ sport_wagers_page.render(
         points_per_game="https://www.teamrankings.com/nba/stat/points-per-game",
         three_pointers_made_per_game="https://www.teamrankings.com/nba/stat/three-pointers-made-per-game"
     ),
-    win_trends_url="https://www.teamrankings.com/nba/trends/win_trends/"
+    win_trends_url="https://www.teamrankings.com/nba/trends/win_trends/",
+    required_files_list=[        
+        dict(
+            name="Moneyline",
+            type="mhtml",
+            label_urls_dict={
+                "Odds": "https://www.teamrankings.com/nba/odds/"
+            }
+        ),
+    ]
 )
