@@ -1,3 +1,4 @@
+from src.components import upload_dialog
 import streamlit as st
 
 def render(
@@ -8,7 +9,7 @@ def render(
 ):
     if required_files_list:
         for required_file in required_files_list:
-            upload_handler(
+            upload_dialog.render(
                 file_name=required_file["name"],
                 file_type=required_file["type"],
                 sport_key=sport_key,
