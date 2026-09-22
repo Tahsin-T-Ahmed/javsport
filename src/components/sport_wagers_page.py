@@ -1,9 +1,5 @@
 import datetime
-from src.components import (
-    delay_disclaimer,
-    page_header_banner,
-    sport_page_body,
-)
+from src.components import delay_disclaimer, page_header_banner, sport_page_body
 from src.services.get_leaderboards import get_leaderboards
 from src.services.get_schedule import get_schedule
 import streamlit as st

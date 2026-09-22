@@ -1,4 +1,4 @@
-from src.components import schedule_banner, table_list
+from src.components import data_tab, results_tab
 import streamlit as st
 
 def render(
@@ -11,29 +11,12 @@ def render(
     view_tabs = st.tabs(["Results", "Data"])
 
     with view_tabs[0]:
-        if required_files_list:
-            for required_file in required_files_list:
-                upload_handler(
-                    file_name=required_file["name"],
-                    file_type=required_file["type"],
-                    sport_key=sport_key,
-                    sport_title=sport_title,
-                    label_urls_dict=required_file["label_urls_dict"]
-                )
-        else:
-            st.session_state[sport_key]["file_requirements"] = dict(
-                fulfilled=True
-            )
-
-    with view_tabs[1]:
-        schedule_banner.render(
-            schedule_df=st.session_state[sport_key]["schedule"]["display"]
+        results_tab.render(
+            sport_key=sport_key,
+            sport_title=sport_title,
+            required_files_list=required_files_list,
+            upload_handler=upload_handler
         )
 
-        if "leaderboards" in st.session_state[sport_key]:
-            table_list.render(
-                title="LEADERBOARDS",
-                dataframes_dict=st.session_state[sport_key]["leaderboards"],
-                collapse=True,
-                hide_index=True
-            )
+    with view_tabs[1]:
+        data_tab.render(sport_key=sport_key)
