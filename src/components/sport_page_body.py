@@ -8,11 +8,10 @@ from src.components import (
 def render(
     sport_key: str,
     sport_title: str,
-    required_files_list: list,
-    upload_handler: function
+    required_files_list: list[dict]
 ):
     if sport_key not in st.session_state:
-            st.session_state[sport_key] = dict()
+        st.session_state[sport_key] = dict()
     
     if "schedule" not in st.session_state[sport_key]:
         st.markdown(
@@ -38,6 +37,5 @@ def render(
     wager_tabs.render(
         sport_key=sport_key,
         sport_title=sport_title,
-        required_files_list=required_files_list,
-        upload_handler=upload_handler
+        required_files_list=required_files_list
     )

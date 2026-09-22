@@ -4,17 +4,16 @@ import streamlit as st
 def render(
     sport_key: str,
     sport_title: str,
-    required_files_list: list,
-    upload_handler: function
+    required_files_list: list[dict]
 ):
     if required_files_list:
-        for required_file in required_files_list:
+        for file_dict in required_files_list:
             upload_dialog.render(
-                file_name=required_file["name"],
-                file_type=required_file["type"],
+                file_name=file_dict["file_name"],
+                file_type=file_dict["file_type"],
                 sport_key=sport_key,
                 sport_title=sport_title,
-                label_urls_dict=required_file["label_urls_dict"]
+                source_url=file_dict["source_url"]
             )
 
         return

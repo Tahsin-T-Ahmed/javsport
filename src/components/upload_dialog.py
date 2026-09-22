@@ -5,7 +5,7 @@ def render(
     file_type: str,
     sport_key: str,
     sport_title: str,
-    label_urls_dict: dict | None = None
+    source_url: str | None = None
 ):
     with st.container(border=True):
         file = st.file_uploader(
@@ -13,8 +13,7 @@ def render(
             type=file_type
         )
 
-        for page_key, page_url in label_urls_dict.items():
-            st.write(f"[{sport_title} {page_key}]({page_url})")
+        st.write(f"[{sport_title} {file_name}]({source_url})")
 
         if not file:
             return

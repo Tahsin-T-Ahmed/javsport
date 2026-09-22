@@ -4,8 +4,7 @@ import streamlit as st
 def render(
     sport_key: str,
     sport_title: str,
-    required_files_list: list,
-    upload_handler: function,
+    required_files_list: list[dict]
 ):
     
     view_tabs = st.tabs(["Results", "Data"])
@@ -14,8 +13,7 @@ def render(
         results_tab.render(
             sport_key=sport_key,
             sport_title=sport_title,
-            required_files_list=required_files_list,
-            upload_handler=upload_handler
+            required_files_list=required_files_list
         )
 
     with view_tabs[1]:

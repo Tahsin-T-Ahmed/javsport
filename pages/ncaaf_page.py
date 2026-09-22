@@ -15,11 +15,9 @@ sport_wagers_page.render(
     win_trends_url="https://www.teamrankings.com/ncf/trends/win_trends/",
     required_files_list=[
         dict(
-            name="Moneyline",
-            type="mhtml",
-            label_urls_dict={
-                "Moneyline": "https://www.teamrankings.com/ncf/odds/"
-            }
+            file_name="Moneyline",
+            file_type="mhtml",
+            source_url="https://www.teamrankings.com/ncf/odds/"
         )
     ]
 )

@@ -4,25 +4,6 @@ from src.services.get_leaderboards import get_leaderboards
 from src.services.get_schedule import get_schedule
 import streamlit as st
 
-def handle_upload(
-    file_name: str,
-    file_type: str,
-    sport_key: str,
-    sport_title: str,
-    label_urls_dict: dict | None = None
-):
-    with st.container(border=True):
-        file = st.file_uploader(
-            label=f"Upload {sport_title} {file_name}:",
-            type=file_type
-        )
-
-        for page_key, page_url in label_urls_dict.items():
-            st.write(f"[{sport_title} {page_key}]({page_url})")
-
-        if file is not None:
-            st.write(file)    
-
 def load_button_handler(
     sport_key: str,
     timestamp: datetime.datetime | None,    # for testing purposes
@@ -87,8 +68,7 @@ def render(
     sport_page_body.render(
         sport_key=sport_key,
         sport_title=sport_title,
-        required_files_list=required_files_list,
-        upload_handler=handle_upload
+        required_files_list=required_files_list
     )
 
     load_button_label = f":material/touch_app: Load {sport_title} Wagers :material/touch_app:"
