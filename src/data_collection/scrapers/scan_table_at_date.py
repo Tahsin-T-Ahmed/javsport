@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.scrapers.get_soup import get_soup

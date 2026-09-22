@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from src.utils.format_timestamp import format_timestamp
 import streamlit as st
 

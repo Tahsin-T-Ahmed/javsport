@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from src.components import delay_disclaimer, empty_schedule_notifier, schedule_banner, table_list, timestamp_banner
 from src.services.get_leaderboards import get_leaderboards
 from src.services.get_schedule import get_schedule
@@ -12,7 +12,7 @@ def load_button_handler(
     win_trends_url: str | None = None
 ):
     if not timestamp:
-        timestamp = datetime.now()
+        timestamp = datetime.datetime.now()
     
     st.session_state[sport_key]["timestamp"] = timestamp
 
