@@ -75,9 +75,7 @@ def render(
     if sport_key not in st.session_state:
         st.session_state[sport_key] = dict()
 
-    if "schedule" not in st.session_state[sport_key]:
-        st.session_state[sport_key] = dict()
-        
+    if "schedule" not in st.session_state[sport_key]:        
         st.markdown(
             body="Click below to see today's predictions",
             text_alignment="center"
