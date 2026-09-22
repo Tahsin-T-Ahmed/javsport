@@ -18,15 +18,26 @@ def make_leaderboard(
 
     leaderboard = leaderboard_map["content"]
 
+    leaderboard = leaderboard[[col for col in leaderboard.columns if "_DATASORT" in col]]
+
+    leaderboard.columns = [column.replace("_DATASORT", "") for column in leaderboard.columns]
+
     leaderboard.drop(
-        columns=[
-            *leaderboard.columns[:9],
-            leaderboard.columns[10]
-        ],
+        columns=["RANK", "LAST 3", "LAST 1"],
         inplace=True
     )
 
-    leaderboard.columns = [column.replace("_DATASORT", "") for column in leaderboard.columns]
+    year_cols = leaderboard.columns.drop(["TEAM", "HOME", "AWAY"])
+    latest_season = max(year_cols)
+
+    leaderboard = leaderboard[["TEAM", latest_season, "HOME", "AWAY"]]
+
+    leaderboard.rename(
+        columns={
+            latest_season: "OVERALL"
+        },
+        inplace=True
+    )
 
     numeric_columns = leaderboard.columns.drop("TEAM")
     leaderboard[numeric_columns] = leaderboard[numeric_columns].astype(float)
