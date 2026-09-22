@@ -1,6 +1,6 @@
 from datetime import datetime
 from src.data_collection.data_maps import DictMap
-from src.data_collection.parsers.make_schedule import make_schedule
+from src.data_collection.builders.make_schedule import make_schedule
 
 def get_schedule(
     timestamp: datetime.datetime,

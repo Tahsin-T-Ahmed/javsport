@@ -1,7 +1,7 @@
 from datetime import datetime
 from src.data_collection.data_maps import DictMap
-from src.data_collection.parsers.make_leaderboard import make_leaderboard
-from src.data_collection.parsers.make_win_trends import make_win_trends
+from src.data_collection.builders.make_leaderboard import make_leaderboard
+from src.data_collection.builders.make_win_trends import make_win_trends
 
 def get_leaderboards(
     timestamp: datetime.datetime,
