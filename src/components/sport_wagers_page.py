@@ -1,11 +1,8 @@
 import datetime
 from src.components import (
     delay_disclaimer,
-    empty_schedule_notifier,
     page_header_banner,
-    schedule_banner,
-    table_list,
-    timestamp_banner
+    sport_page_body,
 )
 from src.services.get_leaderboards import get_leaderboards
 from src.services.get_schedule import get_schedule
@@ -28,50 +25,7 @@ def handle_upload(
             st.write(f"[{sport_title} {page_key}]({page_url})")
 
         if file is not None:
-            st.write(file)
-
-def handle_data_loaded(
-    sport_key: str,
-    sport_title: str,
-    required_files_list: list[dict] | None = None
-):
-    if st.session_state[sport_key]["schedule"]["data"].empty:
-        empty_schedule_notifier.render(
-            sport_name=sport_title,
-            timestamp=st.session_state[sport_key]["timestamp"]
-        )
-
-        return
-    
-    view_tabs = st.tabs(["Results", "Data"])
-
-    with view_tabs[0]:
-        if required_files_list:
-            for required_file in required_files_list:
-                handle_upload(
-                    file_name=required_file["name"],
-                    file_type=required_file["type"],
-                    sport_key=sport_key,
-                    sport_title=sport_title,
-                    label_urls_dict=required_file["label_urls_dict"]
-                )
-        else:
-            st.session_state[sport_key]["file_requirements"] = dict(
-                fulfilled=True
-            )
-
-    with view_tabs[1]:
-        schedule_banner.render(
-            schedule_df=st.session_state[sport_key]["schedule"]["display"]
-        )
-
-        if "leaderboards" in st.session_state[sport_key]:
-            table_list.render(
-                title="LEADERBOARDS",
-                dataframes_dict=st.session_state[sport_key]["leaderboards"],
-                collapse=True,
-                hide_index=True
-            )
+            st.write(file)    
 
 def load_button_handler(
     sport_key: str,
@@ -134,25 +88,12 @@ def render(
         sport_icon=sport_icon
     )
 
-    if sport_key not in st.session_state:
-        st.session_state[sport_key] = dict()
-
-    if "schedule" not in st.session_state[sport_key]:
-        st.markdown(
-            body="Click below to see today's predictions",
-            text_alignment="center"
-        )
-    else:
-        timestamp_banner.render(
-            timestamp=st.session_state[sport_key]["timestamp"],
-            header="Loaded on (TIMESTAMP):"
-        )
-
-        handle_data_loaded(
-            sport_key=sport_key,
-            sport_title=sport_title,
-            required_files_list=required_files_list
-        )
+    sport_page_body.render(
+        sport_key=sport_key,
+        sport_title=sport_title,
+        required_files_list=required_files_list,
+        upload_handler=handle_upload
+    )
 
     load_button_label = f":material/touch_app: Load {sport_title} Wagers :material/touch_app:"
 
