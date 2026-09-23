@@ -9,11 +9,11 @@ def render(
     if required_files_list:
         for file_dict in required_files_list:
             upload_dialog.render(
-                file_name=file_dict["file_name"],
+                file_label=file_dict["file_label"],
                 file_type=file_dict["file_type"],
                 sport_key=sport_key,
                 sport_title=sport_title,
-                source_url=file_dict["source_url"]
+                source_url=file_dict.get("source_url")
             )
 
         return
