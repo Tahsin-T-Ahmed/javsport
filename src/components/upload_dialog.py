@@ -9,11 +9,9 @@ def render(
 ):
     with st.container(border=True):
         file = st.file_uploader(
-            label=f"Upload {sport_title} {file_name}:",
+            label=f"Upload [{sport_title} {file_name} Data]({source_url}) as .{file_type} file",
             type=file_type
         )
-
-        st.write(f"[{sport_title} {file_name}]({source_url})")
 
         if not file:
             return
