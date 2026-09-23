@@ -16,17 +16,20 @@ sport_wagers_page.render(
     win_trends_url="https://www.teamrankings.com/mlb/trends/win_trends/",
     required_files_list=[
         dict(
-            file_name="Moneyline",
+            file_label="Moneyline",
+            file_key="moneyline",
             file_type="mhtml",
             source_url="https://www.teamrankings.com/mlb/odds/"
         ),
         dict(
-            file_name="Pitcher IP",
+            file_label="Pitcher IP",
+            file_key="innings_pitched",
             file_type="xlsx",
             source_url="https://www.fangraphs.com/leaders/major-league?pos=all&lg=all&qual=0&season=2026&season1=2026&ind=0&rost=0&filter=&players=0&pageitems=2000000000&stats=sta&team=0&type=c%2C13&month=33&v_cr=202301"
         ),
         dict(
-            file_name="Pitcher SIERA",
+            file_label="Pitcher SIERA",
+            file_key="siera",
             file_type="xlsx",
             source_url="https://www.fangraphs.com/leaders/major-league?pos=all&lg=all&qual=0&season=2026&season1=2026&ind=0&rost=0&filter=&players=0&pageitems=2000000000&stats=sta&team=0&type=c%2C122&month=3&v_cr=202301"
         )

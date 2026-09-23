@@ -10,6 +10,7 @@ def render(
         for file_dict in required_files_list:
             upload_dialog.render(
                 file_label=file_dict["file_label"],
+                file_key=file_dict["file_key"],
                 file_type=file_dict["file_type"],
                 sport_key=sport_key,
                 sport_title=sport_title,

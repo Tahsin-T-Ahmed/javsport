@@ -15,7 +15,8 @@ sport_wagers_page.render(
     win_trends_url="https://www.teamrankings.com/wnba/trends/win_trends/",
     required_files_list=[
         dict(
-            file_name="Moneyline",
+            file_label="Moneyline",
+            file_key="moneyline",
             file_type="mhtml",
             source_url="https://www.teamrankings.com/wnba/odds/"
         )
