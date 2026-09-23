@@ -6,7 +6,7 @@ import streamlit as st
 
 def load_button_handler(
     sport_key: str,
-    timestamp: datetime.datetime | None,    # for testing purposes
+    timestamp: datetime.datetime | None,
     schedule_url: str,
     leaderboard_urls_dict: dict,
     win_trends_url: str | None = None
