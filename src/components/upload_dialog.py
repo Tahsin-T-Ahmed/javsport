@@ -1,3 +1,4 @@
+import datetime
 import streamlit as st
 
 def render(
@@ -6,6 +7,8 @@ def render(
     file_type: str,
     sport_key: str,
     sport_title: str,
+    callback_handler: function,
+    timestamp: datetime.datetime,
     source_url: str | None = None
 ):
     with st.container(border=True):
@@ -24,4 +27,7 @@ def render(
         if not file:
             return
         
-        st.write(file)
+        callback_handler(
+            file=file,
+            timestamp=timestamp
+        )

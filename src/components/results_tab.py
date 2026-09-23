@@ -9,12 +9,10 @@ def render(
     if required_files_list:
         for file_dict in required_files_list:
             upload_dialog.render(
-                file_label=file_dict["file_label"],
-                file_key=file_dict["file_key"],
-                file_type=file_dict["file_type"],
+                **file_dict,
                 sport_key=sport_key,
                 sport_title=sport_title,
-                source_url=file_dict.get("source_url")
+                timestamp=st.session_state[sport_key]["timestamp"]
             )
 
         return

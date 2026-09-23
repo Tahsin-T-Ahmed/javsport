@@ -1,4 +1,5 @@
 from src.components import sport_wagers_page
+from src.data_collection.scrapers.scan_moneyline import scan_moneyline
 
 sport_wagers_page.render(
     sport_name="WNBA",
@@ -18,6 +19,7 @@ sport_wagers_page.render(
             file_label="Moneyline",
             file_key="moneyline",
             file_type="mhtml",
+            callback_handler=scan_moneyline,
             source_url="https://www.teamrankings.com/wnba/odds/"
         )
     ]
