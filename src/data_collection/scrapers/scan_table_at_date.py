@@ -11,7 +11,7 @@ def scan_table_at_date(
     if soup_map["error"]:
         return DataFrameMap(
             error=soup_map["error"],
-            conent=None
+            content=None
         )
 
     soup = soup_map["content"]
