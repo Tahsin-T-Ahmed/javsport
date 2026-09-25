@@ -7,7 +7,7 @@ def render(
     file_type: str,
     sport_key: str,
     sport_title: str,
-    callback_handler: function,
+    file_parser: function,
     timestamp: datetime.datetime,
     guide_desc: str | None = None,
     source_url: str | None = None
@@ -30,8 +30,6 @@ def render(
 
         if not file:
             return
-        
-        callback_handler(
-            file=file,
-            timestamp=timestamp
-        )
+
+        st.header("File found")
+        st.write(file)

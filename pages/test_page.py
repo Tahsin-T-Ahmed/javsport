@@ -1,6 +1,6 @@
 import datetime
 from src.components import upload_dialog
-from src.services.handle_odds_upload import handle_odds_upload
+from src.data_collection.scrapers.scan_odds_table import scan_odds_table
 import streamlit as st
 
 upload_dialog.render(
@@ -9,6 +9,6 @@ upload_dialog.render(
     file_type="mhtml",
     sport_key="",
     sport_title="",
-    callback_handler=handle_odds_upload,
+    file_parser=scan_odds_table,
     timestamp=datetime.datetime.now()
 )
