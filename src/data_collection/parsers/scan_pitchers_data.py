@@ -9,4 +9,10 @@ def scan_pitchers_data(
     file: UploadedFile,
     timestamp: datetime.datetime
 ) -> DataFrameMap:
+    st.write("Pitcher-Data-Received")
     st.write(file)
+
+    return DataFrameMap(
+        error=None,
+        content=pd.DataFrame()
+    )
