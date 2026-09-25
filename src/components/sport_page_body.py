@@ -12,7 +12,17 @@ def render(
     required_files_list: list[RequiredFileMap]
 ):
     if sport_key not in st.session_state:
-        st.session_state[sport_key] = dict()
+        st.session_state[sport_key] = dict(
+            file_requirements=dict(
+                fulfilled=False,
+                files={
+                    file_map["file_key"]: dict(
+                        fulfilled=False
+                    )
+                    for file_map in required_files_list
+                }
+            )
+        )
     
     if "schedule" not in st.session_state[sport_key]:
         st.markdown(
