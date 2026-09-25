@@ -4,11 +4,12 @@ from src.components import (
     timestamp_banner,
     wager_tabs
 )
+from src.data_collection.data_maps import RequiredFileMap
 
 def render(
     sport_key: str,
     sport_title: str,
-    required_files_list: list[dict]
+    required_files_list: list[RequiredFileMap]
 ):
     if sport_key not in st.session_state:
         st.session_state[sport_key] = dict()

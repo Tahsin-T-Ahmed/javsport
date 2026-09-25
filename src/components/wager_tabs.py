@@ -1,10 +1,11 @@
 from src.components import data_tab, results_tab
+from src.data_collection.data_maps import RequiredFileMap
 import streamlit as st
 
 def render(
     sport_key: str,
     sport_title: str,
-    required_files_list: list[dict]
+    required_files_list: list[RequiredFileMap]
 ):
     
     view_tabs = st.tabs(["Results", "Data"])
