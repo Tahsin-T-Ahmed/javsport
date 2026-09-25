@@ -9,6 +9,7 @@ def render(
     sport_title: str,
     callback_handler: function,
     timestamp: datetime.datetime,
+    guide_desc: str | None = None,
     source_url: str | None = None
 ):
     with st.container(border=True):
@@ -23,6 +24,9 @@ def render(
             label=label,
             type=file_type
         )
+
+        if guide_desc:
+            st.write(guide_desc)
 
         if not file:
             return
