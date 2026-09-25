@@ -72,4 +72,5 @@ def render(
         if not confirm_button:
             return
 
+        st.session_state[sport_key]["file_requirements"]["files"][file_key]["fulfilled"] = True
         st.write("Confirmed")
