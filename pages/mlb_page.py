@@ -22,7 +22,7 @@ sport_wagers_page.render(
             file_key="moneyline",
             file_type="mhtml",
             source_url="https://www.teamrankings.com/mlb/odds/",
-            callback_handler=scan_odds_table
+            file_parser=scan_odds_table
         ),
         # RequiredFileMap(
         #     file_label="Pitcher IP",

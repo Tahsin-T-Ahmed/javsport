@@ -60,6 +60,8 @@ def render(
         layout="centered"
     )
 
+    st.write(st.session_state)
+
     page_header_banner.render(
         sport_title=sport_title,
         sport_subheader=sport_subheader,
