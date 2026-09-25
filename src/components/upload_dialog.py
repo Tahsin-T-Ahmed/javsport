@@ -18,7 +18,7 @@ def render(
         if source_url:
             label = f"Upload [{sport_title} {file_label} Data]({source_url})"
 
-        label += f" as .{file_type} file"
+        label += f" as :orange[.{file_type} file]"
 
         file = st.file_uploader(
             label=label,
@@ -31,5 +31,45 @@ def render(
         if not file:
             return
 
-        st.header("File found")
-        st.write(file)
+        table_map = file_parser(
+            file=file,
+            timestamp=timestamp
+        )
+        if table_map["error"]:
+            st.error(table_map["error"])
+            return
+
+        table = table_map["content"]
+
+        if table.empty:
+            st.warning(
+                title="DATA NOT DETECTED",
+                body=f"No valid data could be extracted from the file: :red[{file.name}]",
+                icon=":material/warning:"
+            )
+            st.markdown("Make sure:")
+            st.markdown("""
+            - the file contains data for the :green[current date]
+            - it has the correct :orange[file type (extension)]
+            - the data is properly formatted
+            """)
+            st.write("Then, try again")
+            return
+
+        st.success(
+            title="SCAN SUCCESSFUL!",
+            body="Review below and Confirm to Upload",
+            icon=":material/check:"
+        )
+        st.caption(f"Data extracted from :green[{file.name}]")
+        st.dataframe(
+            data=table,
+            height=200,
+            hide_index=True
+        )
+        confirm_button = st.button(":green[Confirm Upload]")
+
+        if not confirm_button:
+            return
+
+        st.write("Confirmed")
