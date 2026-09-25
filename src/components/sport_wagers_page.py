@@ -60,7 +60,7 @@ def render(
         layout="centered"
     )
 
-    st.write(st.session_state)
+    session_state_display = st.empty()
 
     page_header_banner.render(
         sport_title=sport_title,
@@ -88,3 +88,5 @@ def render(
     )
 
     delay_disclaimer.render()
+
+    session_state_display.write(st.session_state)
