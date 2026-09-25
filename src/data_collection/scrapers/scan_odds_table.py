@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import datetime
 import pandas as pd
-import streamlit as st
 from streamlit.typing import UploadedFile
 from src.data_collection.data_maps import DataFrameMap
 from src.utils.get_date_ordinal_suffix import get_date_ordinal_suffix
@@ -81,7 +80,6 @@ def scan_odds_table(
             )
 
     odds_df.reset_index(drop=True, inplace=True)
-    st.write(odds_df)
 
     return DataFrameMap(
         error=None,
