@@ -9,13 +9,13 @@ class DataFrameMap(JavSportDataMap):
     content: pd.DataFrame | None
 
 class DictMap(JavSportDataMap):
-    content = dict | None
+    content: dict | None
 
 class SoupMap(JavSportDataMap):
     content: BeautifulSoup | None
 
 class StringMap(JavSportDataMap):
-    content = str | None
+    content: str | None
 
 class RequiredFileMap(TypedDict):
     file_label: str
