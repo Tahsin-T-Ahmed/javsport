@@ -6,7 +6,7 @@ from streamlit.typing import UploadedFile
 from src.data_collection.data_maps import DataFrameMap
 from src.utils.get_date_ordinal_suffix import get_date_ordinal_suffix
 
-def scan_moneyline(
+def scan_odds_table(
     file: UploadedFile,
     timestamp: datetime.datetime
 ) -> DataFrameMap:
@@ -22,11 +22,11 @@ def scan_moneyline(
     modules = soup.select("div[class*=module]:not([class*=ajax]):not([class*=-in])")
     if not modules:
         return DataFrameMap(
-            error=f"ERROR (Moneyline-Scanner): No module-divs found in Moneyline page.",
+            error=f"ERROR (Odds-Scanner): No module-divs found in Odds page.",
             content=None
         )
 
-    moneyline_df = pd.DataFrame()
+    odds_df = pd.DataFrame()
 
     for module in modules:
         module_header = module.find("h2")
@@ -75,15 +75,15 @@ def scan_moneyline(
 
             subtable_df["TOTAL"] = subtable_df["TOTAL"].sum()
 
-            moneyline_df = pd.concat(
-                [moneyline_df, subtable_df],
+            odds_df = pd.concat(
+                [odds_df, subtable_df],
                 axis=0
             )
 
-    moneyline_df.reset_index(drop=True, inplace=True)
-    st.write(moneyline_df)
+    odds_df.reset_index(drop=True, inplace=True)
+    st.write(odds_df)
 
     return DataFrameMap(
         error=None,
-        content=moneyline_df
+        content=odds_df
     )
