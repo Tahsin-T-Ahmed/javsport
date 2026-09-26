@@ -19,7 +19,7 @@ def render(
                 icon = ":material/check:"
             else:
                 color = "orange"
-                icon = ":material/north:"
+                icon = ":material/upload:"
             st.write(f"- :{color}[{sport_title} {file['file_label']} {icon}]")
 
         return
