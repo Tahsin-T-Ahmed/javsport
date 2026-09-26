@@ -15,3 +15,11 @@ def render(sport_key: str):
         collapse=True,
         hide_index=True
     )
+
+    if not st.session_state[sport_key]["file_requirements"]["fulfilled"]:
+        return
+
+    table_list.render(
+        title="UPLOADED FILES",
+        dataframes_dict=st.session_state[sport_key]["file_requirements"]["data"]
+    )
