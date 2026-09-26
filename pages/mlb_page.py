@@ -26,14 +26,14 @@ sport_wagers_page.render(
             file_parser=scan_odds_table
         ),
         RequiredFileMap(
-            file_label="Pitcher IP",
+            file_label="Pitchers IP",
             file_key="innings_pitched",
             file_type="xlsx",
             file_parser=scan_pitchers_data,
             source_url="https://www.fangraphs.com/leaders/major-league?pos=all&lg=all&qual=0&season=2026&season1=2026&ind=0&rost=0&filter=&players=0&pageitems=2000000000&stats=sta&team=0&type=c%2C13&month=33&v_cr=202301"
         ),
         RequiredFileMap(
-            file_label="Pitcher SIERA",
+            file_label="Pitchers SIERA",
             file_key="siera",
             file_type="xlsx",
             file_parser=scan_pitchers_data,
