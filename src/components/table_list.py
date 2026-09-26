@@ -11,7 +11,7 @@ def render(
     
     for df_key, df in dataframes_dict.items():
         table.render(
-            data=df.round(2),
+            data=df,
             label=f"{' '.join([term.capitalize() for term in df_key.split('_')])}",
             collapse=collapse,
             hide_index=hide_index
