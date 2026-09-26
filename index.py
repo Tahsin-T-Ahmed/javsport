@@ -48,13 +48,22 @@ wnba_page = st.Page(
     icon=":material/sports_basketball:"
 )
 
-test_page = st.Page(
-    page="./pages/test_page.py",
-    title="Dev-Test",
-    url_path="/test"
-)
+# test_page = st.Page(
+#     page="./pages/test_page.py",
+#     title="Dev-Test",
+#     url_path="/test"
+# )
 
-pages = [home_page, mlb_page, nba_page, ncaab_page, ncaaf_page, nfl_page, wnba_page, test_page]
+pages = [
+    home_page,
+    mlb_page,
+    nba_page,
+    ncaab_page,
+    ncaaf_page,
+    nfl_page,
+    wnba_page,
+    # test_page
+]
 
 nav = st.navigation(
     pages=pages,

@@ -1,4 +1,6 @@
 from src.components import sport_wagers_page
+from src.data_collection.data_maps import RequiredFileMap
+from src.data_collection.scrapers.scan_odds_table import scan_odds_table
 
 sport_wagers_page.render(
     sport_name="NCAAB",
@@ -14,11 +16,12 @@ sport_wagers_page.render(
     ),
     win_trends_url="https://www.teamrankings.com/ncb/trends/win_trends/",
     required_files_list=[
-        dict(
+        RequiredFileMap(
             file_label="Moneyline",
             file_key="moneyline",
             file_type="mhtml",
-            source_url="https://www.teamrankings.com/ncb/odds/"
+            source_url="https://www.teamrankings.com/ncb/odds/",
+            file_parser=scan_odds_table
         )
     ]
 )
