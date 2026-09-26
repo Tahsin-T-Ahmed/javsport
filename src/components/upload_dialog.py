@@ -11,7 +11,9 @@ def render(
     timestamp: datetime.datetime,
     guide_desc: str | None = None,
     source_url: str | None = None
-):
+):    
+    st.session_state[sport_key]["file_requirements"]["data"][file_key] = None
+    
     with st.container(border=True):
         label = f"Upload {sport_title} {file_label} Data"
 
@@ -56,21 +58,18 @@ def render(
             st.write("Then, try again")
             return
 
+        st.session_state[sport_key]["file_requirements"]["data"][file_key] = table
+
         st.success(
             title="SCAN SUCCESSFUL!",
-            body="Review below and Confirm to Upload",
+            body="Re-upload new file to overwrite",
             icon=":material/check:"
         )
-        st.caption(f"Data extracted from :green[{file.name}]")
+
         st.dataframe(
             data=table,
             height=200,
             hide_index=True
         )
-        confirm_button = st.button(":green[Confirm Upload]")
-
-        if not confirm_button:
-            return
-
-        st.session_state[sport_key]["file_requirements"]["files"][file_key]["fulfilled"] = True
-        st.write("Confirmed")
+        
+        st.caption(f"Data extracted from :green[{file.name}]")

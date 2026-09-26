@@ -15,10 +15,8 @@ def render(
         st.session_state[sport_key] = dict(
             file_requirements=dict(
                 fulfilled=False,
-                files={
-                    file_map["file_key"]: dict(
-                        fulfilled=False
-                    )
+                data={
+                    file_map["file_key"]: None
                     for file_map in required_files_list
                 }
             )
