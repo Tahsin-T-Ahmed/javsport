@@ -1,8 +1,8 @@
 from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
 from src.data_collection.scrapers.scan_odds_table import scan_odds_table
-from src.data_collection.parsers.scan_pitchers_data import scan_pitchers_data
 from src.services.get_innings_pitched import get_innings_pitched
+from src.services.get_siera import get_siera
 
 sport_wagers_page.render(
     sport_name="MLB",
@@ -37,7 +37,7 @@ sport_wagers_page.render(
             file_label="Pitchers SIERA",
             file_key="siera",
             file_type="xlsx",
-            file_parser=scan_pitchers_data,
+            file_parser=get_siera,
             source_url="https://www.fangraphs.com/leaders/major-league?pos=all&lg=all&qual=0&season=2026&season1=2026&ind=0&rost=0&filter=&players=0&pageitems=2000000000&stats=sta&team=0&type=c%2C122&month=3&v_cr=202301"
         )
     ]
