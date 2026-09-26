@@ -1,16 +1,18 @@
 import datetime
-from src.components import upload_dialog
-from src.data_collection.scrapers.scan_odds_table import scan_odds_table
+from src.data_collection.builders.make_schedule import make_schedule
 import streamlit as st
 
-st.session_state
-
-upload_dialog.render(
-    file_label="Moneyline",
-    file_key="moneyline",
-    file_type="mhtml",
-    sport_key="SPORTKEY",
-    sport_title="SPORT-TITLE",
-    file_parser=scan_odds_table,
+schedule_map = make_schedule(
+    schedule_url="https://www.teamrankings.com/ncf/schedules/season/?week=0",
     timestamp=datetime.datetime.now()
 )
+
+schedule = None
+
+if schedule_map["error"]:
+    st.error(schedule_map)
+
+else:
+    schedule = schedule_map["content"]
+
+    st.write(schedule)

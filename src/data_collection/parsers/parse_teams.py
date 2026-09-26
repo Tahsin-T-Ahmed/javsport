@@ -19,7 +19,7 @@ def parse_teams(title: str) -> StringMap:
     title_terms = title.split(title_splitter)
 
     teams = [term.strip() for term in title_terms]
-    teams_string = '-'.join(teams)
+    teams_string = '--javsport-team-separator-str--'.join(teams)
 
     return StringMap(
         error=None,

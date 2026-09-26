@@ -36,7 +36,9 @@ def make_schedule(
         lambda col: parse_teams(col)["content"]
     )
 
-    schedule[["TEAM A", "TEAM B"]] = schedule["TEAMS PARSED"].str.split("-", expand=True)
+    schedule[["TEAM A", "TEAM B"]] = (
+        schedule["TEAMS PARSED"].str.split("--javsport-team-separator-str--", expand=True)
+    )
 
     schedule = schedule[["TITLE", "TIME", "TEAM A", "TEAM B"]]
 
