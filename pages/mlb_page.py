@@ -2,6 +2,7 @@ from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
 from src.data_collection.scrapers.scan_odds_table import scan_odds_table
 from src.data_collection.parsers.scan_pitchers_data import scan_pitchers_data
+from src.services.get_innings_pitched import get_innings_pitched
 
 sport_wagers_page.render(
     sport_name="MLB",
@@ -29,7 +30,7 @@ sport_wagers_page.render(
             file_label="Pitchers IP",
             file_key="innings_pitched",
             file_type="xlsx",
-            file_parser=scan_pitchers_data,
+            file_parser=get_innings_pitched,
             source_url="https://www.fangraphs.com/leaders/major-league?pos=all&lg=all&qual=0&season=2026&season1=2026&ind=0&rost=0&filter=&players=0&pageitems=2000000000&stats=sta&team=0&type=c%2C13&month=33&v_cr=202301"
         ),
         RequiredFileMap(
