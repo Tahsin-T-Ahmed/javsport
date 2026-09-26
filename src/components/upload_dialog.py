@@ -73,3 +73,9 @@ def render(
         )
         
         st.caption(f"Data extracted from :green[{file.name}]")
+
+    if all(st.session_state[sport_key]["file_requirements"]["data"][file] is not None 
+           for file in st.session_state[sport_key]["file_requirements"]["data"]):
+        st.session_state[sport_key]["file_requirements"]["fulfilled"] = True
+    else:
+        st.session_state[sport_key]["file_requirements"]["fulfilled"] = False
