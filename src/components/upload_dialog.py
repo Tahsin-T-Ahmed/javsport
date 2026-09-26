@@ -53,7 +53,7 @@ def render(
             st.markdown("""
             - the file contains data for the :green[current date]
             - it has the correct :orange[file type (extension)]
-            - the data is properly formatted
+            - it contains the :violet[target data (e.g. IP, SIERA)]
             """)
             st.write("Then, try again")
             return
