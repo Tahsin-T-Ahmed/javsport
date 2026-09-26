@@ -7,25 +7,21 @@ def render(
     sport_title: str,
     required_files_list: list[RequiredFileMap]
 ):
-    if not required_files_list:
-        st.session_state[sport_key]["file_requirements"] = dict(
-            fulfilled=True
-        )
+    if not st.session_state[sport_key]["file_requirements"]["fulfilled"]:
+        st.subheader("Files required:")
+
+        for file in required_files_list:
+            color = None
+            icon = None
+
+            if st.session_state[sport_key]["file_requirements"]["data"][file["file_key"]] is not None:
+                color = "green"
+                icon = ":material/check:"
+            else:
+                color = "orange"
+                icon = ":material/north:"
+            st.write(f"- :{color}[{sport_title} {file['file_label']} {icon}]")
 
         return
 
-    for file_map in required_files_list:
-        upload_dialog.render(
-            **file_map,
-            sport_key=sport_key,
-            sport_title=sport_title,
-            timestamp=st.session_state[sport_key]["timestamp"]
-        )        
-
-    if all(
-        st.session_state[sport_key]["file_requirements"]["data"][file] is not None
-        for file in st.session_state[sport_key]["file_requirements"]["data"]
-    ):
-        st.session_state[sport_key]["file_requirements"]["fulfilled"] = True
-    else:
-        st.session_state[sport_key]["file_requirements"]["fulfilled"] = False
+    st.write("File requirements met")
