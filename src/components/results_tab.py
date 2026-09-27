@@ -1,4 +1,4 @@
-from src.components import upload_dialog
+from src.components import header
 from src.data_collection.data_maps import RequiredFileMap
 import streamlit as st
 
@@ -8,7 +8,10 @@ def render(
     required_files_list: list[RequiredFileMap]
 ):
     if not st.session_state[sport_key]["file_requirements"]["fulfilled"]:
-        st.subheader("Files required:")
+        header.render(
+            text="Files required:",
+            text_alignment="left"
+        )
 
         for file in required_files_list:
             color = None
