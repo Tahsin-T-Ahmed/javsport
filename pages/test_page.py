@@ -1,14 +1,14 @@
 from bs4 import BeautifulSoup
 import datetime
-from src.data_collection.parsers.scan_mlb_probables import scan_mlb_probables
+from src.data_collection.parsers.scan_mlb_starting_pitchers import scan_mlb_starting_pitchers
 import streamlit as st
 
-pp = st.file_uploader(
-    label="Upload Probables",
-    type=["html", "mhtml"]
+roster_file = st.file_uploader(
+    label="Upload MLB Roster",
+    type="xlsx"
 )
 
-if pp is not None:
+if roster_file is not None:
     
-    probables = scan_mlb_probables(pp)
-    st.write(probables["content"])
+    roster = scan_mlb_starting_pitchers(roster_file)
+    st.write(roster["content"])
