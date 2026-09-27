@@ -44,7 +44,7 @@ sport_wagers_page.render(
         RequiredFileMap(
             file_label="Probable Pitchers",
             file_key="probable_pitchers",
-            file_type="mhtml",
+            file_type=["html", "mhtml"],
             file_parser=scan_mlb_probables,
             source_url="https://www.fangraphs.com/roster-resource/probables-grid"
         )
