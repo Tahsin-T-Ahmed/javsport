@@ -4,7 +4,7 @@ import streamlit as st
 def render(
     file_label: str,
     file_key: str,
-    file_type: str,
+    file_type: str | list[str],
     sport_key: str,
     sport_title: str,
     file_parser: function,
@@ -20,7 +20,19 @@ def render(
         if source_url:
             label = f"Upload [{sport_title} {file_label} Data]({source_url})"
 
-        label += f" as :orange[.{file_type} file]"
+        file_type_label_color = "green"
+        file_type_label = f":{file_type_label_color}[.{file_type}]"
+
+        if isinstance(file_type, list):
+            file_type_label = f":{file_type_label_color}[.{file_type[0]}]"
+
+            if len(file_type) > 2:
+                file_type_label += "".join([f', :{file_type_label_color}[.{ft}]' for ft in file_type[1:-1]])
+                file_type_label += ','
+
+            file_type_label += f" or :{file_type_label_color}[.{file_type[-1]}]"
+
+        label += f" as {file_type_label} file"
 
         file = st.file_uploader(
             label=label,
