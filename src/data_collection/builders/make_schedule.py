@@ -4,6 +4,8 @@ from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.scrapers.scan_table_at_date import scan_table_at_date
 from src.data_collection.parsers.parse_teams import parse_teams
 
+import streamlit as st
+
 def make_schedule(
     schedule_url: str,
     timestamp: datetime.datetime
@@ -29,6 +31,8 @@ def make_schedule(
             content=schedule
         )
 
+    schedule = schedule[schedule["TIME"].str.contains(":", na=False)]
+
     schedule["TIME"] = schedule["TIME"].apply(lambda row: f"{date_str} {row}")
     schedule["TIME"] = pd.to_datetime(schedule["TIME"])
 
@@ -46,6 +50,8 @@ def make_schedule(
         func=lambda row: True if "@" in row["TITLE"] or " at " in row["TITLE"] else False,
         axis=1
     )
+
+    schedule.reset_index(drop=True, inplace=True)
 
     return DataFrameMap(
         error=None,
