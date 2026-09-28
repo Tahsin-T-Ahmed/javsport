@@ -28,21 +28,6 @@ def load_button_handler(
 
     st.session_state[sport_key]["schedule"] = schedule_dict_map["content"]
 
-    if st.session_state[sport_key]["schedule"]["data"].empty:
-        return
-
-    leaderboards_map = get_leaderboards(
-        leaderboard_urls_dict=leaderboard_urls_dict,
-        timestamp=timestamp,
-        win_trends_url=win_trends_url
-    )
-
-    if leaderboards_map["error"]:
-        st.error(leaderboards_map["error"])
-        return
-
-    st.session_state[sport_key]["leaderboards"] = leaderboards_map["content"]
-
 def render(
     sport_name: str,
     sport_subheader: str,
@@ -71,7 +56,9 @@ def render(
     sport_page_body.render(
         sport_key=sport_key,
         sport_title=sport_title,
-        required_files_list=required_files_list
+        required_files_list=required_files_list,
+        leaderboard_urls_dict=leaderboard_urls_dict,
+        win_trends_url=win_trends_url
     )
 
     load_button_label = f":material/touch_app: Load {sport_title} Data :material/touch_app:"

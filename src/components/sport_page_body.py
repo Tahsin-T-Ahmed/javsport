@@ -5,11 +5,14 @@ from src.components import (
     wager_tabs
 )
 from src.data_collection.data_maps import RequiredFileMap
+from src.services.get_leaderboards import get_leaderboards
 
 def render(
     sport_key: str,
     sport_title: str,
-    required_files_list: list[RequiredFileMap]
+    required_files_list: list[RequiredFileMap],
+    leaderboard_urls_dict: dict,
+    win_trends_url: str
 ):
     if sport_key not in st.session_state:
         st.session_state[sport_key] = dict(
@@ -42,6 +45,18 @@ def render(
         )
 
         return
+
+    leaderboards_map = get_leaderboards(
+        leaderboard_urls_dict=leaderboard_urls_dict,
+        timestamp=st.session_state[sport_key]["timestamp"],
+        win_trends_url=win_trends_url
+    )
+
+    if leaderboards_map["error"]:
+        st.error(leaderboards_map["error"])
+        return
+
+    st.session_state[sport_key]["leaderboards"] = leaderboards_map["content"]
 
     wager_tabs.render(
         sport_key=sport_key,
