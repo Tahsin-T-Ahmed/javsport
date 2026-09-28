@@ -28,6 +28,8 @@ def load_button_handler(
 
     st.session_state[sport_key]["schedule"] = schedule_dict_map["content"]
 
+    st.session_state[sport_key]["leaderboards"] = dict()
+
 def render(
     sport_name: str,
     sport_subheader: str,
@@ -76,4 +78,4 @@ def render(
 
     delay_disclaimer.render()
 
-    # session_state_preview.write(st.session_state[sport_key])
+    # session_state_preview.write(st.session_state)
