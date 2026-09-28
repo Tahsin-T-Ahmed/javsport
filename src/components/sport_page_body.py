@@ -1,6 +1,7 @@
 import streamlit as st
 from src.components import (
     empty_schedule_notifier,
+    file_upload_section,
     timestamp_banner,
     wager_tabs
 )
@@ -57,6 +58,12 @@ def render(
         return
 
     st.session_state[sport_key]["leaderboards"] = leaderboards_map["content"]
+
+    file_upload_section.render(
+        sport_key=sport_key,
+        sport_title=sport_title,
+        required_files_list=required_files_list
+    )
 
     wager_tabs.render(
         sport_key=sport_key,
