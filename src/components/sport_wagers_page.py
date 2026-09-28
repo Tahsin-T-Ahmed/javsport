@@ -4,12 +4,10 @@ from src.data_collection.data_maps import RequiredFileMap
 from src.services.get_schedule import get_schedule
 import streamlit as st
 
-def load_button_handler(
+def load_schedule(
     sport_key: str,
     timestamp: datetime.datetime | None,
-    schedule_url: str,
-    leaderboard_urls_dict: dict,
-    win_trends_url: str | None = None
+    schedule_url: str
 ):
     if not timestamp:
         timestamp = datetime.datetime.now()
@@ -71,8 +69,8 @@ def render(
         type="primary",
         label=load_button_label,
         width="stretch",
-        on_click=load_button_handler,
-        args=[sport_key, timestamp, schedule_url, leaderboard_urls_dict, win_trends_url]
+        on_click=load_schedule,
+        args=[sport_key, timestamp, schedule_url]
     )
 
     delay_disclaimer.render()
