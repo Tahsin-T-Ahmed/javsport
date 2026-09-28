@@ -89,4 +89,4 @@ def render(
 
     delay_disclaimer.render()
 
-    session_state_preview.write(st.session_state[sport_key])
+    # session_state_preview.write(st.session_state[sport_key])
