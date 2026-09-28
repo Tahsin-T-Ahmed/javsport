@@ -74,10 +74,10 @@ def render(
         required_files_list=required_files_list
     )
 
-    load_button_label = f":material/touch_app: Load {sport_title} Wagers :material/touch_app:"
+    load_button_label = f":material/touch_app: Load {sport_title} Data :material/touch_app:"
 
     if sport_key in st.session_state and "schedule" in st.session_state[sport_key]:
-        load_button_label = f":material/refresh: Reload {sport_title} Wagers :material/refresh:"
+        load_button_label = f":material/refresh: Reload {sport_title} Data :material/refresh:"
 
     st.button(
         type="primary",
