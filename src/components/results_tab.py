@@ -1,6 +1,6 @@
 from src.components import header
 from src.data_collection.data_maps import RequiredFileMap
-from src.services.predict_match import predict_match
+from src.services.predict_mlb_match import predict_mlb_match
 import streamlit as st
 
 def render(
@@ -29,6 +29,6 @@ def render(
         return
 
     st.session_state[sport_key]["schedule"]["data"].apply(
-        func=predict_match,
+        func=predict_mlb_match,
         axis=1
     )
