@@ -1,5 +1,6 @@
 from src.components import header
 from src.data_collection.data_maps import RequiredFileMap
+from src.services.predict_match import predict_match
 import streamlit as st
 
 def render(
@@ -27,4 +28,7 @@ def render(
 
         return
 
-    st.write("File requirements met")
+    st.session_state[sport_key]["schedule"]["data"].apply(
+        func=predict_match,
+        axis=1
+    )
