@@ -73,9 +73,15 @@ def render(
         st.session_state[sport_key]["file_requirements"]["data"][file_key] = table
 
         st.success(
-            title="SCAN SUCCESSFUL!",
-            body="Re-upload new file to overwrite",
+            title=f"{file_label} Data Scanned!",
+            body="Please review below before proceeding",
             icon=":material/check:"
+        )
+
+        st.toast(
+            body=f"Upload Successful",
+            icon=":material/check:",
+            duration="long"
         )
 
         st.dataframe(
