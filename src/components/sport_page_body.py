@@ -28,7 +28,7 @@ def render(
     
     if "schedule" not in st.session_state[sport_key]:
         st.markdown(
-            body="Click below to get started",
+            body=":material/south: Click below to start :material/south:",
             text_alignment="center"
         )
 
