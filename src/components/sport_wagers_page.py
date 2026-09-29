@@ -19,11 +19,6 @@ def load_schedule(
         text=f"Checking {sport_title} Schedule...",
         show_time=True
     ):
-        st.toast(
-            body=f"Loading {sport_title} Schedule...",
-            icon="spinner"
-        )
-
         schedule_dict_map = get_schedule(
             schedule_url=schedule_url,
             timestamp=timestamp
