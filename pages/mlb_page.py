@@ -3,7 +3,7 @@ from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
 from src.data_collection.parsers.scan_mlb_probables import scan_mlb_probables
 from src.data_collection.parsers.scan_mlb_starting_pitchers import scan_mlb_starting_pitchers
-from src.data_collection.scrapers.scan_odds_table import scan_odds_table
+from src.data_collection.parsers.scan_odds_table import scan_odds_table
 from src.services.get_innings_pitched import get_innings_pitched
 from src.services.get_siera import get_siera
 

@@ -1,6 +1,6 @@
 from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
-from src.data_collection.scrapers.scan_odds_table import scan_odds_table
+from src.data_collection.parsers.scan_odds_table import scan_odds_table
 
 sport_wagers_page.render(
     sport_name="NCAAB",
