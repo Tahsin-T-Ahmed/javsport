@@ -39,16 +39,19 @@ def render(
             type=file_type
         )
 
-        if guide_type:
-            guide_desc = "Instructions: "
-            match(guide_type):
-                case "webpage":
-                    guide_desc += ":orange[:material/download_2: Download (Save)] the full :green[webpage :material/web:]"
-                case "spreadsheet":
-                    guide_desc += ":orange[:material/content_copy: Copy/Paste] the :green[entire table :material/table:] (with :blue[links :material/link_2:]) into a :green[spreadsheet :material/view_list:]"
-                case _:
-                    guide_desc = "Please consult JavSport admins on how to process this data"
-            st.caption(guide_desc)
+        caption_container = st.empty()
+
+        with caption_container:
+            if guide_type:
+                guide_desc = "Instructions: "
+                match(guide_type):
+                    case "webpage":
+                        guide_desc += ":orange[:material/download_2: Download (Save)] the full :green[webpage :material/web:]"
+                    case "spreadsheet":
+                        guide_desc += ":orange[:material/content_copy: Copy/Paste] the :green[entire table :material/table:] (with :blue[links :material/link_2:]) into a :green[spreadsheet :material/view_list:]"
+                    case _:
+                        guide_desc = "Please consult JavSport admins on how to process this data"
+                st.caption(guide_desc)
 
         if not file:
             return
@@ -81,16 +84,17 @@ def render(
         st.session_state[sport_key]["file_requirements"]["data"][file_key] = table
 
         st.success(
-            title=f"{file_label} Data Scanned!",
-            body="Please review below before proceeding",
+            title=f"{file_label} file scanned!",
+            body="Please review data below before proceeding",
             icon=":material/check:"
         )
 
         st.toast(
-            body=f"Upload Successful",
-            icon=":material/check:",
-            duration="long"
+            body=f":orange[{sport_title}] :green[{file_label}] Uploaded",
+            icon=":material/check:"
         )
+
+        caption_container.empty()
 
         st.dataframe(
             data=table,
