@@ -19,6 +19,11 @@ def load_schedule(
         text=f"Checking {sport_title} Schedule...",
         show_time=True
     ):
+        st.toast(
+            body=f"Loading {sport_title} Schedule...",
+            icon="spinner"
+        )
+
         schedule_dict_map = get_schedule(
             schedule_url=schedule_url,
             timestamp=timestamp
@@ -29,6 +34,12 @@ def load_schedule(
                 body = schedule_dict_map["error"],
                 icon=":material/error:"
             )
+
+            st.toast(
+                body=f":red[Failed to load {sport_title} schedule]",
+                icon=":material/error:"
+            )
+
             return
 
         st.session_state[sport_key]["schedule"] = schedule_dict_map["content"]
