@@ -30,35 +30,40 @@ sport_wagers_page.render(
             file_key="moneyline",
             file_type="mhtml",
             source_url="https://www.teamrankings.com/mlb/odds/",
-            file_parser=scan_odds_table
+            file_parser=scan_odds_table,
+            guide_type="webpage"
         ),
         RequiredFileMap(
             file_label="Pitchers IP",
             file_key="innings_pitched",
             file_type="xlsx",
             file_parser=get_innings_pitched,
-            source_url=f"https://www.fangraphs.com/leaders/major-league?pos=all&lg=all&qual=0&season={timestamp.year}&season1={timestamp.year}&ind=0&rost=0&filter=&players=0&pageitems=2000000000&stats=sta&team=0&type=c%2C13&month=33&v_cr=202301"
+            source_url=f"https://www.fangraphs.com/leaders/major-league?pos=all&lg=all&qual=0&season={timestamp.year}&season1={timestamp.year}&ind=0&rost=0&filter=&players=0&pageitems=2000000000&stats=sta&team=0&type=c%2C13&month=33&v_cr=202301",
+            guide_type="spreadsheet"
         ),
         RequiredFileMap(
             file_label="Pitchers SIERA",
             file_key="siera",
             file_type="xlsx",
             file_parser=get_siera,
-            source_url=f"https://www.fangraphs.com/leaders/major-league?pos=all&lg=all&qual=0&season={timestamp.year}&season1={timestamp.year}&ind=0&rost=0&filter=&players=0&pageitems=2000000000&stats=sta&team=0&type=c%2C122&month=3&v_cr=202301"
+            source_url=f"https://www.fangraphs.com/leaders/major-league?pos=all&lg=all&qual=0&season={timestamp.year}&season1={timestamp.year}&ind=0&rost=0&filter=&players=0&pageitems=2000000000&stats=sta&team=0&type=c%2C122&month=3&v_cr=202301",
+            guide_type="spreadsheet"
         ),
         RequiredFileMap(
             file_label="Probable Pitchers",
             file_key="probable_pitchers",
             file_type=["html", "mhtml"],
             file_parser=scan_mlb_probables,
-            source_url="https://www.fangraphs.com/roster-resource/probables-grid"
+            source_url="https://www.fangraphs.com/roster-resource/probables-grid",
+            guide_type="spreadsheet"
         ),
         RequiredFileMap(
             file_label="Starting Pitchers (Roster)",
             file_key="starting_pitchers",
             file_type="xlsx",
             file_parser=scan_mlb_starting_pitchers,
-            source_url="https://www.fangraphs.com/roster-resource/roster-grid"
+            source_url="https://www.fangraphs.com/roster-resource/roster-grid",
+            guide_type="spreadsheet"
         )
     ]
 )

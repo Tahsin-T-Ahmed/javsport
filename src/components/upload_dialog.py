@@ -9,7 +9,7 @@ def render(
     sport_title: str,
     file_parser: function,
     timestamp: datetime.datetime,
-    guide_desc: str | None = None,
+    guide_type: str | None = None,
     source_url: str | None = None
 ):    
     st.session_state[sport_key]["file_requirements"]["data"][file_key] = None
@@ -39,8 +39,16 @@ def render(
             type=file_type
         )
 
-        if guide_desc:
-            st.write(guide_desc)
+        if guide_type:
+            guide_desc = "Instructions: "
+            match(guide_type):
+                case "webpage":
+                    guide_desc += ":orange[:material/download_2: Download (Save)] the full :green[webpage :material/web:]"
+                case "spreadsheet":
+                    guide_desc += ":orange[:material/content_copy: Copy/Paste] the :green[entire table :material/table:] (with :blue[links :material/link_2:]) into a :green[spreadsheet :material/view_list:]"
+                case _:
+                    guide_desc = "Please consult JavSport admins on how to process this data"
+            st.caption(guide_desc)
 
         if not file:
             return

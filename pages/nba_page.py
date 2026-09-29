@@ -21,7 +21,8 @@ sport_wagers_page.render(
             file_key="moneyline",
             file_type="mhtml",
             file_parser=scan_odds_table,
-            source_url="https://www.teamrankings.com/nba/odds/"
+            source_url="https://www.teamrankings.com/nba/odds/",
+            guide_type="webpage"
         )
     ]
 )

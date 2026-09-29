@@ -23,4 +23,4 @@ class RequiredFileMap(TypedDict):
     file_type: str
     file_parser: Callable
     source_url: str | None
-    guide_desc: str | None
+    guide_type: str | None
