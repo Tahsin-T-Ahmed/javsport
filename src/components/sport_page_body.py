@@ -46,27 +46,28 @@ def render(
         )
 
         return
-    
-    with st.spinner(
-        text=f"Loading {sport_title} Leaderboards...",
-        show_time=True
-    ):
-        progress_bar = st.progress(0.0)
-        leaderboards_map = get_leaderboards(
-            leaderboard_urls_dict=leaderboard_urls_dict,
-            timestamp=st.session_state[sport_key]["timestamp"],
-            win_trends_url=win_trends_url,
-            progress_bar=progress_bar,
-            sport_title=sport_title
-        )
 
-        if leaderboards_map["error"]:
-            st.error(leaderboards_map["error"])
-            return
+    if not st.session_state[sport_key]["leaderboards"]:    
+        with st.spinner(
+            text=f"Loading {sport_title} Leaderboards...",
+            show_time=True
+        ):
+            progress_bar = st.progress(0.0)
+            leaderboards_map = get_leaderboards(
+                leaderboard_urls_dict=leaderboard_urls_dict,
+                timestamp=st.session_state[sport_key]["timestamp"],
+                win_trends_url=win_trends_url,
+                progress_bar=progress_bar,
+                sport_title=sport_title
+            )
 
-        st.session_state[sport_key]["leaderboards"] = leaderboards_map["content"]
-        
-        progress_bar.empty()
+            if leaderboards_map["error"]:
+                st.error(leaderboards_map["error"])
+                return
+
+            st.session_state[sport_key]["leaderboards"] = leaderboards_map["content"]
+            
+            progress_bar.empty()
 
     file_upload_section.render(
         sport_key=sport_key,
