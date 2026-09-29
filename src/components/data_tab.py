@@ -8,6 +8,9 @@ def render(sport_key: str):
 
     if "leaderboards" not in st.session_state[sport_key]:
         return
+
+    if not st.session_state[sport_key]["leaderboards"]:
+        return
     
     table_list.render(
         title="LEADERBOARDS",
