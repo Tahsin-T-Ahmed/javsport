@@ -28,7 +28,7 @@ def render(
     
     if "schedule" not in st.session_state[sport_key]:
         st.markdown(
-            body="Click below to see today's predictions",
+            body="Click below to get started",
             text_alignment="center"
         )
 
