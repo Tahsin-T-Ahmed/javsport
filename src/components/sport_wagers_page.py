@@ -6,6 +6,7 @@ import streamlit as st
 
 def load_schedule(
     sport_key: str,
+    sport_title: str,
     timestamp: datetime.datetime | None,
     schedule_url: str
 ):
@@ -14,18 +15,25 @@ def load_schedule(
     
     st.session_state[sport_key]["timestamp"] = timestamp
 
-    schedule_dict_map = get_schedule(
-        schedule_url=schedule_url,
-        timestamp=timestamp
-    )
+    with st.spinner(
+        text=f"Loading {sport_title} Data...",
+        show_time=True
+    ):
+        schedule_dict_map = get_schedule(
+            schedule_url=schedule_url,
+            timestamp=timestamp
+        )
 
-    if schedule_dict_map["error"]:
-        st.error(schedule_dict_map["error"])
-        return
+        if schedule_dict_map["error"]:
+            st.error(
+                body = schedule_dict_map["error"],
+                icon=":material/error:"
+            )
+            return
 
-    st.session_state[sport_key]["schedule"] = schedule_dict_map["content"]
+        st.session_state[sport_key]["schedule"] = schedule_dict_map["content"]
 
-    st.session_state[sport_key]["leaderboards"] = dict()
+        st.session_state[sport_key]["leaderboards"] = dict()
 
 def render(
     sport_name: str,
@@ -70,7 +78,7 @@ def render(
         label=load_button_label,
         width="stretch",
         on_click=load_schedule,
-        args=[sport_key, timestamp, schedule_url]
+        args=[sport_key, sport_title, timestamp, schedule_url]
     )
 
     delay_disclaimer.render()
