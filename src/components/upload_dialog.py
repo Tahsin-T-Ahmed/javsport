@@ -11,7 +11,18 @@ def render(
     timestamp: datetime.datetime,
     guide_type: str | None = None,
     source_url: str | None = None
-):    
+):
+    initial_file_success = None
+
+    if (
+        file_key in st.session_state[sport_key]["file_requirements"]["data"]
+        and
+        st.session_state[sport_key]["file_requirements"]["data"][file_key] is not None
+    ):
+        initial_file_success = True
+    else:
+        initial_file_success = False
+
     st.session_state[sport_key]["file_requirements"]["data"][file_key] = None
     
     with st.container(border=True):
@@ -44,13 +55,15 @@ def render(
         with caption_container:
             if guide_type:
                 guide_desc = "Instructions: "
+                
                 match(guide_type):
                     case "webpage":
-                        guide_desc += ":orange[:material/download_2: Download (Save)] the full :green[webpage :material/web:]"
+                        guide_desc += ":orange[:material/download_2: Download & Save :material/save:] the full :green[webpage :material/web:]"
                     case "spreadsheet":
-                        guide_desc += ":orange[:material/content_copy: Copy/Paste] the :green[entire table :material/table:] (with :blue[links :material/link_2:]) into a :green[spreadsheet :material/view_list:]"
+                        guide_desc += ":orange[:material/content_copy: Copy/Paste] the :green[ENTIRE table :material/table:] (with :blue[links :material/link_2:]) into a :green[spreadsheet :material/view_list:]"
                     case _:
                         guide_desc = "Please consult JavSport admins on how to process this data"
+                
                 st.caption(guide_desc)
 
         if not file:
@@ -80,7 +93,7 @@ def render(
             """)
             st.write("Then, try again")
             return
-
+        
         st.session_state[sport_key]["file_requirements"]["data"][file_key] = table
 
         st.success(
@@ -89,10 +102,11 @@ def render(
             icon=":material/check:"
         )
 
-        st.toast(
-            body=f":orange[{sport_title}] :green[{file_label}] Uploaded",
-            icon=":material/check:"
-        )
+        if not initial_file_success:
+            st.toast(
+                body=f":orange[{sport_title}] :green[{file_label}] Uploaded",
+                icon=":material/check:"
+            )
 
         caption_container.empty()
 
