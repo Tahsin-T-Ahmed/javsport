@@ -43,7 +43,7 @@ def get_leaderboards(
         if progress_bar:
             progress_bar.progress(
                 value=loading_progress/n_leaderboards,
-                text=f"Loading {sport_title} {' '.join([word.capitalize() for word in leaderboard_key.split('_')])}..."
+                text=f"Loading {sport_title} :green[{' '.join([word.capitalize() for word in leaderboard_key.split('_')])}]..."
             )
 
         leaderboard_map = make_leaderboard(
