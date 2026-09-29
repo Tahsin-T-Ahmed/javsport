@@ -81,6 +81,9 @@ def scan_odds_table(
 
     odds_df.reset_index(drop=True, inplace=True)
 
+    if "" in odds_df.columns:
+        odds_df.drop(columns="", inplace=True)
+
     return DataFrameMap(
         error=None,
         content=odds_df
