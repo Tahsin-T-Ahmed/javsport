@@ -16,7 +16,7 @@ def load_schedule(
     st.session_state[sport_key]["timestamp"] = timestamp
 
     with st.spinner(
-        text=f"Loading {sport_title} Data...",
+        text=f"Checking {sport_title} Schedule...",
         show_time=True
     ):
         schedule_dict_map = get_schedule(
