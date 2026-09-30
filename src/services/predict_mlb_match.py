@@ -41,6 +41,7 @@ def predict_mlb_match(
                 content=None
             )
 
+        pitcher_name = pitchers_row["PITCHER 1"].item()
         pitcher_fgid = pitchers_row["PITCHER 1 FGID"].item()
 
         if not any(sp_df["FGID"].str.contains(pitcher_fgid)):
@@ -50,6 +51,8 @@ def predict_mlb_match(
             )
 
         pitcher_siera = siera_df.loc[pitcher_fgid == siera_df["PLAYER FGID"], "SIERA"].item()
+
+        metrics[f"pitcher_name_{team_key}"] = pitcher_name
 
         metrics[f"pitcher_siera_{team_key}"] = pitcher_siera
 
@@ -71,6 +74,8 @@ def predict_mlb_match(
 
     metrics["league_avg_runs"] = league_avg_runs
 
+    metrics["pitcher_siera_a"], metrics["pitcher_siera_b"] = metrics["pitcher_siera_b"], metrics["pitcher_siera_a"]
+
     
 
     response = requests.get(
@@ -82,4 +87,7 @@ def predict_mlb_match(
 
     if 200 == response.status_code:
 
-        return response.text
+        metrics["team_a_prediction"] = float(response.text)
+        metrics["team_b_prediction"] = 1 - float(metrics["team_a_prediction"])
+
+    return metrics

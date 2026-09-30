@@ -72,4 +72,4 @@ if st.button("Go"):
         st.error("Invalid response received")
         st.html(response.text)
 
-session_state_view.write(st.session_state)
+# session_state_view.write(st.session_state)
