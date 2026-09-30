@@ -28,7 +28,9 @@ def render(
 
         return
 
+    league_avg_runs = st.session_state[sport_key]["leaderboards"]["runs_per_game"]["OVERALL"].mean()
+
     st.session_state[sport_key]["schedule"]["data"].apply(
-        func=predict_mlb_match,
+        func=lambda row: st.write(predict_mlb_match(row, league_avg_runs)),
         axis=1
     )
