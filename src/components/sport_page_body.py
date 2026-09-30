@@ -47,17 +47,13 @@ def render(
 
         return
 
-    upload_section_container = st.empty()
-
-    with upload_section_container.container():
-        file_upload_section.render(
-            sport_key=sport_key,
-            sport_title=sport_title,
-            required_files_list=required_files_list
+    file_upload_section.render(
+        sport_key=sport_key,
+        sport_title=sport_title,
+        required_files_list=required_files_list
         )
 
     if st.session_state[sport_key]["file_requirements"]["fulfilled"]:
-        upload_section_container.empty()
         if not st.session_state[sport_key]["leaderboards"]:
             with st.spinner(
                 text=f"Loading {sport_title} Leaderboards...",
