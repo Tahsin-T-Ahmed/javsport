@@ -31,6 +31,16 @@ def render(
     league_avg_runs = st.session_state[sport_key]["leaderboards"]["runs_per_game"]["OVERALL"].mean()
 
     st.session_state[sport_key]["schedule"]["data"].apply(
-        func=lambda row: st.write(predict_mlb_match(row, league_avg_runs)),
+        func=lambda row: st.write(
+            predict_mlb_match(
+                match_row=row,
+                league_avg_runs=league_avg_runs,
+                probable_pitchers_df=st.session_state["mlb"]["file_requirements"]["data"]["probable_pitchers"],
+                sp_df=st.session_state["mlb"]["file_requirements"]["data"]["starting_pitchers"],
+                siera_df=st.session_state["mlb"]["file_requirements"]["data"]["siera"],
+                innings_pitched_df=st.session_state["mlb"]["file_requirements"]["data"]["innings_pitched"],
+                leaderboards=st.session_state["mlb"]["leaderboards"]
+            )
+        ),
         axis=1
     )
