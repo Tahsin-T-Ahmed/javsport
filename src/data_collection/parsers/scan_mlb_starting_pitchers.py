@@ -35,9 +35,7 @@ def scan_mlb_starting_pitchers(
             return DataFrameMap(
                 error=f"ERROR (MLB Roster-Scanner): Failed to scan CELLS of row #{row_idx+1} in file",
                 content=None
-            )
-
-        new_row_idx = starting_pitchers.shape[0]
+            )        
 
         for cell_idx, cell in enumerate(cells):
             if "SP" == cell.value and "SP" in cells[cell_idx-1].value:
@@ -50,6 +48,8 @@ def scan_mlb_starting_pitchers(
 
                 pitcher_fgid = pitcher_link.split("/stats")[0].split("/")[-1]
 
+                new_row_idx = starting_pitchers.shape[0]
+                
                 starting_pitchers.loc[new_row_idx, "NAME"] = pitcher_name
                 starting_pitchers.loc[new_row_idx, "FGID"] = pitcher_fgid
 
