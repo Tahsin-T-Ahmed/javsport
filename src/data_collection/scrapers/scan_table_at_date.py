@@ -18,24 +18,40 @@ def scan_table_at_date(
 
     date_str = f"{timestamp.strftime('%a %b')} {timestamp.day}"
 
-    todays_cell = soup.find("th", string=date_str)
-    if not todays_cell:
+    table_heads = soup.find_all("thead")
+
+    todays_thead = None
+
+    for thead in table_heads:
+        table_date_raw = thead.find("th").text
+        
+        table_date_clean = " ".join(
+            [
+                date_term.strip()
+                for date_term in table_date_raw.split(" ")
+                if date_term != ""
+            ]
+        )
+
+        if table_date_clean == date_str:
+            todays_thead = thead
+            break
+
+    if not todays_thead:
         return DataFrameMap(
             error=None,
             content=pd.DataFrame()
         )
 
-    head = todays_cell.parent.parent
-
-    headers = head.find_all("th")
+    headers = todays_thead.find_all("th")
 
     columns = [header.text.strip().upper() for header in headers]
     columns[0] = "TITLE"
 
-    body = head.find_next_sibling("tbody")
+    body = todays_thead.find_next_sibling("tbody")
     if not body:
         return DataFrameMap(
-            error=f"ERROR (TableArray-Scan): Failed to scan BODY for head ({head}) from URL ({url})",
+            error=f"ERROR (TableArray-Scan): Failed to scan BODY for head ({todays_thead}) from URL ({url})",
             content=None
         )
 
