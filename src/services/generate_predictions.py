@@ -1,7 +1,8 @@
 import streamlit as st
 
 def generate_predictions(
-    sport_key: str
+    sport_key: str,
+    metrics_assembler: callable
 ):
     schedule = st.session_state[sport_key]["schedule"]["data"]
     leaderboards = st.session_state[sport_key]["leaderboards"]
@@ -13,4 +14,10 @@ def generate_predictions(
             b=match_row["TEAM B"]
         )
 
-        metrics = dict()
+        metrics = metrics_assembler(
+            team_names_dict=team_names,
+            leaderboards_dict=leaderboards,
+            uploaded_files_dict=uploaded_files
+        )
+
+        st.write(metrics)

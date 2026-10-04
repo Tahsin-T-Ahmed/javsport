@@ -47,9 +47,10 @@ def render(
     sport_icon: str,
     schedule_url: str,
     leaderboard_urls_dict: dict,
+    metrics_assembler: callable,
     win_trends_url: str | None = None,
     timestamp: datetime.datetime | None = None,
-    required_files_list: list[RequiredFileMap] | None = None
+    required_files_list: list[RequiredFileMap] | None = None,
 ):
     sport_title, sport_key = sport_name.upper(), sport_name.lower()
 
@@ -71,7 +72,8 @@ def render(
         sport_title=sport_title,
         required_files_list=required_files_list,
         leaderboard_urls_dict=leaderboard_urls_dict,
-        win_trends_url=win_trends_url
+        win_trends_url=win_trends_url,
+        metrics_assembler=metrics_assembler
     )
 
     load_button_label = f":material/touch_app: Load {sport_title} Data :material/touch_app:"

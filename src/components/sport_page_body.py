@@ -13,7 +13,8 @@ def render(
     sport_title: str,
     required_files_list: list[RequiredFileMap],
     leaderboard_urls_dict: dict,
-    win_trends_url: str
+    win_trends_url: str,
+    metrics_assembler: callable
 ):
     if sport_key not in st.session_state:
         st.session_state[sport_key] = dict(
@@ -79,5 +80,6 @@ def render(
     wager_tabs.render(
         sport_key=sport_key,
         sport_title=sport_title,
-        required_files_list=required_files_list
+        required_files_list=required_files_list,
+        metrics_assembler=metrics_assembler
     )

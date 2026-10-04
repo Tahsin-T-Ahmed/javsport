@@ -5,7 +5,8 @@ import streamlit as st
 def render(
     sport_key: str,
     sport_title: str,
-    required_files_list: list[RequiredFileMap]
+    required_files_list: list[RequiredFileMap],
+    metrics_assembler: callable
 ):
     if not st.session_state[sport_key]["file_requirements"]["fulfilled"]:
         header.render(
@@ -28,5 +29,6 @@ def render(
         return
 
     predictions_section.render(
-        sport_key=sport_key
+        sport_key=sport_key,
+        metrics_assembler=metrics_assembler
     )

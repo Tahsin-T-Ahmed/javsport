@@ -3,6 +3,7 @@ from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
 from src.data_collection.parsers.scan_mlb_starting_pitchers import scan_mlb_starting_pitchers
 from src.data_collection.parsers.scan_odds_table import scan_odds_table
+from src.metrics_assembly.assemble_mlb_metrics import assemble_mlb_metrics
 from src.services.get_innings_pitched import get_innings_pitched
 from src.services.get_mlb_probables import get_mlb_probables
 from src.services.get_siera import get_siera
@@ -65,5 +66,6 @@ sport_wagers_page.render(
             source_url="https://www.fangraphs.com/roster-resource/roster-grid",
             guide_type="spreadsheet"
         )
-    ]
+    ],
+    metrics_assembler=assemble_mlb_metrics
 )
