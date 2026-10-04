@@ -1,6 +1,5 @@
 from src.components import header, predictions_section
 from src.data_collection.data_maps import RequiredFileMap
-from src.services.predict_mlb_match import predict_mlb_match
 import streamlit as st
 
 def render(
@@ -28,4 +27,6 @@ def render(
 
         return
 
-    predictions_section.render()
+    predictions_section.render(
+        sport_key=sport_key
+    )
