@@ -1,10 +1,60 @@
 import pandas as pd
-from src.data_collection.data_maps import DictMap
+from src.data_collection.data_maps import DataFrameMap
 
 def assemble_mlb_metrics(
     team_names_dict: dict,
+    team_b_is_home: bool,
     leaderboards_dict: dict[str, pd.DataFrame],
     uploaded_files_dict: dict[str, pd.DataFrame]
-) -> DictMap:
-    pass
+) -> DataFrameMap:
+    metrics = pd.DataFrame()
+
+    for team_key, team_name in team_names_dict.items():
+        probable_pitchers_df = uploaded_files_dict["probable_pitchers"]
+        siera_df = uploaded_files_dict["siera"]
+        sp_df = uploaded_files_dict["starting_pitchers"]
+
+        pitchers_row = probable_pitchers_df[team_name == probable_pitchers_df["TR TEAM"]]
+
+        if pitchers_row["N PITCHERS"].item() != 1:
+            return DataFrameMap(
+                error=f"Pitcher-count is not 1 for team: {team_name}",
+                content=None
+            )
+
+        pitcher_name = pitchers_row["PITCHER 1"].item()
+        pitcher_fgid = pitchers_row["PITCHER 1 FGID"].item()
+
+        if not any(sp_df["FGID"].str.contains(pitcher_fgid)):
+            return DataFrameMap(
+                error=f"Pitcher is not Starting Pitcher (SP) for team {team_name}",
+                content=None
+            )
+
+        pitcher_siera = siera_df.loc[pitcher_fgid == siera_df["PLAYER FGID"], "SIERA"].item()
+
+        metrics.loc["pitcher_name", team_name] = pitcher_name
+
+        metrics.loc["pitcher_siera", team_name] = str(pitcher_siera)
+
+        for leaderboard_key, leaderboard in leaderboards_dict.items():
+            target_column = "AWAY"
+            if team_b_is_home and "b" == team_key:
+                target_column = "HOME"
+
+            team_row = leaderboard[team_name == leaderboard["TEAM"]]
+
+            if "runs_per_game" == leaderboard_key:
+                continue
+
+            if "win_trends" == leaderboard_key:
+                team_total_games = team_row[["WINS", "LOSSES", "TIES"]].sum().sum()
+                metrics.loc["total_games", team_name] = str(team_total_games)
+            else:
+                metrics.loc[leaderboard_key, team_name] = str(team_row[target_column].item())
+
+    return DataFrameMap(
+        error=None,
+        content=metrics
+    )
     
