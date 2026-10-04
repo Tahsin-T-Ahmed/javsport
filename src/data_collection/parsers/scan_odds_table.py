@@ -32,9 +32,15 @@ def scan_odds_table(
         if not module_header:
             continue
 
-        module_date = module_header.text
+        module_date_raw = module_header.text
 
-        if module_date != date_str:
+        module_date_clean = " ".join([
+            date_term.strip() 
+            for date_term in module_date_raw.split(" ")
+            if "" != date_term
+        ])
+
+        if module_date_clean != date_str:
             continue
 
         subtables = module.find_all("table")

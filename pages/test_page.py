@@ -1,14 +1,19 @@
 import streamlit as st
 
+from bs4 import BeautifulSoup
 import datetime
-from src.data_collection.scrapers.scan_table_at_date import scan_table_at_date
+from src.data_collection.parsers.scan_odds_table import scan_odds_table
 
-url = "https://www.teamrankings.com/ncf/schedules/season/?week=0"
-timestamp = datetime.datetime.now()
-
-x = scan_table_at_date(
-    url=url,
-    timestamp=timestamp
+file = st.file_uploader(
+    label="Upload Moneyline",
+    type="mhtml"
 )
 
-st.write(x)
+if file is not None:
+    timestamp = datetime.datetime.now()
+    soup = scan_odds_table(
+        file=file,
+        timestamp=timestamp
+    )
+
+    st.write(soup)
