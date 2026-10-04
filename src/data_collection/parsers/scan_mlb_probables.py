@@ -38,7 +38,7 @@ def scan_mlb_probables(file: UploadedFile, **kwargs) -> DataFrameMap:
 
         pitcher_spans = cells[1].find_all("span")
 
-        probgrid.loc[new_row_idx, "TEAM"] = cells[0].text
+        probgrid.loc[new_row_idx, "FG TEAM"] = cells[0].text
         probgrid.loc[new_row_idx, "N PITCHERS"] = len(pitcher_spans)
 
         for pitcher_idx, pitcher_span in enumerate(pitcher_spans):

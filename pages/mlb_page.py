@@ -1,10 +1,10 @@
 from datetime import datetime
 from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
-from src.data_collection.parsers.scan_mlb_probables import scan_mlb_probables
 from src.data_collection.parsers.scan_mlb_starting_pitchers import scan_mlb_starting_pitchers
 from src.data_collection.parsers.scan_odds_table import scan_odds_table
 from src.services.get_innings_pitched import get_innings_pitched
+from src.services.get_mlb_probables import get_mlb_probables
 from src.services.get_siera import get_siera
 
 timestamp = datetime.now()
@@ -53,7 +53,7 @@ sport_wagers_page.render(
             file_label="Probable Pitchers",
             file_key="probable_pitchers",
             file_type=["html", "mhtml"],
-            file_parser=scan_mlb_probables,
+            file_parser=get_mlb_probables,
             source_url="https://www.fangraphs.com/roster-resource/probables-grid",
             guide_type="spreadsheet"
         ),
