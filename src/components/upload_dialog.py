@@ -1,4 +1,5 @@
 import datetime
+from src.components import table
 import streamlit as st
 
 def render(
@@ -77,9 +78,9 @@ def render(
             st.error(table_map["error"])
             return
 
-        table = table_map["content"]
+        table_df = table_map["content"]
 
-        if table.empty:
+        if table_df.empty:
             st.warning(
                 title="DATA NOT DETECTED",
                 body=f"No valid data could be extracted from the file: :red[{file.name}]",
@@ -94,7 +95,7 @@ def render(
             st.write("Then, try again")
             return
         
-        st.session_state[sport_key]["file_requirements"]["data"][file_key] = table
+        st.session_state[sport_key]["file_requirements"]["data"][file_key] = table_df
 
         st.success(
             title=f"{file_label} file scanned!",
@@ -110,9 +111,10 @@ def render(
 
         caption_container.empty()
 
-        st.dataframe(
-            data=table,
-            height=200,
+        table.render(
+            data=table_df,
+            label=f"{file_label} Data",
+            collapse=True,
             hide_index=True
         )
         
