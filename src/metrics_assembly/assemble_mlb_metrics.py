@@ -8,12 +8,12 @@ def assemble_mlb_metrics(
     uploaded_files_dict: dict[str, pd.DataFrame]
 ) -> DataFrameMap:
     metrics = pd.DataFrame()
+    
+    probable_pitchers_df = uploaded_files_dict["probable_pitchers"]
+    siera_df = uploaded_files_dict["siera"]
+    sp_df = uploaded_files_dict["starting_pitchers"]
 
     for team_key, team_name in team_names_dict.items():
-        probable_pitchers_df = uploaded_files_dict["probable_pitchers"]
-        siera_df = uploaded_files_dict["siera"]
-        sp_df = uploaded_files_dict["starting_pitchers"]
-
         pitchers_row = probable_pitchers_df[team_name == probable_pitchers_df["TR TEAM"]]
 
         if pitchers_row["N PITCHERS"].item() != 1:
@@ -38,20 +38,18 @@ def assemble_mlb_metrics(
         metrics.loc["pitcher_siera", team_name] = str(pitcher_siera)
 
         for leaderboard_key, leaderboard in leaderboards_dict.items():
-            target_column = "AWAY"
-            if team_b_is_home and "b" == team_key:
-                target_column = "HOME"
-
             team_row = leaderboard[team_name == leaderboard["TEAM"]]
-
-            if "runs_per_game" == leaderboard_key:
-                continue
 
             if "win_trends" == leaderboard_key:
                 team_total_games = team_row[["WINS", "LOSSES", "TIES"]].sum().sum()
                 metrics.loc["total_games", team_name] = str(team_total_games)
-            else:
-                metrics.loc[leaderboard_key, team_name] = str(team_row[target_column].item())
+                continue
+
+            target_column = "AWAY"
+            if "b" == team_key and team_b_is_home:
+                target_column = "HOME"
+                
+            metrics.loc[leaderboard_key, team_name] = str(team_row[target_column].item())
 
     return DataFrameMap(
         error=None,
