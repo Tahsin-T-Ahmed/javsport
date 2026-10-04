@@ -13,5 +13,6 @@ def render(
         data=schedule_df,
         label=schedule_caption,
         hide_index=True,
-        collapse=True
+        collapse=True,
+        height="auto"
     )
