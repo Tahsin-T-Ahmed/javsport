@@ -5,7 +5,8 @@ def render(
     data: pd.DataFrame,
     hide_index: bool = False,
     label: str | None = None,
-    collapse: bool = False
+    collapse: bool = False,
+    height: int | str = 250
 ):
     if not collapse:
         st.caption(label)
@@ -23,5 +24,6 @@ def render(
     ):
         st.dataframe(
             data=data,
-            hide_index=hide_index
+            hide_index=hide_index,
+            height=height
         )
