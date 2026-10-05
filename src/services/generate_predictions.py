@@ -1,4 +1,5 @@
 import json
+import numpy as np
 import requests
 import streamlit as st
 
@@ -37,7 +38,7 @@ def generate_predictions(
 
     api_url = f"http://127.0.0.1:5000/{sport_key}/predict-team-a-win-chance"
 
-    for index, match_row in schedule.iterrows():
+    for match_index, match_row in schedule.iterrows():
         team_names = dict(
             a=match_row["TEAM A"],
             b=match_row["TEAM B"]
@@ -65,7 +66,7 @@ def generate_predictions(
             metrics_json=metrics_json
         )
 
-        st.write(params)
+        # st.write(params)
 
         response = requests.get(
             url=api_url,
@@ -74,7 +75,16 @@ def generate_predictions(
 
         if 200 != response.status_code:
             st.error(f"ERROR: Invalid status code {response.status_code} from URL {api_url}")
-            st.html(response.text)
+            # st.html(response.text)
             continue
 
-        st.write(response.text)
+        team_a_win_chance = float(response.text)
+        team_b_win_chance = 1 - team_a_win_chance
+
+        st.markdown(
+            body=f"#### :orange[#{match_index}:] :red[{match_row['TITLE']}]",
+            anchors=False
+        )
+
+        st.write(f"{match_row['TEAM A']}: {np.round(team_a_win_chance*100, 2)}%")
+        st.write(f"{match_row['TEAM B']}: {np.round(team_b_win_chance*100, 2)}%")
