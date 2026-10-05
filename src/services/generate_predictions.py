@@ -1,3 +1,5 @@
+import json
+import requests
 import streamlit as st
 
 def generate_predictions(
@@ -33,6 +35,8 @@ def generate_predictions(
         .mean()
     )
 
+    api_url = f"http://127.0.0.1:5000/{sport_key}/predict-team-a-win-chance"
+
     for index, match_row in schedule.iterrows():
         team_names = dict(
             a=match_row["TEAM A"],
@@ -52,6 +56,25 @@ def generate_predictions(
             st.error(metrics_map["error"])
             continue
 
-        metrics = metrics_map["content"]
+        metrics_df = metrics_map["content"]
 
-        st.write(metrics)
+        metrics_json = metrics_df.to_json()
+
+        params = dict(
+            league_average=league_average,
+            metrics=json.loads(metrics_json)
+        )
+
+        st.write(params)
+
+        response = requests.get(
+            url=api_url,
+            params=params
+        )
+
+        if 200 != response.status_code:
+            st.error(f"ERROR: Invalid status code {response.status_code} from URL {api_url}")
+            st.html(response.text)
+            continue
+
+        st.write(response.text)
