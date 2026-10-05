@@ -33,23 +33,27 @@ def assemble_mlb_metrics(
 
         pitcher_siera = siera_df.loc[pitcher_fgid == siera_df["PLAYER FGID"], "SIERA"].item()
 
-        metrics.loc["pitcher_name", team_name] = pitcher_name
+        team_column_key = f"TEAM {team_key.upper()}"
 
-        metrics.loc["pitcher_siera", team_name] = str(pitcher_siera)
+        metrics.loc["team_name", team_column_key] = team_name
+
+        metrics.loc["pitcher_name", team_column_key] = pitcher_name
+
+        metrics.loc["pitcher_siera", team_column_key] = str(pitcher_siera)
 
         for leaderboard_key, leaderboard in leaderboards_dict.items():
             team_row = leaderboard[team_name == leaderboard["TEAM"]]
 
             if "win_trends" == leaderboard_key:
                 team_total_games = team_row[["WINS", "LOSSES", "TIES"]].sum().sum()
-                metrics.loc["total_games", team_name] = str(team_total_games)
+                metrics.loc["total_games", team_column_key] = str(team_total_games)
                 continue
 
             target_column = "AWAY"
             if "b" == team_key and team_b_is_home:
                 target_column = "HOME"
                 
-            metrics.loc[leaderboard_key, team_name] = str(team_row[target_column].item())
+            metrics.loc[leaderboard_key, team_column_key] = str(team_row[target_column].item())
 
     return DataFrameMap(
         error=None,
