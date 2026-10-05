@@ -81,10 +81,36 @@ def generate_predictions(
         team_a_win_chance = float(response.text)
         team_b_win_chance = 1 - team_a_win_chance
 
-        st.markdown(
-            body=f"#### :orange[#{match_index}:] :red[{match_row['TITLE']}]",
-            anchors=False
+        display_time = (
+            st.session_state[sport_key]
+            ["schedule"]
+            ["display"]
+            .loc[match_index, "TIME"]
         )
 
-        st.write(f"{match_row['TEAM A']}: {np.round(team_a_win_chance*100, 2)}%")
-        st.write(f"{match_row['TEAM B']}: {np.round(team_b_win_chance*100, 2)}%")
+        with st.container(border=True):
+
+            st.markdown(
+                body=(
+                    f"#### :orange[#{match_index}:] :red[{match_row['TITLE']}] ({display_time})"
+                ),
+                anchors=False
+            )
+
+            if team_a_win_chance > team_b_win_chance:
+                st.write(
+                    f"Winner: {match_row['TEAM A']} (:green[{np.round(team_a_win_chance * 100, 2)}%] confidence)"
+                )
+            elif team_b_win_chance > team_a_win_chance:
+                st.write(
+                    f"Winner: {match_row['TEAM B']} (:green[{np.round(team_b_win_chance * 100, 2)}%] confidence)"
+                )
+            else:
+                st.write("No clear winner (coin-flip)")
+
+            st.markdown("#### Market says:")
+            st.write(
+                uploaded_files["moneyline"].loc[
+                    match_row["TEAM A"] == uploaded_files["moneyline"]["TEAM"]
+                ]
+            )
