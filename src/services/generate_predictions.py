@@ -62,7 +62,7 @@ def generate_predictions(
 
         params = dict(
             league_average=league_average,
-            metrics=json.loads(metrics_json)
+            metrics_json=metrics_json
         )
 
         st.write(params)
