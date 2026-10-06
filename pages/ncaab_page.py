@@ -1,6 +1,7 @@
 from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
 from src.data_collection.parsers.scan_odds_table import scan_odds_table
+from src.metrics_assembly.assemble_ncaab_metrics import assemble_ncaab_metrics
 
 sport_wagers_page.render(
     sport_name="NCAAB",
@@ -24,5 +25,6 @@ sport_wagers_page.render(
             file_parser=scan_odds_table,
             guide_type="webpage"
         )
-    ]
+    ],
+    metrics_assembler=assemble_ncaab_metrics
 )
