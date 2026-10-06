@@ -1,6 +1,6 @@
 import json
 import numpy as np
-import requests
+from src.services.get_team_a_win_chance import get_team_a_win_chance
 import streamlit as st
 
 def generate_predictions(
@@ -36,8 +36,6 @@ def generate_predictions(
         .mean()
     )
 
-    api_url = f"http://127.0.0.1:5000/{sport_key}/predict-team-a-win-chance"
-
     for match_index, match_row in schedule.iterrows():
         team_names = dict(
             a=match_row["TEAM A"],
@@ -59,58 +57,22 @@ def generate_predictions(
 
         metrics_df = metrics_map["content"]
 
-        metrics_json = metrics_df.to_json()
-
-        params = dict(
-            league_average=league_average,
-            metrics_json=metrics_json
+        team_a_win_chance_map = get_team_a_win_chance(
+            sport_key=sport_key,
+            metrics_df=metrics_df,
+            league_average=league_average
         )
 
-        # st.write(params)
-
-        response = requests.get(
-            url=api_url,
-            params=params
-        )
-
-        if 200 != response.status_code:
-            st.error(f"ERROR: Invalid status code {response.status_code} from URL {api_url}")
-            # st.html(response.text)
+        if team_a_win_chance_map["error"]:
+            st.error(team_a_win_chance_map["error"])
             continue
 
-        team_a_win_chance = float(response.text)
+        team_a_win_chance = team_a_win_chance_map["content"]
+        
         team_b_win_chance = 1 - team_a_win_chance
 
-        display_time = (
-            st.session_state[sport_key]
-            ["schedule"]
-            ["display"]
-            .loc[match_index, "TIME"]
-        )
+        st.write("TEAM A:")
+        st.write(f"{match_row['TEAM A']}: :green[{team_a_win_chance}]")
 
-        with st.container(border=True):
-
-            st.markdown(
-                body=(
-                    f"#### :orange[#{match_index}:] :red[{match_row['TITLE']}] ({display_time})"
-                ),
-                anchors=False
-            )
-
-            if team_a_win_chance > team_b_win_chance:
-                st.write(
-                    f"Winner: {match_row['TEAM A']} (:green[{np.round(team_a_win_chance * 100, 2)}%] confidence)"
-                )
-            elif team_b_win_chance > team_a_win_chance:
-                st.write(
-                    f"Winner: {match_row['TEAM B']} (:green[{np.round(team_b_win_chance * 100, 2)}%] confidence)"
-                )
-            else:
-                st.write("No clear winner (coin-flip)")
-
-            st.markdown("#### Market says:")
-            st.write(
-                uploaded_files["moneyline"].loc[
-                    match_row["TEAM A"] == uploaded_files["moneyline"]["TEAM"]
-                ]
-            )
+        st.write("TEAM B:")
+        st.write(f"{match_row['TEAM B']}: :orange[{team_b_win_chance}]")
