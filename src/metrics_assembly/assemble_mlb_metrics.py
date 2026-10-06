@@ -39,12 +39,6 @@ def assemble_mlb_metrics(
 
         metrics.loc["team_name", team_column_key] = team_name
 
-        metrics.loc["pitcher_name", team_column_key] = pitcher_name
-
-        metrics.loc["pitcher_siera", team_column_key] = str(pitcher_siera)
-
-        metrics.loc["pitcher_ip", team_column_key] = str(pitcher_ip)
-
         for leaderboard_key, leaderboard in leaderboards_dict.items():
             team_row = leaderboard[team_name == leaderboard["TEAM"]]
 
@@ -58,6 +52,12 @@ def assemble_mlb_metrics(
                 target_column = "HOME"
                 
             metrics.loc[leaderboard_key, team_column_key] = str(team_row[target_column].item())
+
+        metrics.loc["pitcher_name", team_column_key] = pitcher_name
+
+        metrics.loc["pitcher_siera", team_column_key] = str(pitcher_siera)
+
+        metrics.loc["pitcher_ip", team_column_key] = str(pitcher_ip)
 
     return DataFrameMap(
         error=None,
