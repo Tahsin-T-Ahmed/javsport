@@ -39,12 +39,10 @@ def generate_predictions(
 
     for match_idx, match_row in schedule.iterrows():
         with st.expander(
-            label=f":green[Game #{match_idx+1}]",
-            expanded=True
+            label=f":orange[#{match_idx+1}:] :red[{match_row['TITLE']}]",
+            expanded=True,
+            type="default"
         ):
-            prediction_header.render(
-                text=f":orange[{match_row['TITLE']}]"
-            )
             team_names = dict(
                 a=match_row["TEAM A"],
                 b=match_row["TEAM B"]
@@ -80,5 +78,9 @@ def generate_predictions(
             
             team_b_win_chance = 1 - team_a_win_chance
 
-            st.write(f"{match_row['TEAM A']}: :green[{np.round(team_a_win_chance*100, 2)}%]")
-            st.write(f"{match_row['TEAM B']}: :orange[{np.round(team_b_win_chance*100, 2)}%]")
+            if team_a_win_chance > team_b_win_chance:
+                st.write(f"{match_row['TEAM A']} :green[{np.round(team_a_win_chance*100, 2)}%]")
+            elif team_b_win_chance > team_a_win_chance:
+                st.write(f"{match_row['TEAM B']} :green[{np.round(team_b_win_chance*100, 2)}%]")
+            else:
+                st.write("COIN FLIP")
