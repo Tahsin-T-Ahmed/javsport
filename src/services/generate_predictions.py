@@ -61,7 +61,7 @@ def generate_predictions(
 
             if metrics_map["error"]:
                 st.info(metrics_map["error"])
-                st.write("Skipping this match...")
+                st.write("This match is not worth calculating")
                 continue
 
             metrics_df = metrics_map["content"]

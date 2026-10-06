@@ -25,7 +25,7 @@ def get_team_a_win_chance(
         return FloatMap(
             error=f"ERROR: Invalid status code {response.status_code} from URL {api_url}",
             content=None
-        )    
+        )
 
     team_a_win_chance = float(response.text)
 
