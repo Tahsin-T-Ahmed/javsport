@@ -12,6 +12,7 @@ def assemble_mlb_metrics(
     probable_pitchers_df = uploaded_files_dict["probable_pitchers"]
     siera_df = uploaded_files_dict["siera"]
     sp_df = uploaded_files_dict["starting_pitchers"]
+    ip_df = uploaded_files_dict["innings_pitched"]
 
     for team_key, team_name in team_names_dict.items():
         pitchers_row = probable_pitchers_df[team_name == probable_pitchers_df["TR TEAM"]]
@@ -32,6 +33,7 @@ def assemble_mlb_metrics(
             )
 
         pitcher_siera = siera_df.loc[pitcher_fgid == siera_df["PLAYER FGID"], "SIERA"].item()
+        pitcher_ip = ip_df.loc[pitcher_fgid == ip_df["PLAYER FGID"], "IP"].item()
 
         team_column_key = f"TEAM {team_key.upper()}"
 
@@ -40,6 +42,8 @@ def assemble_mlb_metrics(
         metrics.loc["pitcher_name", team_column_key] = pitcher_name
 
         metrics.loc["pitcher_siera", team_column_key] = str(pitcher_siera)
+
+        metrics.loc["pitcher_ip", team_column_key] = str(pitcher_ip)
 
         for leaderboard_key, leaderboard in leaderboards_dict.items():
             team_row = leaderboard[team_name == leaderboard["TEAM"]]
@@ -59,4 +63,3 @@ def assemble_mlb_metrics(
         error=None,
         content=metrics
     )
-    
