@@ -1,5 +1,6 @@
 import json
 import numpy as np
+from src.components import prediction_header
 from src.services.get_team_a_win_chance import get_team_a_win_chance
 import streamlit as st
 
@@ -36,43 +37,48 @@ def generate_predictions(
         .mean()
     )
 
-    for match_index, match_row in schedule.iterrows():
-        team_names = dict(
-            a=match_row["TEAM A"],
-            b=match_row["TEAM B"]
-        )
+    for match_idx, match_row in schedule.iterrows():
+        with st.expander(
+            label=f":green[Game #{match_idx+1}]",
+            expanded=True
+        ):
+            prediction_header.render(
+                text=f":orange[{match_row['TITLE']}]"
+            )
+            team_names = dict(
+                a=match_row["TEAM A"],
+                b=match_row["TEAM B"]
+            )
 
-        team_b_is_home = match_row["TEAM B IS HOME"]
+            team_b_is_home = match_row["TEAM B IS HOME"]
 
-        metrics_map = metrics_assembler(
-            team_names_dict=team_names,
-            team_b_is_home=team_b_is_home,
-            leaderboards_dict=leaderboards,
-            uploaded_files_dict=uploaded_files
-        )
+            metrics_map = metrics_assembler(
+                team_names_dict=team_names,
+                team_b_is_home=team_b_is_home,
+                leaderboards_dict=leaderboards,
+                uploaded_files_dict=uploaded_files
+            )
 
-        if metrics_map["error"]:
-            st.error(metrics_map["error"])
-            continue
+            if metrics_map["error"]:
+                st.info(metrics_map["error"])
+                st.write("Skipping this match...")
+                continue
 
-        metrics_df = metrics_map["content"]
+            metrics_df = metrics_map["content"]
 
-        team_a_win_chance_map = get_team_a_win_chance(
-            sport_key=sport_key,
-            metrics_df=metrics_df,
-            league_average=league_average
-        )
+            team_a_win_chance_map = get_team_a_win_chance(
+                sport_key=sport_key,
+                metrics_df=metrics_df,
+                league_average=league_average
+            )
 
-        if team_a_win_chance_map["error"]:
-            st.error(team_a_win_chance_map["error"])
-            continue
+            if team_a_win_chance_map["error"]:
+                st.error(team_a_win_chance_map["error"])
+                continue
 
-        team_a_win_chance = team_a_win_chance_map["content"]
-        
-        team_b_win_chance = 1 - team_a_win_chance
+            team_a_win_chance = team_a_win_chance_map["content"]
+            
+            team_b_win_chance = 1 - team_a_win_chance
 
-        st.write("TEAM A:")
-        st.write(f"{match_row['TEAM A']}: :green[{team_a_win_chance}]")
-
-        st.write("TEAM B:")
-        st.write(f"{match_row['TEAM B']}: :orange[{team_b_win_chance}]")
+            st.write(f"{match_row['TEAM A']}: :green[{np.round(team_a_win_chance*100, 2)}%]")
+            st.write(f"{match_row['TEAM B']}: :orange[{np.round(team_b_win_chance*100, 2)}%]")
