@@ -55,12 +55,24 @@ def render(
         team_a_win_chance = team_a_win_chance_map["content"]
         
         team_b_win_chance = 1 - team_a_win_chance
+
+        metrics_display_df = metrics_df.copy()
+        
+        metrics_display_df.rename(
+            index=lambda row: (
+                " ".join([
+                    term.capitalize()
+                    if term not in ["ip", "siera"]
+                    else term.upper()
+                    for term in row.split("_")
+                ])
+            ),
+            inplace=True
+        )
         
         table.render(
-            data=metrics_df.rename(
-                index=lambda row: " ".join([term.capitalize() for term in row.split("_")])
-            ),
-            label="Team Metrics",
+            data=metrics_display_df,
+            label="Team Stats",
             collapse=True,
             height="content"
         )
