@@ -19,4 +19,7 @@ def render(
         )
 
     with view_tabs[1]:
-        data_tab.render(sport_key=sport_key)
+        data_tab.render(
+            sport_key=sport_key,
+            sport_title=sport_title
+        )
