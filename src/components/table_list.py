@@ -8,7 +8,7 @@ def render(
     hide_index:bool = False
 ):
     with st.expander(
-        label=title,
+        label=f":violet[{title}]",
         expanded=True
     ):
         if title:
