@@ -5,7 +5,7 @@ import streamlit as st
 def load_schedule(
     sport_key: str,
     sport_title: str,
-    timestamp: datetime.datetime | None,
+    timestamp: datetime.datetime,
     schedule_url: str
 ):
     if not timestamp:

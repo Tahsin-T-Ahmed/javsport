@@ -1,9 +1,11 @@
+from datetime import datetime
 from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
 from src.data_collection.parsers.scan_odds_table import scan_odds_table
 from src.metrics_assembly.assemble_nba_metrics import assemble_nba_metrics
 
 sport_wagers_page.render(
+    timestamp=datetime.now(),
     sport_name="NBA",
     sport_subheader="Pro Basketball",
     sport_icon=":material/sports_basketball:",

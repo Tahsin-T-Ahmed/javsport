@@ -1,9 +1,11 @@
+from datetime import datetime
 from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
 from src.data_collection.parsers.scan_odds_table import scan_odds_table
 from src.metrics_assembly.assemble_wnba_metrics import assemble_wnba_metrics
 
 sport_wagers_page.render(
+    timestamp=datetime.now(),
     sport_name="WNBA",
     sport_subheader="Women's NBA",
     sport_icon=":material/sports_basketball:",

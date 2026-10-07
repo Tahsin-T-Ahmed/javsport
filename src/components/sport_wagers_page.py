@@ -12,8 +12,8 @@ def render(
     schedule_url: str,
     leaderboard_urls_dict: dict,
     metrics_assembler: callable,
+    timestamp: datetime.datetime,
     win_trends_url: str | None = None,
-    timestamp: datetime.datetime | None = None,
     required_files_list: list[RequiredFileMap] | None = None,
 ):
     sport_title, sport_key = sport_name.upper(), sport_name.lower()
