@@ -1,4 +1,4 @@
-from src.components import upload_dialog
+from src.components import header, upload_dialog
 from src.data_collection.data_maps import RequiredFileMap
 import streamlit as st
 
@@ -7,6 +7,13 @@ def render(
     sport_title: str,
     required_files_list: list[RequiredFileMap]
 ):
+    header.render("UPLOAD FILES FOR RESULTS")
+    st.markdown(
+        body="Click :yellow[SUBMIT FILES] at the bottom when finished",
+        text_alignment="center",
+        anchors=False
+    )
+    
     for file_map in required_files_list:
         upload_dialog.render(
             **file_map,
