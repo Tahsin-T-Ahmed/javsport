@@ -81,7 +81,8 @@ def render(
             data=metrics_display_df,
             label="Team Stats",
             collapse=True,
-            height="content"
+            height="content",
+            expanded=False
         )
 
         if team_a_win_chance > team_b_win_chance:
