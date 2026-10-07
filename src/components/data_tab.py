@@ -20,7 +20,8 @@ def render(
         title=f"{sport_title} Leaderboards",
         dataframes_dict=st.session_state[sport_key]["leaderboards"],
         collapse=True,
-        hide_index=True
+        hide_index=True,
+        height=300
     )
 
     if not st.session_state[sport_key]["file_requirements"]["fulfilled"]:
@@ -30,5 +31,6 @@ def render(
         title=f"Uploaded {sport_title} Data",
         dataframes_dict=st.session_state[sport_key]["file_requirements"]["data"],
         collapse=True,
-        hide_index=True
+        hide_index=True,
+        height="auto"
     )

@@ -5,7 +5,8 @@ def render(
     dataframes_dict: dict,
     title: str | None = None,
     collapse: bool = False,
-    hide_index:bool = False
+    hide_index: bool = False,
+    height: int | str = "auto"
 ):
     with st.expander(
         label=f":violet[{title}]",
@@ -24,5 +25,6 @@ def render(
                     for term in df_key.split('_')
                 ])}",
                 collapse=collapse,
-                hide_index=hide_index
+                hide_index=hide_index,
+                height=height
             )
