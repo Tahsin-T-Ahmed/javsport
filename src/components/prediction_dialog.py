@@ -19,7 +19,7 @@ def render(
         ]
     )
     with st.expander(
-        label=f":violet[#{match_idx+1}:] :orange[{display_time}] :red[{match_row['TITLE']}]",
+        label=f":red[#{match_idx+1}:] :orange[{display_time}] :violet[{match_row['TITLE']}]",
         expanded=True,
         type="default"
     ):
@@ -60,6 +60,13 @@ def render(
         team_a_win_chance = team_a_win_chance_map["content"]        
         team_b_win_chance = 1 - team_a_win_chance
 
+        if team_a_win_chance > team_b_win_chance:
+            st.write(f"{match_row['TEAM A']} :green[{np.round(team_a_win_chance*100, 2)}%]")
+        elif team_b_win_chance > team_a_win_chance:
+            st.write(f"{match_row['TEAM B']} :green[{np.round(team_b_win_chance*100, 2)}%]")
+        else:
+            st.write("COIN FLIP")
+
         metrics_display_df = metrics_df.copy()        
         metrics_display_df.rename(
             index=lambda row: (
@@ -84,10 +91,3 @@ def render(
             height="content",
             expanded=False
         )
-
-        if team_a_win_chance > team_b_win_chance:
-            st.write(f"{match_row['TEAM A']} :green[{np.round(team_a_win_chance*100, 2)}%]")
-        elif team_b_win_chance > team_a_win_chance:
-            st.write(f"{match_row['TEAM B']} :green[{np.round(team_b_win_chance*100, 2)}%]")
-        else:
-            st.write("COIN FLIP")
