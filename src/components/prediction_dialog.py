@@ -13,8 +13,13 @@ def render(
     uploaded_files: dict[str, pd.DataFrame],
     metrics_assembler: callable,
 ):
+    display_time = (
+        st.session_state[sport_key]["schedule"]["display"].loc[
+            match_idx, "TIME"
+        ]
+    )
     with st.expander(
-        label=f":orange[#{match_idx+1}:] :red[{match_row['TITLE']}]",
+        label=f":violet[#{match_idx+1}:] :orange[{display_time}] :red[{match_row['TITLE']}]",
         expanded=True,
         type="default"
     ):
