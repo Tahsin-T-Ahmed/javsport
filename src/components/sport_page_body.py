@@ -38,11 +38,6 @@ def render(
             timestamp=timestamp,
             schedule_url=schedule_url
         )
-    
-    timestamp_banner.render(
-        timestamp=st.session_state[sport_key]["timestamp"],
-        header="Loaded on (TIMESTAMP):"
-    )
 
     if st.session_state[sport_key]["schedule"]["data"].empty:
         empty_schedule_notifier.render(

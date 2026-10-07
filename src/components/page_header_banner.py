@@ -17,5 +17,3 @@ def render(
         text_alignment="center",
         anchors=False
     )
-
-    st.divider()
