@@ -2,44 +2,8 @@ import datetime
 from src.components import delay_disclaimer, page_header_banner, sport_page_body
 from src.data_collection.data_maps import RequiredFileMap
 from src.services.get_schedule import get_schedule
+from src.services.load_schedule import load_schedule
 import streamlit as st
-
-def load_schedule(
-    sport_key: str,
-    sport_title: str,
-    timestamp: datetime.datetime | None,
-    schedule_url: str
-):
-    if not timestamp:
-        timestamp = datetime.datetime.now()
-    
-    st.session_state[sport_key]["timestamp"] = timestamp
-
-    with st.spinner(
-        text=f"Checking {sport_title} Schedule...",
-        show_time=True
-    ):
-        schedule_dict_map = get_schedule(
-            schedule_url=schedule_url,
-            timestamp=timestamp
-        )
-
-        if schedule_dict_map["error"]:
-            st.error(
-                body = schedule_dict_map["error"],
-                icon=":material/error:"
-            )
-
-            st.toast(
-                body=f":red[Failed to load {sport_title} schedule]",
-                icon=":material/error:"
-            )
-
-            return
-
-        st.session_state[sport_key]["schedule"] = schedule_dict_map["content"]
-
-        st.session_state[sport_key]["leaderboards"] = dict()
 
 def render(
     sport_name: str,
@@ -70,24 +34,23 @@ def render(
     sport_page_body.render(
         sport_key=sport_key,
         sport_title=sport_title,
+        schedule_url=schedule_url,
+        timestamp=timestamp,
         required_files_list=required_files_list,
         leaderboard_urls_dict=leaderboard_urls_dict,
         win_trends_url=win_trends_url,
         metrics_assembler=metrics_assembler
     )
 
-    load_button_label = f":material/touch_app: Load {sport_title} Data :material/touch_app:"
-
     if sport_key in st.session_state and "schedule" in st.session_state[sport_key]:
-        load_button_label = f":material/refresh: Reload {sport_title} Data :material/refresh:"
 
-    st.button(
-        type="primary",
-        label=load_button_label,
-        width="stretch",
-        on_click=load_schedule,
-        args=[sport_key, sport_title, timestamp, schedule_url]
-    )
+        st.button(
+            type="primary",
+            label=f":material/refresh: Reload {sport_title} Data :material/refresh:",
+            width="stretch",
+            on_click=load_schedule,
+            args=[sport_key, sport_title, timestamp, schedule_url]
+        )
 
     delay_disclaimer.render()
 

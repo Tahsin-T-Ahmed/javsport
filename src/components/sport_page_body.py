@@ -1,3 +1,4 @@
+import datetime
 import streamlit as st
 from src.components import (
     empty_schedule_notifier,
@@ -7,10 +8,13 @@ from src.components import (
 )
 from src.data_collection.data_maps import RequiredFileMap
 from src.services.get_leaderboards import get_leaderboards
+from src.services.load_schedule import load_schedule
 
 def render(
     sport_key: str,
     sport_title: str,
+    schedule_url: str,
+    timestamp: datetime.datetime,
     required_files_list: list[RequiredFileMap],
     leaderboard_urls_dict: dict,
     win_trends_url: str,
@@ -28,12 +32,12 @@ def render(
         )
     
     if "schedule" not in st.session_state[sport_key]:
-        st.markdown(
-            body=":material/south: Click below to start :material/south:",
-            text_alignment="center"
+        load_schedule(
+            sport_key=sport_key,
+            sport_title=sport_title,
+            timestamp=timestamp,
+            schedule_url=schedule_url
         )
-
-        return
     
     timestamp_banner.render(
         timestamp=st.session_state[sport_key]["timestamp"],
