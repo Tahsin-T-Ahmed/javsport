@@ -6,7 +6,8 @@ def render(
     hide_index: bool = False,
     label: str | None = None,
     collapse: bool = False,
-    height: int | str = 250
+    height: int | str = 250,
+    expanded: bool = True
 ):
     if not collapse:
         st.caption(label)
@@ -19,7 +20,7 @@ def render(
     
     with st.expander(
         label=label,
-        expanded=True,
+        expanded=expanded,
         type="compact"
     ):
         st.dataframe(
