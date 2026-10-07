@@ -49,7 +49,7 @@ def render(
             label=f":material/refresh: Reload {sport_title} Data :material/refresh:",
             width="stretch",
             on_click=load_schedule,
-            args=[sport_key, sport_title, timestamp, schedule_url]
+            args=[sport_key, sport_title, timestamp, schedule_url, required_files_list]
         )
 
     delay_disclaimer.render()

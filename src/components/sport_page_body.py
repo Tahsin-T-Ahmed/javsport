@@ -21,22 +21,15 @@ def render(
     metrics_assembler: callable
 ):
     if sport_key not in st.session_state:
-        st.session_state[sport_key] = dict(
-            file_requirements=dict(
-                fulfilled=False,
-                data={
-                    file_map["file_key"]: None
-                    for file_map in required_files_list
-                }
-            )
-        )
+        st.session_state[sport_key] = dict()
     
     if "schedule" not in st.session_state[sport_key]:
         load_schedule(
             sport_key=sport_key,
             sport_title=sport_title,
             timestamp=timestamp,
-            schedule_url=schedule_url
+            schedule_url=schedule_url,
+            required_files_list=required_files_list
         )
 
     if st.session_state[sport_key]["schedule"]["data"].empty:
