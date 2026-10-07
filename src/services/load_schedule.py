@@ -8,9 +8,6 @@ def load_schedule(
     timestamp: datetime.datetime,
     schedule_url: str
 ):
-    if not timestamp:
-        timestamp = datetime.datetime.now()
-    
     st.session_state[sport_key]["timestamp"] = timestamp
 
     with st.spinner(
