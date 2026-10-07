@@ -97,12 +97,6 @@ def render(
         
         st.session_state[sport_key]["file_requirements"]["data"][file_key] = table_df
 
-        st.success(
-            title=f"{file_label} file scanned!",
-            body="Please review data below before proceeding",
-            icon=":material/check:"
-        )
-
         if not initial_file_success:
             st.toast(
                 body=f":orange[{sport_title}] :green[{file_label}] Uploaded",
