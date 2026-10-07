@@ -12,7 +12,7 @@ def render(
         expanded=True
     ):
         if title:
-            header.render(title)
+            header.render(title.upper())
         
         for df_key, df in dataframes_dict.items():
             table.render(

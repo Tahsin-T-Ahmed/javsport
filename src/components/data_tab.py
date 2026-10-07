@@ -13,7 +13,7 @@ def render(sport_key: str):
         return
     
     table_list.render(
-        title="LEADERBOARDS",
+        title="Leaderboards",
         dataframes_dict=st.session_state[sport_key]["leaderboards"],
         collapse=True,
         hide_index=True
@@ -23,7 +23,7 @@ def render(sport_key: str):
         return
 
     table_list.render(
-        title="UPLOADED DATA",
+        title="Uploaded Data",
         dataframes_dict=st.session_state[sport_key]["file_requirements"]["data"],
         collapse=True,
         hide_index=True
