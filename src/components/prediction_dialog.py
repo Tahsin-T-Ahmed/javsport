@@ -52,12 +52,10 @@ def render(
             st.error(team_a_win_chance_map["error"])
             return
 
-        team_a_win_chance = team_a_win_chance_map["content"]
-        
+        team_a_win_chance = team_a_win_chance_map["content"]        
         team_b_win_chance = 1 - team_a_win_chance
 
-        metrics_display_df = metrics_df.copy()
-        
+        metrics_display_df = metrics_df.copy()        
         metrics_display_df.rename(
             index=lambda row: (
                 " ".join([
@@ -69,6 +67,10 @@ def render(
             ),
             inplace=True
         )
+
+        metrics_display_header = metrics_display_df.iloc[0, :]
+        metrics_display_df.columns = metrics_display_header
+        metrics_display_df = metrics_display_df.iloc[1:, :]
         
         table.render(
             data=metrics_display_df,
