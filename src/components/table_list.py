@@ -17,7 +17,12 @@ def render(
         for df_key, df in dataframes_dict.items():
             table.render(
                 data=df,
-                label=f"{' '.join([term.capitalize() for term in df_key.split('_')])}",
+                label=f"{' '.join([
+                    term.capitalize()
+                    if term != "siera"
+                    else term.upper()
+                    for term in df_key.split('_')
+                ])}",
                 collapse=collapse,
                 hide_index=hide_index
             )
