@@ -38,10 +38,13 @@ def render(
         )
 
         if metrics_map["error"]:
-            st.info("This match is not worth calculating")
-            st.error(
-                body=metrics_map["error"],
-                icon=":material/cancel:"
+            st.info(
+                body=f"This match will be skipped",
+                icon=":material/skip_next:"
+            )
+            st.warning(
+                body = f"Why? :red[{metrics_map['error']}]",
+                icon=":material/sentiment_dissatisfied:"
             )
             return
 
