@@ -1,8 +1,7 @@
 import streamlit as st
 
-from bs4 import BeautifulSoup
 import datetime
-from src.data_collection.parsers.scan_odds_table import scan_odds_table
+from src.services.get_moneyline import get_moneyline
 
 file = st.file_uploader(
     label="Upload Moneyline",
@@ -11,9 +10,12 @@ file = st.file_uploader(
 
 if file is not None:
     timestamp = datetime.datetime.now()
-    soup = scan_odds_table(
+    moneyline = get_moneyline(
         file=file,
         timestamp=timestamp
     )
 
-    st.write(soup)
+    if moneyline["error"]:
+        st.error(moneyline["error"])
+    else:
+        st.write(moneyline["content"])
