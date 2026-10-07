@@ -2,10 +2,10 @@ from datetime import datetime
 from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
 from src.data_collection.parsers.scan_mlb_starting_pitchers import scan_mlb_starting_pitchers
-from src.data_collection.parsers.scan_odds_table import scan_odds_table
 from src.metrics_assembly.assemble_mlb_metrics import assemble_mlb_metrics
 from src.services.get_innings_pitched import get_innings_pitched
 from src.services.get_mlb_probables import get_mlb_probables
+from src.services.get_moneyline import get_moneyline
 from src.services.get_siera import get_siera
 
 timestamp = datetime.now()
@@ -31,7 +31,7 @@ sport_wagers_page.render(
             file_key="moneyline",
             file_type="mhtml",
             source_url="https://www.teamrankings.com/mlb/odds/",
-            file_parser=scan_odds_table,
+            file_parser=get_moneyline,
             guide_type="webpage"
         ),
         RequiredFileMap(

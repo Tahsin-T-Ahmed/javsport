@@ -1,8 +1,8 @@
 from datetime import datetime
 from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
-from src.data_collection.parsers.scan_odds_table import scan_odds_table
 from src.metrics_assembly.assemble_wnba_metrics import assemble_wnba_metrics
+from src.services.get_moneyline import get_moneyline
 
 sport_wagers_page.render(
     timestamp=datetime.now(),
@@ -24,7 +24,7 @@ sport_wagers_page.render(
             file_key="moneyline",
             file_type="mhtml",
             source_url="https://www.teamrankings.com/wnba/odds/",
-            file_parser=scan_odds_table,
+            file_parser=get_moneyline,
             guide_type="webpage"
         )
     ],
