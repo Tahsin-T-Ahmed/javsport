@@ -1,4 +1,4 @@
-from src.components import page_header_banner
+from src.components import header, page_header_banner
 import streamlit as st
 
 st.set_page_config(
@@ -17,8 +17,32 @@ with st.expander(
 ):
     st.markdown("##### JavSport is a :rainbow[SPORTS-BETTING WAGER-CALCULATION SOFTWARE!]")
     st.write("Sports include baseball, basketball, and American football")
-    st.write("Our strategy is to bet against the market's :green[Money-Line Odds]")
     st.write("JavSport uses a specialized formula for sports-metrics calculation")
-    st.write("Our predictions are then compared with the market's to show you the edge")
+    st.write("Our strategy is to bet against the market's :green[Money-Line Odds]")
+    st.write("We compare our predictions with the market's and show you the edge")
     st.write("Then, you make money!")
     st.caption("or you lose, we don't know")
+
+    st.markdown(
+        body="[Link to GitHub Repo](https://github.com/Tahsin-T-Ahmed/javsport)"
+    )
+
+with st.expander(
+    label="About Us",
+    expanded=True
+):
+    lcol, rcol = st.columns(2)
+
+    with lcol:
+        header.render("Javier Rodriguez")
+        st.markdown(
+            body="Sports-betting Connoisseur",
+            text_alignment="center"
+        )
+
+    with rcol:
+        header.render("Tahsin T Ahmed")
+        st.markdown(
+            body="Software Developer",
+            text_alignment="center"
+        )
