@@ -24,7 +24,7 @@ with st.expander(
     st.caption("or you lose, we don't know")
 
     st.markdown(
-        body="[Link to GitHub Repo](https://github.com/Tahsin-T-Ahmed/javsport)"
+        body="[Link to GitHub Repo :material/open_in_new:](https://github.com/Tahsin-T-Ahmed/javsport)"
     )
 
 with st.expander(

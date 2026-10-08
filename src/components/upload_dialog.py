@@ -30,7 +30,7 @@ def render(
         label = f"Upload {sport_title} {file_label} Data"
 
         if source_url:
-            label = f"Upload [{sport_title} {file_label} Data]({source_url})"
+            label = f"Upload [{sport_title} {file_label} Data :material/open_in_new:]({source_url})"
 
         file_type_label_color = "green"
         file_type_label = f":{file_type_label_color}[.{file_type}]"
