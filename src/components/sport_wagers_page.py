@@ -26,9 +26,9 @@ def render(
     session_state_preview = st.empty()
 
     page_header_banner.render(
-        sport_title=sport_title,
-        sport_subheader=sport_subheader,
-        sport_icon=sport_icon
+        title=sport_title,
+        subheader=sport_subheader,
+        icon=sport_icon
     )
 
     sport_page_body.render(
