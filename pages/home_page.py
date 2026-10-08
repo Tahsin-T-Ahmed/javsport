@@ -70,24 +70,40 @@ with st.container(horizontal=True, horizontal_alignment="center"):
         anchors=False
     )
 
-st.space()
+with st.container(border=True):
+    with st.container(
+        horizontal=True,
+        horizontal_alignment="center",
+        gap="xsmall"
+    ):
+        st.markdown(
+            body="### :red[:material/warning: WARNING:]",
+            anchors=False
+        )
 
-with st.container(
-    horizontal=True,
-    horizontal_alignment="center",
-    gap="xsmall"
-):
+        st.markdown(
+            body="### DATA IS TIME-SENSITIVE",
+            anchors=False
+        )
+
     st.markdown(
-        body="### :red[:material/warning: WARNING:]",
-        anchors=False
+        body=":material/play_pause: Once the stats are loaded, they're STATIC :material/pause_circle:",
+        text_alignment="center"
     )
 
-    st.markdown(
-        body="### DATA IS TIME-SENSITIVE",
-        anchors=False
+    st.caption(
+        body="No pun intended",
+        text_alignment="center"
     )
 
 st.markdown(
-    body='All calculations use the data available when the "Load" button is clicked',
-    text_alignment="center"
+    body="Developed by [Tahsin T Ahmed](https://github.com/Tahsin-T-Ahmed)",
+    text_alignment="center",
+    anchors=False
+)
+
+st.markdown(
+    body="[Link to GitHub Repo :material/open_in_new:](https://github.com/Tahsin-T-Ahmed/javsport)",
+    text_alignment="center",
+    anchors=False
 )
