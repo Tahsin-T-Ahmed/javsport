@@ -60,15 +60,18 @@ def render(
             st.error(team_a_win_chance_map["error"])
             return
 
-        team_a_win_chance = team_a_win_chance_map["content"]        
-        team_b_win_chance = 1 - team_a_win_chance
+        team_win_chances = dict()
+        team_win_chances["a"] = team_a_win_chance_map["content"] 
+        team_win_chances["b"] = 1 - team_win_chances["a"]
 
-        if team_a_win_chance > team_b_win_chance:
-            st.write(f"{match_row['TEAM A']} :green[{np.round(team_a_win_chance*100, 2)}%]")
-        elif team_b_win_chance > team_a_win_chance:
-            st.write(f"{match_row['TEAM B']} :green[{np.round(team_b_win_chance*100, 2)}%]")
+        winning_team_key = None
+
+        if team_win_chances["a"] > team_win_chances["b"]:
+            winning_team_key = "a"
+        elif team_win_chances["b"] > team_win_chances["a"]:
+            winning_team_key = "b"
         else:
-            st.write("COIN FLIP")
+            winning_team_key = None
 
         metrics_display_df = metrics_df.copy()        
         metrics_display_df.rename(
@@ -96,7 +99,30 @@ def render(
                 ]
             ).item()
 
-        
+        st.markdown(
+            body=f"##### :orange[:material/trophy:] JavSport thinks :violet[{team_names[winning_team_key]}] will win :orange[:material/trophy:]",
+            anchors=False
+        )
+
+        st.write(f"JavSport's confidence: :violet[{np.round(team_win_chances[winning_team_key]*100, 2)}%]")
+        st.write(f"Market's confidence: :orange[{np.round(team_moneylines[winning_team_key]*100, 2)}%]")
+
+        edge = np.round(
+            (team_win_chances[winning_team_key] - team_moneylines[winning_team_key])*100,
+            2
+        )
+
+        if np.abs(edge) >= 0.5:
+            edge_color = None
+
+            if team_win_chances[winning_team_key] < team_moneylines[winning_team_key]:
+                edge_color = "red"
+            else:
+                edge_color = "green"
+
+            st.write(f"Edge against Market: :{edge_color}[{'+' if edge > 0 else ''}{edge}%]")
+        else:
+            st.caption("Predictions are similar")
         
         table.render(
             data=metrics_display_df,
