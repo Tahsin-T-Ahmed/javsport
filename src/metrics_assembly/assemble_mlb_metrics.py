@@ -17,9 +17,11 @@ def assemble_mlb_metrics(
     for team_key, team_name in team_names_dict.items():
         pitchers_row = probable_pitchers_df[team_name == probable_pitchers_df["TR TEAM"]]
 
-        if pitchers_row["N PITCHERS"].item() != 1:
+        n_pitchers = int(pitchers_row["N PITCHERS"].item())
+
+        if n_pitchers != 1:
             return DataFrameMap(
-                error=f"Pitcher-count is not 1 for {team_name}",
+                error=f"{team_name} has {n_pitchers} pitchers",
                 content=None
             )
 
