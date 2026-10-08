@@ -41,9 +41,10 @@ with st.expander(
         )
 
         st.image(
-            image="./img/javy.png"
+            image="./img/javy.png",
+            width="stretch",
+            caption="Celebrating Tampa Bay's win over NY Yankees"
         )
-        st.caption("Celebrating Tampa Bay's win over NY Yankees")
 
     with rcol:
         header.render("Tahsin T Ahmed")
@@ -53,6 +54,7 @@ with st.expander(
         )
 
         st.image(
-            image="./img/tahsin.png"
+            image="./img/tahsin.png",
+            width="stretch",
+            caption="Makin' all kinds of gains (all kinds)"
         )
-        st.caption("Makin' all kinds of gains (all kinds)")
