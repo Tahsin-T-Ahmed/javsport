@@ -17,16 +17,6 @@ The project supports **MLB, NBA, NCAA Basketball, NCAA Football, NFL, and WNBA**
 
 All sports require a moneyline file in **MHTML** format, along with other file-dependencies that differ across sports.
 
-| File input | Expected file format |
-| --- | --- |
-| Moneyline | MHTML |
-| Innings pitched | XLSX |
-| SIERA pitching metric | XLSX |
-| Probable pitchers | HTML |
-| Pitcher roster data | XLSX |
-
-The MLB spreadsheet inputs need the player/team columns and links used by the parser. The app shows upload guidance on each sport page and previews successfully parsed files before they are submitted. For non-MLB sports, team schedules and performance metrics are loaded by the app; the moneyline is supplied by the user.
-
 ## How it works
 
 1. Choose a sport page. JavSport loads that sport's current-day schedule.
