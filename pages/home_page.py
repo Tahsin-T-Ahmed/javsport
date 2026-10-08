@@ -23,7 +23,7 @@ with st.container(border=True):
     st.space()
 
     st.markdown(
-        body=":gray[Don't tell anyone about this website]",
+        body=":gray[:material/mic_off: Don't tell anyone about this website :material/mic_off:]",
         text_alignment="center",
         anchors=None
     )
