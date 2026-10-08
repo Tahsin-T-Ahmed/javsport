@@ -86,6 +86,17 @@ def render(
         metrics_display_header = metrics_display_df.iloc[0, :]
         metrics_display_df.columns = metrics_display_header
         metrics_display_df = metrics_display_df.iloc[1:, :]
+
+        team_moneylines = dict()
+        for team_key, team_name in team_names.items():
+            team_moneylines[team_key] = (
+                uploaded_files["moneyline"].loc[
+                    team_name == uploaded_files["moneyline"]["TEAM"],
+                    "PROBABILITY"
+                ]
+            ).item()
+
+        
         
         table.render(
             data=metrics_display_df,
