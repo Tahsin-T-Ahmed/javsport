@@ -8,7 +8,7 @@ about_page = st.Page(
 
 home_page = st.Page(
     page="./pages/home_page.py",
-    title="Home",
+    title="JavSport",
     icon=":material/home:"
 )
 
