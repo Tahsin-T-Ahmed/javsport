@@ -22,6 +22,12 @@ with st.container(border=True):
 
     st.space()
 
+    st.markdown(
+        body=":gray[Don't tell anyone about this website]",
+        text_alignment="center",
+        anchors=None
+    )
+
 st.markdown(
     body="Choose a **SPORT** from the top-left :material/north_west: menu or the shortcuts below :material/south::",
     text_alignment="center"
