@@ -40,9 +40,19 @@ with st.expander(
             text_alignment="center"
         )
 
+        st.image(
+            image="./img/javy.png"
+        )
+        st.caption("Celebrating Tampa Bay's win over NY Yankees")
+
     with rcol:
         header.render("Tahsin T Ahmed")
         st.markdown(
             body="Software Developer",
             text_alignment="center"
         )
+
+        st.image(
+            image="./img/tahsin.png"
+        )
+        st.caption("Makin' all kinds of gains (all kinds)")
