@@ -19,7 +19,7 @@ def render(
         ]
     )
     with st.expander(
-        label=f":red[#{match_idx+1}:] :orange[{display_time}] :violet[{match_row['TITLE']}]",
+        label=f":red[{match_idx+1}/{st.session_state[sport_key]["schedule"]["data"].shape[0]}:] :orange[{display_time}] :violet[{match_row['TITLE']}]",
         expanded=True,
         type="default"
     ):
