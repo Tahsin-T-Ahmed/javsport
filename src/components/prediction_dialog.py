@@ -50,19 +50,20 @@ def render(
 
         metrics_df = metrics_map["content"]
 
-        team_a_win_chance_map = get_team_a_win_chance(
-            sport_key=sport_key,
-            metrics_df=metrics_df,
-            league_average=league_average
-        )
-
-        if team_a_win_chance_map["error"]:
-            st.error(team_a_win_chance_map["error"])
-            return
-
         team_win_chances = dict()
-        team_win_chances["a"] = team_a_win_chance_map["content"] 
-        team_win_chances["b"] = 1 - team_win_chances["a"]
+
+        with st.spinner("Loading Win-Probability..."):
+            team_a_win_chance_map = get_team_a_win_chance(
+                sport_key=sport_key,
+                metrics_df=metrics_df,
+                league_average=league_average
+            )
+
+            if team_a_win_chance_map["error"]:
+                st.error(team_a_win_chance_map["error"])
+                return
+            team_win_chances["a"] = team_a_win_chance_map["content"] 
+            team_win_chances["b"] = 1 - team_win_chances["a"]
 
         winning_team_key = None
 
