@@ -39,8 +39,8 @@ def render(
 
         if metrics_map["error"]:
             st.info(
-                body=f"This match will be skipped",
-                icon=":material/skip_next:"
+                body=f"This match is not worth calculating",
+                icon=":material/thumb_down:"
             )
             st.warning(
                 body = f"Why? :red[{metrics_map['error']}]",
