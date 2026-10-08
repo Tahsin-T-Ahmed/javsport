@@ -59,7 +59,7 @@ sport_wagers_page.render(
             guide_type="spreadsheet"
         ),
         RequiredFileMap(
-            file_label="Starting Pitchers (Roster)",
+            file_label="Roster",
             file_key="starting_pitchers",
             file_type="xlsx",
             file_parser=scan_mlb_starting_pitchers,
