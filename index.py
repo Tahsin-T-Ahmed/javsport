@@ -1,5 +1,11 @@
 import streamlit as st
 
+about_page = st.Page(
+    page="./pages/about_page.py",
+    title="About",
+    icon=":material/help:"
+)
+
 home_page = st.Page(
     page="./pages/home_page.py",
     title="Home",
@@ -48,11 +54,11 @@ wnba_page = st.Page(
     icon=":material/sports_basketball:"
 )
 
-test_page = st.Page(
-    page="./pages/test_page.py",
-    title="Dev-Test",
-    url_path="/test"
-)
+# test_page = st.Page(
+#     page="./pages/test_page.py",
+#     title="Dev-Test",
+#     url_path="/test"
+# )
 
 pages = [
     home_page,
@@ -62,7 +68,8 @@ pages = [
     ncaaf_page,
     nfl_page,
     wnba_page,
-    test_page
+    about_page
+    # test_page
 ]
 
 nav = st.navigation(
