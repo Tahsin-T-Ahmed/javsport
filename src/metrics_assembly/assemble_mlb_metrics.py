@@ -19,7 +19,7 @@ def assemble_mlb_metrics(
 
         if pitchers_row["N PITCHERS"].item() != 1:
             return DataFrameMap(
-                error=f"Pitcher-count is not 1 for team: {team_name}",
+                error=f"Pitcher-count is not 1 for {team_name}",
                 content=None
             )
 
