@@ -15,16 +15,45 @@ with st.expander(
     label="About JavSport",
     expanded=True
 ):
-    st.markdown("##### JavSport is a :rainbow[SPORTS-BETTING WAGER-CALCULATION SOFTWARE!]")
-    st.write("Sports include baseball, basketball, and American football")
-    st.write("JavSport uses a specialized formula for sports-metrics calculation")
-    st.write("Our strategy is to bet against the market's :green[Money-Line Odds]")
-    st.write("We compare our predictions with the market's and show you the edge")
-    st.write("Then, you make money!")
-    st.caption("or you lose, we don't know")
+    st.markdown(
+        body="##### JavSport is a :rainbow[SPORTS-BETTING WAGER-CALCULATION SOFTWARE!]",
+        text_alignment="center",
+        anchors=False
+    )
+    st.markdown(
+        body="Sports include baseball, basketball, and American football",
+        text_alignment="center",
+        anchors=False
+    )
+    st.markdown(
+        body="JavSport uses a specialized formula for sports-metrics calculation",
+        text_alignment="center",
+        anchors=False
+    )
+    st.markdown(
+        body="Our strategy is to bet against the market's :green[Money-Line Odds]",
+        text_alignment="center",
+        anchors=False
+    )
+    st.markdown(
+        body="We compare our predictions with the market's and show you the edge",
+        text_alignment="center",
+        anchors=False
+    )
+    st.markdown(
+        body="Then, you make money!",
+        text_alignment="center",
+        anchors=False
+    )
+    st.caption(
+        body="or you lose, we don't know",
+        text_alignment="center"
+    )
 
     st.markdown(
-        body="[Link to GitHub Repo :material/open_in_new:](https://github.com/Tahsin-T-Ahmed/javsport)"
+        body="[Link to GitHub Repo :material/open_in_new:](https://github.com/Tahsin-T-Ahmed/javsport)",
+        text_alignment="right",
+        anchors=False
     )
 
 with st.expander(
@@ -34,27 +63,39 @@ with st.expander(
     lcol, rcol = st.columns(2)
 
     with lcol:
-        header.render("Javier Rodriguez")
-        st.markdown(
-            body="Sports-betting Connoisseur",
-            text_alignment="center"
-        )
+        with st.container(border=True):
+            header.render("Javy")
+            st.caption(
+                body="\"Haa-Vee\"",
+                text_alignment="center"
+            )
+            st.markdown(
+                body=":orange[Sports-betting Connoisseur]",
+                text_alignment="center",
+                anchors=False
+            )
 
-        st.image(
-            image="./img/javy.png",
-            width="stretch",
-            caption="Celebrating Tampa Bay's win over NY Yankees"
-        )
+            st.image(
+                image="./img/javy.png",
+                width="stretch",
+                caption="Celebrating Tampa Bay's win over NY Yankees"
+            )
 
     with rcol:
-        header.render("Tahsin T Ahmed")
-        st.markdown(
-            body="Software Developer",
-            text_alignment="center"
-        )
+        with st.container(border=True):
+            header.render("Tazy")
+            st.caption(
+                body="\"Tay-Zee\"",
+                text_alignment="center"
+            )
+            st.markdown(
+                body=":orange[Software Developer]",
+                text_alignment="center",
+                anchors=False
+            )
 
-        st.image(
-            image="./img/tahsin.png",
-            width="stretch",
-            caption="Makin' all kinds of gains (all kinds)"
-        )
+            st.image(
+                image="./img/tahsin.png",
+                width="stretch",
+                caption=["Makin' all kinds of gains (all kinds)"]
+            )
