@@ -7,19 +7,20 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title(
-    body="JavSport", 
-    text_alignment="center",
-    anchor=False
-)
+with st.container(border=True):
+    st.title(
+        body=":violet[JavSport]", 
+        text_alignment="center",
+        anchor=False
+    )
 
-st.markdown(
-    body="#### :material/money_bag: Bet Smarter, Not Harder :material/money_bag:",
-    text_alignment="center",
-    anchors=False
-)
+    st.markdown(
+        body="#### :rainbow[:material/money_bag: Bet Smarter, Not Harder :material/money_bag:]",
+        text_alignment="center",
+        anchors=False
+    )
 
-st.divider()
+    st.space()
 
 st.markdown(
     body="Choose a **SPORT** from the top-left :material/north_west: menu or the shortcuts below :material/south::",
