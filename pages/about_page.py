@@ -1,14 +1,14 @@
-from src.components import header, page_header_banner
+from src.components import header
 import streamlit as st
 
 st.set_page_config(
     page_title="About JavSport"
 )
 
-page_header_banner.render(
-    title="About",
-    subheader="What is JavSport? Who are we?",
-    icon=":material/help:"
+st.header(
+    body="What is JavSport?",
+    text_alignment="center",
+    anchor=False
 )
 
 with st.expander(
@@ -70,7 +70,7 @@ with st.expander(
                 text_alignment="center"
             )
             st.markdown(
-                body=":orange[Sports-betting Connoisseur]",
+                body=":orange[Sports-Betting Connoisseur]",
                 text_alignment="center",
                 anchors=False
             )
