@@ -1,21 +1,7 @@
 import streamlit as st
 
-import datetime
-from src.services.get_moneyline import get_moneyline
+from src.data_collection.builders.make_team_roster import make_team_roster
 
-file = st.file_uploader(
-    label="Upload Moneyline",
-    type="mhtml"
-)
-
-if file is not None:
-    timestamp = datetime.datetime.now()
-    moneyline = get_moneyline(
-        file=file,
-        timestamp=timestamp
-    )
-
-    if moneyline["error"]:
-        st.error(moneyline["error"])
-    else:
-        st.write(moneyline["content"])
+make_team_roster(
+    url="https://www.teamrankings.com/mlb/teams/"
+)["content"]
