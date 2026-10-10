@@ -10,26 +10,41 @@ def render(
     match_row: pd.Series,
     match_idx: int,
     leaderboards: dict[str, pd.DataFrame],
+    team_roster: pd.DataFrame,
     uploaded_files: dict[str, pd.DataFrame],
     metrics_assembler: callable,
 ):
+    team_names = dict(
+        a=match_row["TEAM A"],
+        b=match_row["TEAM B"]
+    )
+
+    team_b_is_home = match_row["TEAM B IS HOME"]
+
     display_time = (
         st.session_state[sport_key]["schedule"]["display"].loc[
             match_idx, "TIME"
         ]
     )
+
+    team_full_names = dict()
+
+    for team_key, team_name in team_names.items():
+        team_trid = leaderboards["win_trends"][
+            team_name == leaderboards["win_trends"]["TEAM NAME"]
+        ].index.item()
+
+        team_full_name = team_roster.loc[
+            team_trid, "TEAM NAME"
+        ]
+
+        team_full_names[team_key] = team_full_name
+        
     with st.expander(
-        label=f":red[{match_idx+1}/{st.session_state[sport_key]["schedule"]["data"].shape[0]}:] :orange[{display_time}] :violet[{match_row['TITLE']}]",
+        label=f":red[{match_idx+1}/{st.session_state[sport_key]["schedule"]["data"].shape[0]}:] :orange[{display_time}] :violet[{team_full_names['a']} vs {team_full_names['b']}]",
         expanded=True,
         type="default"
     ):
-        team_names = dict(
-            a=match_row["TEAM A"],
-            b=match_row["TEAM B"]
-        )
-
-        team_b_is_home = match_row["TEAM B IS HOME"]
-
         metrics_map = metrics_assembler(
             team_names_dict=team_names,
             team_b_is_home=team_b_is_home,

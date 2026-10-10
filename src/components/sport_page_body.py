@@ -8,6 +8,7 @@ from src.components import (
 )
 from src.data_collection.data_maps import RequiredFileMap
 from src.services.get_leaderboards import get_leaderboards
+from src.services.get_team_roster import get_team_roster
 from src.services.load_schedule import load_schedule
 
 def render(
@@ -17,6 +18,7 @@ def render(
     timestamp: datetime.datetime,
     required_files_list: list[RequiredFileMap],
     leaderboard_urls_dict: dict,
+    team_roster_url: str,
     win_trends_url: str,
     metrics_assembler: callable
 ):
@@ -58,6 +60,7 @@ def render(
                 show_time=True
             ):
                 progress_bar = st.progress(0.0)
+
                 leaderboards_map = get_leaderboards(
                     leaderboard_urls_dict=leaderboard_urls_dict,
                     timestamp=st.session_state[sport_key]["timestamp"],
@@ -71,6 +74,16 @@ def render(
                     return
 
                 st.session_state[sport_key]["leaderboards"] = leaderboards_map["content"]
+
+                team_roster_map = get_team_roster(url=team_roster_url)
+
+                if team_roster_map["error"]:
+                    st.error(team_roster_map)
+                    return
+
+                team_roster = team_roster_map["content"]
+
+                st.session_state[sport_key]["team_roster"] = team_roster
                 
                 progress_bar.empty()
 

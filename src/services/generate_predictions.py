@@ -7,6 +7,7 @@ def generate_predictions(
 ):
     schedule = st.session_state[sport_key]["schedule"]["data"]
     leaderboards = st.session_state[sport_key]["leaderboards"]
+    team_roster = st.session_state[sport_key]["team_roster"]
     uploaded_files = st.session_state[sport_key]["file_requirements"]["data"]
     
     league_points_df_name = None
@@ -41,6 +42,7 @@ def generate_predictions(
             match_row=match_row,
             match_idx=match_idx,
             leaderboards=leaderboards,
+            team_roster=team_roster,
             uploaded_files=uploaded_files,
             metrics_assembler=metrics_assembler
         )

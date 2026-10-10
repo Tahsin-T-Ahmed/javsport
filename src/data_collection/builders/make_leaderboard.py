@@ -34,12 +34,13 @@ def make_leaderboard(
 
     leaderboard.rename(
         columns={
+            "TEAM": "TEAM NAME",
             latest_season: "OVERALL"
         },
         inplace=True
     )
 
-    numeric_columns = leaderboard.columns.drop("TEAM")
+    numeric_columns = leaderboard.columns.drop("TEAM NAME")
     leaderboard[numeric_columns] = leaderboard[numeric_columns].astype(float)
     
     return DataFrameMap(

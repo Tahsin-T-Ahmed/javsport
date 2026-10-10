@@ -25,6 +25,7 @@ sport_wagers_page.render(
         walks_per_game="https://www.teamrankings.com/mlb/stat/walks-per-game"
     ),
     win_trends_url="https://www.teamrankings.com/mlb/trends/win_trends/",
+    team_roster_url="https://www.teamrankings.com/mlb/teams/",
     required_files_list=[
         RequiredFileMap(
             file_label="Moneyline",

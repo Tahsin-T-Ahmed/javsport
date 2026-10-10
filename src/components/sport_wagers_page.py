@@ -18,6 +18,7 @@ def render(
     leaderboard_urls_dict: dict,
     metrics_assembler: callable,
     timestamp: datetime.datetime,
+    team_roster_url: str,
     win_trends_url: str | None = None,
     required_files_list: list[RequiredFileMap] | None = None,
 ):
@@ -43,6 +44,7 @@ def render(
         timestamp=timestamp,
         required_files_list=required_files_list,
         leaderboard_urls_dict=leaderboard_urls_dict,
+        team_roster_url=team_roster_url,
         win_trends_url=win_trends_url,
         metrics_assembler=metrics_assembler
     )
