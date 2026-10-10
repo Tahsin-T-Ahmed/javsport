@@ -73,6 +73,12 @@ with lcol:
             caption="Celebrating Tampa Bay's win over NY Yankees"
         )
 
+        st.markdown(
+            body="Contact: dbookmvp7@gmail.com",
+            text_alignment="center",
+            anchors=False
+        )
+
 with rcol:
     with st.container(border=True):
         header.render("Tazy")
@@ -89,7 +95,13 @@ with rcol:
         st.image(
             image="./img/tahsin.png",
             width="stretch",
-            caption=["Makin' all kinds of gains (all kinds)"]
+            caption="Makin' all kinds of gains (all kinds)"
+        )
+
+        st.markdown(
+            body="Contact: tahsin.t.ahmed@gmail.com",
+            text_alignment="center",
+            anchors=False
         )
 
 footer.render()
