@@ -11,7 +11,7 @@ def assemble_mlb_metrics(
     
     probable_pitchers_df = uploaded_files_dict["probable_pitchers"]
     siera_df = uploaded_files_dict["siera"]
-    roster_df = uploaded_files_dict["starting_pitchers"]
+    roster_df = uploaded_files_dict["player_roster"]
     ip_df = uploaded_files_dict["innings_pitched"]
 
     for team_key, team_name in team_names_dict.items():

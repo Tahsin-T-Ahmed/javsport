@@ -60,8 +60,8 @@ sport_wagers_page.render(
             guide_type="spreadsheet"
         ),
         RequiredFileMap(
-            file_label="Roster",
-            file_key="starting_pitchers",
+            file_label="Player Roster",
+            file_key="player_roster",
             file_type="xlsx",
             file_parser=scan_mlb_roster,
             source_url="https://www.fangraphs.com/roster-resource/roster-grid",
