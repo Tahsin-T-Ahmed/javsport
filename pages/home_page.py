@@ -1,6 +1,7 @@
 from datetime import datetime
-import streamlit as st
+from src.components import footer
 from src.utils.format_timestamp import format_timestamp
+import streamlit as st
 
 st.set_page_config(
     page_title="JavSport - Better Sports Better",
@@ -96,14 +97,4 @@ with st.container(border=True):
         text_alignment="center"
     )
 
-st.markdown(
-    body="Developed by [Tahsin T Ahmed](https://github.com/Tahsin-T-Ahmed)",
-    text_alignment="center",
-    anchors=False
-)
-
-st.markdown(
-    body="[Link to GitHub Repo :material/open_in_new:](https://github.com/Tahsin-T-Ahmed/javsport)",
-    text_alignment="center",
-    anchors=False
-)
+footer.render()
