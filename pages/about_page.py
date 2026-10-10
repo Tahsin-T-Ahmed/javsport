@@ -1,4 +1,4 @@
-from src.components import header
+from src.components import footer, header
 import streamlit as st
 
 st.set_page_config(
@@ -91,3 +91,5 @@ with rcol:
             width="stretch",
             caption=["Makin' all kinds of gains (all kinds)"]
         )
+
+footer.render()
