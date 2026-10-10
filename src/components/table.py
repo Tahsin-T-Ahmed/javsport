@@ -30,4 +30,5 @@ def render(
             height=height
         )
 
-        st.caption(caption)
+        if caption:
+            st.caption(caption)
