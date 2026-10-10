@@ -1,16 +1,19 @@
 import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.parsers.scan_mlb_probables import scan_mlb_probables
+from streamlit.delta_generator import DeltaGenerator
 from streamlit.typing import UploadedFile
 
 def get_mlb_probables(
     file: UploadedFile,
+    progress_bar: DeltaGenerator | None = None,
     **kwargs
 ) -> DataFrameMap:
     team_glossary = pd.read_csv("./src/glossaries/mlb/teams_fangraphs.csv")
     
     probables_map = scan_mlb_probables(
         file=file,
+        progress_bar=progress_bar,
         **kwargs
     )
 

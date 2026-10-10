@@ -1,11 +1,13 @@
 from bs4 import BeautifulSoup
 import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
+from streamlit.delta_generator import DeltaGenerator
 from streamlit.typing import UploadedFile
 from unidecode import unidecode
 
 def scan_mlb_probables(
     file: UploadedFile,
+    progress_bar: DeltaGenerator | None = None,
     **kwargs
 ) -> DataFrameMap:
     soup = BeautifulSoup(file)
@@ -19,7 +21,15 @@ def scan_mlb_probables(
 
     probgrid = pd.DataFrame()
 
+    n_rows = len(rows)
+
     for row_idx, row in enumerate(rows):
+        if progress_bar:
+            progress_bar.progress(
+                value= row_idx / n_rows,
+                text=f"Scanning row {row_idx+1} of {n_rows} ({int(row_idx/n_rows)}%)..."
+            )
+        
         cells = row.find_all("td")
         if not cells:
             continue
@@ -46,6 +56,12 @@ def scan_mlb_probables(
             pitcher_fgid = pitcher_link["href"].split("/stats")[0].split("/")[-1]
 
             probgrid.loc[new_row_idx, f"PITCHER {pitcher_idx+1} FGID"] = pitcher_fgid
+
+    if progress_bar:
+        progress_bar.status(
+            label="Complete! :green[:material/check:]",
+            state="complete"
+        )
 
     return DataFrameMap(
         error=None,
