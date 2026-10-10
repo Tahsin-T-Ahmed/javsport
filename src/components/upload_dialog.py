@@ -70,15 +70,25 @@ def render(
         if not file:
             return
 
-        table_map = file_parser(
-            file=file,
-            timestamp=timestamp
-        )
-        if table_map["error"]:
-            st.error(table_map["error"])
-            return
+        table_df = None
 
-        table_df = table_map["content"]
+        progress_bar = st.progress(value=0)
+
+        with st.spinner(
+            text=f"Scanning :orange[{file.name}]..."
+        ):
+            table_map = file_parser(
+                file=file,
+                timestamp=timestamp,
+                progress_bar=progress_bar
+            )
+            if table_map["error"]:
+                st.error(table_map["error"])
+                return
+
+            table_df = table_map["content"]
+
+            progress_bar.empty()
 
         if table_df.empty:
             st.warning(
