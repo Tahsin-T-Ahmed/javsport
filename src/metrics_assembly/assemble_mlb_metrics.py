@@ -11,7 +11,7 @@ def assemble_mlb_metrics(
     
     probable_pitchers_df = uploaded_files_dict["probable_pitchers"]
     siera_df = uploaded_files_dict["siera"]
-    sp_df = uploaded_files_dict["starting_pitchers"]
+    roster_df = uploaded_files_dict["starting_pitchers"]
     ip_df = uploaded_files_dict["innings_pitched"]
 
     for team_key, team_name in team_names_dict.items():
@@ -28,9 +28,18 @@ def assemble_mlb_metrics(
         pitcher_name = pitchers_row["PITCHER 1"].item()
         pitcher_fgid = pitchers_row["PITCHER 1 FGID"].item()
 
-        if not any(sp_df["FGID"].str.contains(pitcher_fgid)):
+        pitcher_roster_row = roster_df.loc[pitcher_fgid == roster_df["PLAYER FGID"]]
+        pitcher_role = pitcher_roster_row["ROLE"].item()
+        pitcher_position = pitcher_roster_row["POSITION"].item()
+
+        if not ("SP" == pitcher_position):
             return DataFrameMap(
-                error=f"Pitcher is not Starting Pitcher (SP) for team {team_name}",
+                error=f"{team_name}'s pitcher {pitcher_name} is not a Starting Pitcher, but {pitcher_position}"
+            )
+        
+        if not ("SP" in pitcher_role):
+            return DataFrameMap(
+                error=f"{team_name}'s pitcher {pitcher_name}'s role is not SP, but {pitcher_role}",
                 content=None
             )
 
