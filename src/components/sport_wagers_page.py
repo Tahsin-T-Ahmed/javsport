@@ -1,5 +1,10 @@
 import datetime
-from src.components import delay_disclaimer, page_header_banner, sport_page_body
+from src.components import (
+    delay_disclaimer,
+    footer,
+    page_header_banner,
+    sport_page_body
+)
 from src.data_collection.data_maps import RequiredFileMap
 from src.services.get_schedule import get_schedule
 from src.services.load_schedule import load_schedule
@@ -53,5 +58,7 @@ def render(
         )
 
     delay_disclaimer.render()
+
+    footer.render()
 
     # session_state_preview.write(st.session_state)
