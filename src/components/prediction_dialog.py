@@ -41,7 +41,7 @@ def render(
         team_full_names[team_key] = team_full_name
         
     with st.expander(
-        label=f":red[{match_idx+1}/{st.session_state[sport_key]["schedule"]["data"].shape[0]}:] :orange[{display_time}] :violet[{team_full_names['a']} vs {team_full_names['b']}]",
+        label=f":red[{match_idx+1}/{st.session_state[sport_key]["schedule"]["data"].shape[0]}:] :orange[{display_time}] :violet[{team_full_names['a']}] {'at' if team_b_is_home else 'vs'} :violet[{team_full_names['b']}]",
         expanded=True,
         type="default"
     ):
