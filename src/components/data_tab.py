@@ -1,4 +1,4 @@
-from src.components import schedule_banner, table_list
+from src.components import schedule_banner, table, table_list
 import streamlit as st
 
 def render(
@@ -17,6 +17,15 @@ def render(
             collapse=True,
             hide_index=True,
             height="auto"
+        )
+
+    if ("team_roster" in st.session_state[sport_key]):
+        table.render(
+            label=f"{sport_title} Team-Roster",
+            data=st.session_state[sport_key]["team_roster"],
+            hide_index=True,
+            collapse=True,
+            height=300
         )
 
     if (
