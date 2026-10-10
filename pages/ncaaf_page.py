@@ -18,6 +18,7 @@ sport_wagers_page.render(
         yards_per_game="https://www.teamrankings.com/college-football/stat/yards-per-game"
     ),
     win_trends_url="https://www.teamrankings.com/ncf/trends/win_trends/",
+    team_roster_url="https://www.teamrankings.com/ncf/teams/",
     required_files_list=[
         RequiredFileMap(
             file_label="Moneyline",

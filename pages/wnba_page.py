@@ -18,6 +18,7 @@ sport_wagers_page.render(
         three_pointers_made_per_game="https://www.teamrankings.com/wnba/stat/three-pointers-made-per-game"
     ),
     win_trends_url="https://www.teamrankings.com/wnba/trends/win_trends/",
+    team_roster_url="https://www.teamrankings.com/wnba/teams/",
     required_files_list=[
         RequiredFileMap(
             file_label="Moneyline",

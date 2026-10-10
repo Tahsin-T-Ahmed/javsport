@@ -19,6 +19,7 @@ sport_wagers_page.render(
         yards_per_game="https://www.teamrankings.com/nfl/stat/yards-per-game"
     ),
     win_trends_url="https://www.teamrankings.com/nfl/trends/win_trends/",
+    team_roster_url="https://www.teamrankings.com/nfl/teams/",
     required_files_list=[
         RequiredFileMap(
             file_label="Moneyline",
