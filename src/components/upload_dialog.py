@@ -109,6 +109,7 @@ def render(
             data=table_df,
             label=f"{file_label} Data",
             collapse=True,
+            expanded=False,
             hide_index=True
         )
         
