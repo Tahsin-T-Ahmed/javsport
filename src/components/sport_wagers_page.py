@@ -52,7 +52,6 @@ def render(
     if sport_key in st.session_state and "schedule" in st.session_state[sport_key]:
 
         st.button(
-            type="primary",
             label=f":material/refresh: Reload {sport_title} Data :material/refresh:",
             width="stretch",
             on_click=load_schedule,
