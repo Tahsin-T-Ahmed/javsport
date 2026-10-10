@@ -108,9 +108,8 @@ def render(
         table.render(
             data=table_df,
             label=f":green[:material/check:] {file_label} Data",
+            caption=f"Data extracted from :green[{file.name}]",
             collapse=True,
             expanded=False,
             hide_index=True
         )
-        
-        st.caption(f"Data extracted from :green[{file.name}]")

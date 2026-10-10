@@ -5,6 +5,7 @@ def render(
     data: pd.DataFrame,
     hide_index: bool = False,
     label: str | None = None,
+    caption: str | None = None,
     collapse: bool = False,
     height: int | str = 250,
     expanded: bool = True
@@ -28,3 +29,5 @@ def render(
             hide_index=hide_index,
             height=height
         )
+
+        st.caption(caption)
