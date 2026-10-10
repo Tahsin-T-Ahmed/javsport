@@ -1,7 +1,8 @@
 import streamlit as st
 
-from src.services.get_team_roster import get_team_roster
+import datetime
+from src.data_collection.builders.make_win_trends import make_win_trends
 
-get_team_roster(
-    url="https://www.teamrankings.com/mlb/teams/"
+make_win_trends(
+    record_url="https://www.teamrankings.com/ncf/trends/win_trends/"
 )["content"]

@@ -13,18 +13,25 @@ def make_win_trends(record_url: str) -> DataFrameMap:
 
     win_trends.rename(
         columns={
+            "TEAM": "TEAM NAME",
             "WIN %_DATASORT": "WIN RATE"
         },
         inplace=True
     )
 
+    win_trends["TEAM TRID"] = win_trends["TEAM_LINK"].apply(
+        lambda link: link.split("/")[-1]
+    )
+
     win_trends[["WINS", "LOSSES", "TIES"]] = win_trends["WIN-LOSS RECORD"].str.split("-", expand=True)
 
-    desired_columns = ["TEAM", "WINS", "LOSSES", "TIES", "WIN RATE"]
+    desired_columns = ["TEAM NAME", "TEAM TRID", "WINS", "LOSSES", "TIES", "WIN RATE"]
     win_trends = win_trends[desired_columns]
 
-    numeric_columns = win_trends.columns.drop("TEAM")
-    win_trends[numeric_columns] = win_trends[numeric_columns].astype(float)
+    win_trends.set_index(
+        keys="TEAM TRID",
+        inplace=True
+    )
 
     return DataFrameMap(
         error=None,
