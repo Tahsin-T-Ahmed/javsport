@@ -107,7 +107,7 @@ def render(
 
         table.render(
             data=table_df,
-            label=f"{file_label} Data",
+            label=f":green[:material/check:] {file_label} Data",
             collapse=True,
             expanded=False,
             hide_index=True
