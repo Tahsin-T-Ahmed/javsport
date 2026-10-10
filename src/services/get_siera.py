@@ -1,15 +1,16 @@
-import datetime
 from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.parsers.scan_pitchers_data import scan_pitchers_data
+from streamlit.delta_generator import DeltaGenerator
 from streamlit.typing import UploadedFile
 
 def get_siera(
     file: UploadedFile,
-    timestamp: datetime.datetime
+    progress_bar: DeltaGenerator | None = None,
+    **kwargs
 ) -> DataFrameMap:
     table_map = scan_pitchers_data(
         file=file,
-        timestamp=timestamp
+        progress_bar=progress_bar
     )
 
     if table_map["error"]:
@@ -24,6 +25,12 @@ def get_siera(
         return DataFrameMap(
             error=f"'SIERA' column not found",
             content=None
+        )
+
+    if progress_bar:
+        progress_bar.status(
+            label="SIERA Scan Complete! :green[:material/check:]",
+            state="complete"
         )
 
     return DataFrameMap(

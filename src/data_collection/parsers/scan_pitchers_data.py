@@ -1,14 +1,15 @@
-import datetime
 import io
 import openpyxl
 import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
+from streamlit.delta_generator import DeltaGenerator
 from streamlit.typing import UploadedFile
 from unidecode import unidecode
 
 def scan_pitchers_data(
     file: UploadedFile,
-    timestamp: datetime.datetime
+    progress_bar: DeltaGenerator | None = None,
+    **kwargs
 ) -> DataFrameMap:
 
     file_bytes = io.BytesIO(file.read())
@@ -36,7 +37,17 @@ def scan_pitchers_data(
 
     pitchers_df = pd.DataFrame()
 
-    for row_idx, row in enumerate(rows):
+    n_rows = len(rows)
+
+    for row_idx in range(n_rows):
+        row = rows[row_idx]
+
+        if progress_bar:
+            progress_bar.progress(
+                value=row_idx/n_rows,
+                text=f"Scanning row {row_idx+1} of {n_rows} ({int(row_idx/n_rows)}%)..."
+            )
+        
         if 0 == row_idx:
             continue
 
