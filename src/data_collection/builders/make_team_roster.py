@@ -23,8 +23,6 @@ def make_team_roster(url: str) -> DataFrameMap:
         inplace=True
     )
 
-    roster = roster[["TEAM NAME", "TEAM TRID"]]
-
     return DataFrameMap(
         error=None,
         content=roster
