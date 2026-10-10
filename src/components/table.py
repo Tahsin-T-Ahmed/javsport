@@ -14,7 +14,8 @@ def render(
         st.caption(label)
         st.dataframe(
             data=data,
-            hide_index=hide_index
+            hide_index=hide_index,
+            height=height
         )
 
         return
