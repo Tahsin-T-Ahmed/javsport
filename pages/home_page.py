@@ -88,7 +88,7 @@ with st.container(border=True):
         )
 
     st.markdown(
-        body=":material/play_pause: Once the stats are loaded, they're STATIC :material/pause_circle:",
+        body=":material/timer_pause: Once the stats are loaded, they're STATIC :material/hourglass_pause:",
         text_alignment="center"
     )
 
