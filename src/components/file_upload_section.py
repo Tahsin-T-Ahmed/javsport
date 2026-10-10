@@ -24,6 +24,7 @@ def render(
 
     submit_files_btn = st.button(
         label=":material/upload: Submit Files :material/upload:",
+        type="primary",
         width="stretch"
     )
 
