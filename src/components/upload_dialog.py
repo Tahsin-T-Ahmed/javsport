@@ -72,11 +72,11 @@ def render(
 
         table_df = None
 
-        progress_bar = st.progress(value=0)
-
         with st.spinner(
             text=f"Scanning :orange[{file.name}]..."
         ):
+            progress_bar = st.progress(value=0)
+            
             table_map = file_parser(
                 file=file,
                 timestamp=timestamp,
