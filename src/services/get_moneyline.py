@@ -3,15 +3,18 @@ import numpy as np
 from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.parsers.scan_odds_table import scan_odds_table
 from src.utils.convert_moneyline import convert_moneyline
+from streamlit.delta_generator import DeltaGenerator
 from streamlit.typing import UploadedFile
 
 def get_moneyline(
     file: UploadedFile,
-    timestamp: datetime.datetime
+    timestamp: datetime.datetime,
+    progress_bar: DeltaGenerator | None = None
 ) -> DataFrameMap:
     odds_map = scan_odds_table(
         file=file,
-        timestamp=timestamp
+        timestamp=timestamp,
+        progress_bar=progress_bar
     )
 
     if odds_map["error"]:

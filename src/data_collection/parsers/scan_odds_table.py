@@ -1,13 +1,15 @@
 from bs4 import BeautifulSoup
 import datetime
 import pandas as pd
+from streamlit.delta_generator import DeltaGenerator
 from streamlit.typing import UploadedFile
 from src.data_collection.data_maps import DataFrameMap
 from src.utils.get_date_ordinal_suffix import get_date_ordinal_suffix
 
 def scan_odds_table(
     file: UploadedFile,
-    timestamp: datetime.datetime
+    timestamp: datetime.datetime,
+    progress_bar: DeltaGenerator | None = None
 ) -> DataFrameMap:
     year = timestamp.year
     month = timestamp.strftime('%B')
@@ -46,11 +48,21 @@ def scan_odds_table(
         subtables = module.find_all("table")
         if not subtables:
             continue
+
+        n_subtables = len(subtables)
         
-        for subtable in subtables:
+        for subtable_idx in range(n_subtables):
+            subtable = subtables[subtable_idx]
+
             headers = subtable.find_all("th")
             if not headers:
                 continue
+
+            if progress_bar:
+                progress_bar.progress(
+                    value=subtable_idx/n_subtables,
+                    text=f"Scanning match {subtable_idx+1} of {n_subtables} ({int(subtable_idx/n_subtables)}%)"
+                )
             
             columns = [header.text.strip().upper() if ":" not in header.text else "TEAM" for header in headers]
             n_columns = len(columns)
@@ -89,6 +101,12 @@ def scan_odds_table(
 
     if "" in odds_df.columns:
         odds_df.drop(columns="", inplace=True)
+
+    if progress_bar:
+        progress_bar.status(
+            label="Complete! :green[:material/check:]",
+            state="complete"
+        )
 
     return DataFrameMap(
         error=None,
