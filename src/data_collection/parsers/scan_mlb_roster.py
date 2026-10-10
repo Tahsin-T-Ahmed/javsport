@@ -7,7 +7,7 @@ from unidecode import unidecode
 
 import streamlit as st
 
-def scan_mlb_starting_pitchers(
+def scan_mlb_roster(
     file: UploadedFile,
     **kwargs
 ) -> DataFrameMap:
@@ -27,7 +27,7 @@ def scan_mlb_starting_pitchers(
             content=None
         )
 
-    starting_pitchers = pd.DataFrame()
+    roster_df = pd.DataFrame()
 
     for row_idx, row in enumerate(rows):
         cells = [cell for cell in row]
@@ -35,25 +35,20 @@ def scan_mlb_starting_pitchers(
             return DataFrameMap(
                 error=f"ERROR (MLB Roster-Scanner): Failed to scan CELLS of row #{row_idx+1} in file",
                 content=None
-            )        
+            )
 
         for cell_idx, cell in enumerate(cells):
-            if "SP" == cell.value and "SP" in cells[cell_idx-1].value:
-                pitcher_cell = cells[cell_idx+1]
-                pitcher_name = unidecode(pitcher_cell.value)
-                pitcher_link = None
+            if not cell.hyperlink:
+                continue
 
-                if pitcher_cell.hyperlink:
-                    pitcher_link = pitcher_cell.hyperlink.target
+            new_row_idx = roster_df.shape[0]
 
-                pitcher_fgid = pitcher_link.split("/stats")[0].split("/")[-1]
-
-                new_row_idx = starting_pitchers.shape[0]
-                
-                starting_pitchers.loc[new_row_idx, "NAME"] = pitcher_name
-                starting_pitchers.loc[new_row_idx, "FGID"] = pitcher_fgid
+            roster_df.loc[new_row_idx, "ROLE"] = str(cells[cell_idx-2].value).strip()
+            roster_df.loc[new_row_idx, "POSITION"] = str(cells[cell_idx-1].value).strip()
+            roster_df.loc[new_row_idx, "PLAYER NAME"] = str(unidecode(cell.value)).strip()
+            roster_df.loc[new_row_idx, "PLAYER FGID"] = str(cell.hyperlink.target.split("/stats")[0].split("/")[-1]).strip()
 
     return DataFrameMap(
         error=None,
-        content=starting_pitchers
+        content=roster_df
     )

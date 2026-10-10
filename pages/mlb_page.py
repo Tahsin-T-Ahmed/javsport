@@ -1,7 +1,7 @@
 from datetime import datetime
 from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
-from src.data_collection.parsers.scan_mlb_starting_pitchers import scan_mlb_starting_pitchers
+from src.data_collection.parsers.scan_mlb_roster import scan_mlb_roster
 from src.metrics_assembly.assemble_mlb_metrics import assemble_mlb_metrics
 from src.services.get_innings_pitched import get_innings_pitched
 from src.services.get_mlb_probables import get_mlb_probables
@@ -62,7 +62,7 @@ sport_wagers_page.render(
             file_label="Roster",
             file_key="starting_pitchers",
             file_type="xlsx",
-            file_parser=scan_mlb_starting_pitchers,
+            file_parser=scan_mlb_roster,
             source_url="https://www.fangraphs.com/roster-resource/roster-grid",
             guide_type="spreadsheet"
         )
