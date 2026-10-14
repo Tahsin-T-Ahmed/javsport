@@ -104,8 +104,6 @@ def render(
             """)
             st.write("Then, try again")
             return
-        
-        st.session_state[sport_key]["file_requirements"]["data"][file_key] = table_df
 
         if not initial_file_success:
             st.toast(
@@ -120,6 +118,15 @@ def render(
             label=f":green[:material/check:] {file_label} Data",
             caption=f"Data extracted from :green[{file.name}]",
             collapse=True,
-            expanded=False,
+            expanded=True,
             hide_index=True
         )
+
+        submit_button = st.button(
+            label=f":material/upload: Submit {sport_title} {file_label} :material/upload:",
+            width="stretch",
+            type="primary"
+        )
+
+        if submit_button:
+            st.session_state[sport_key]["file_requirements"]["data"][file_key] = table_df
