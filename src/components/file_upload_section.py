@@ -14,7 +14,8 @@ def render(
         anchors=False
     )
     
-    for file_map in required_files_list:
+    for file_key, file_map in enumerate(required_files_list):
+        st.write(file_key)
         upload_dialog.render(
             **file_map,
             sport_key=sport_key,
@@ -22,26 +23,8 @@ def render(
             timestamp=st.session_state[sport_key]["timestamp"]
         )
 
-    submit_files_btn = st.button(
-        label=":material/upload: Submit Files :material/upload:",
-        type="primary",
-        width="stretch"
-    )
-
-    if submit_files_btn:
-        if all(
-            st.session_state[sport_key]["file_requirements"]["data"][file] is not None
-            for file in st.session_state[sport_key]["file_requirements"]["data"]
-        ):
-            st.session_state[sport_key]["file_requirements"]["fulfilled"] = True
-        else:
-            st.session_state[sport_key]["file_requirements"]["fulfilled"] = False
-            st.error(
-                title="Missing Files",
-                body="Upload ALL files :material/upload_file: to proceed",
-                icon=":material/rule:"
-            )
-            st.toast(
-                body=":red[Missing Required Files]",
-                icon=":material/cancel:"
-            )
+    if all(
+        st.session_state[sport_key]["file_requirements"]["data"][file] is not None
+        for file in st.session_state[sport_key]["file_requirements"]["data"]
+    ):
+        st.session_state[sport_key]["file_requirements"]["fulfilled"] = True

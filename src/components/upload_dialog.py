@@ -24,7 +24,7 @@ def render(
     else:
         initial_file_success = False
 
-    st.session_state[sport_key]["file_requirements"]["data"][file_key] = None
+    # st.session_state[sport_key]["file_requirements"]["data"][file_key] = None
     
     with st.container(border=True):
         label = f"Upload {sport_title} {file_label} Data"
