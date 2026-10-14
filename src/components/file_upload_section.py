@@ -14,10 +14,12 @@ def render(
         anchors=False
     )
     
-    for file_key, file_map in enumerate(required_files_list):
-        st.write(file_key)
+    for req_file_idx, req_file_map in enumerate(required_files_list):
+        if st.session_state[sport_key]["file_requirements"]["data"][req_file_map["file_key"]] is not None:
+            continue
+        
         upload_dialog.render(
-            **file_map,
+            **req_file_map,
             sport_key=sport_key,
             sport_title=sport_title,
             timestamp=st.session_state[sport_key]["timestamp"]

@@ -25,8 +25,10 @@ def render(
         initial_file_success = False
 
     # st.session_state[sport_key]["file_requirements"]["data"][file_key] = None
+
+    dialog_container = st.empty()
     
-    with st.container(border=True):
+    with dialog_container.container(border=True):
         label = f"Upload {sport_title} {file_label} Data"
 
         if source_url:
@@ -130,3 +132,4 @@ def render(
 
         if submit_button:
             st.session_state[sport_key]["file_requirements"]["data"][file_key] = table_df
+            dialog_container.empty()
