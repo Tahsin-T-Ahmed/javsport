@@ -123,13 +123,6 @@ def render(
             expanded=True,
             hide_index=True
         )
-
-        submit_button = st.button(
-            label=f":material/upload: Submit {sport_title} {file_label} :material/upload:",
-            width="stretch",
-            type="primary"
-        )
-
-        if submit_button:
-            st.session_state[sport_key]["file_requirements"]["data"][file_key] = table_df
-            dialog_container.empty()
+        
+        st.session_state[sport_key]["file_requirements"]["data"][file_key] = table_df
+        dialog_container.empty()
