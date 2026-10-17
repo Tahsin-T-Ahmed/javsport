@@ -31,6 +31,10 @@ def get_moneyline(
             content=None
         )
 
+    moneyline_df["MONEY LINE"] = moneyline_df["MONEY LINE"].apply(
+        lambda val: 0 if "--" == val else val
+    )
+
     moneyline_df["MONEY LINE"] = moneyline_df["MONEY LINE"].astype(float)
 
     moneyline_df["PROBABILITY"] = moneyline_df["MONEY LINE"].apply(
