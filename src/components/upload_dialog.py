@@ -70,27 +70,29 @@ def render(
                 st.caption(guide_desc)
 
         if not file:
+            st.session_state[sport_key]["file_requirements"]["buffer"][file_key] = None
             return
+        
+        if st.session_state[sport_key]["file_requirements"]["buffer"][file_key] is None:
+            with st.spinner(
+                text=f"Scanning :orange[{file.name}]..."
+            ):
+                progress_bar = st.progress(value=0)
+                
+                table_map = file_parser(
+                    file=file,
+                    timestamp=timestamp,
+                    progress_bar=progress_bar
+                )
+                if table_map["error"]:
+                    st.error(table_map["error"])
+                    return
 
-        table_df = None
+                st.session_state[sport_key]["file_requirements"]["buffer"][file_key] = table_map["content"]
 
-        with st.spinner(
-            text=f"Scanning :orange[{file.name}]..."
-        ):
-            progress_bar = st.progress(value=0)
-            
-            table_map = file_parser(
-                file=file,
-                timestamp=timestamp,
-                progress_bar=progress_bar
-            )
-            if table_map["error"]:
-                st.error(table_map["error"])
-                return
+                progress_bar.empty()
 
-            table_df = table_map["content"]
-
-            progress_bar.empty()
+        table_df = st.session_state[sport_key]["file_requirements"]["buffer"][file_key]
 
         if table_df.empty:
             st.warning(
@@ -123,6 +125,12 @@ def render(
             expanded=True,
             hide_index=True
         )
+
+        if st.button(f"Submit {sport_title} {file_label}"):
         
-        st.session_state[sport_key]["file_requirements"]["data"][file_key] = table_df
-        dialog_container.empty()
+            st.session_state[sport_key]["file_requirements"]["data"][file_key] = (
+                st.session_state[sport_key]["file_requirements"]["buffer"][file_key]
+            )
+
+            st.session_state[sport_key]["file_requirements"]["buffer"][file_key] = None
+            dialog_container.empty()

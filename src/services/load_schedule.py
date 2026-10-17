@@ -12,13 +12,15 @@ def load_schedule(
 ):
     st.session_state[sport_key]["timestamp"] = timestamp    
         
-    st.session_state[sport_key]["file_requirements"]=dict(
-        fulfilled=False,
-        data={
-            file_map["file_key"]: None
-            for file_map in required_files_list
-        }
-    )
+    st.session_state[sport_key]["file_requirements"]=dict()
+
+    st.session_state[sport_key]["file_requirements"]["fulfilled"] = False
+    st.session_state[sport_key]["file_requirements"]["data"] = dict()
+    st.session_state[sport_key]["file_requirements"]["buffer"] = dict()
+
+    for file_map in required_files_list:
+        st.session_state[sport_key]["file_requirements"]["data"][file_map["file_key"]] = None
+        st.session_state[sport_key]["file_requirements"]["buffer"][file_map["file_key"]] = None
 
     with st.spinner(
         text=f"Checking {sport_title} Schedule...",
