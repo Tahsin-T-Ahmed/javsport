@@ -16,7 +16,7 @@ def assemble_ncaaf_metrics(
         metrics.loc["team_name", team_column_key] = team_name
 
         for leaderboard_key, leaderboard in leaderboards_dict.items():
-            team_row = leaderboard[team_name == leaderboard["TEAM"]]
+            team_row = leaderboard[team_name == leaderboard["TEAM NAME"]]
 
             if "win_trends" == leaderboard_key:
                 team_total_games = team_row[["WINS", "LOSSES", "TIES"]].sum().sum()
