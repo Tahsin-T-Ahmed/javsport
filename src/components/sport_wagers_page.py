@@ -10,6 +10,7 @@ from src.services.get_schedule import get_schedule
 from src.services.load_schedule import load_schedule
 import streamlit as st
 
+@st.fragment
 def render(
     sport_name: str,
     sport_subheader: str,
@@ -51,12 +52,13 @@ def render(
 
     if sport_key in st.session_state and "schedule" in st.session_state[sport_key]:
 
-        st.button(
-            label=f":material/refresh: Reload {sport_title} Data :material/refresh:",
+        if st.button(
+            label=f":material/refresh: Reset {sport_title} Data :material/refresh:",
             width="stretch",
-            on_click=load_schedule,
-            args=[sport_key, sport_title, timestamp, schedule_url, required_files_list]
-        )
+        ):
+            load_schedule(sport_key, sport_title, timestamp, schedule_url, required_files_list)
+            
+            st.rerun()
 
     delay_disclaimer.render()
 
