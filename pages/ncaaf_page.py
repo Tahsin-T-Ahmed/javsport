@@ -11,9 +11,12 @@ sport_wagers_page.render(
     sport_icon=":material/sports_football:",
     schedule_url="https://www.teamrankings.com/ncf/schedules/season/?week=0",
     leaderboard_urls_dict=dict(
+        field_goal_attempts_per_game="https://www.teamrankings.com/college-football/stat/field-goal-attempts-per-game",
+        giveaways_per_game="https://www.teamrankings.com/college-football/stat/giveaways-per-game",
         opponent_penalties_per_game="https://www.teamrankings.com/college-football/stat/opponent-penalties-per-game",
         plays_per_game="https://www.teamrankings.com/college-football/stat/plays-per-game",
         points_per_game="https://www.teamrankings.com/college-football/stat/points-per-game",
+        punt_attempts_per_game="https://www.teamrankings.com/college-football/stat/punt-attempts-per-game",
         touchdowns_per_game="https://www.teamrankings.com/college-football/stat/offensive-touchdowns-per-game",
         yards_per_game="https://www.teamrankings.com/college-football/stat/yards-per-game"
     ),
