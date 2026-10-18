@@ -14,6 +14,8 @@ def render(
     uploaded_files: dict[str, pd.DataFrame],
     metrics_assembler: callable,
 ):
+    win_trends = leaderboards["win_trends"]
+    
     team_names = dict(
         a=match_row["TEAM A"],
         b=match_row["TEAM B"]
@@ -30,13 +32,15 @@ def render(
     team_full_names = dict()
 
     for team_key, team_name in team_names.items():
-        team_trid = leaderboards["win_trends"][
-            team_name == leaderboards["win_trends"]["TEAM NAME"]
-        ].index.item()
+        team_trid = win_trends.loc[
+            team_name == win_trends["TEAM NAME"],
+            "TEAM TRID"
+        ].item()
 
         team_full_name = team_roster.loc[
-            team_trid, "TEAM NAME"
-        ]
+            team_trid == team_roster["TEAM TRID"], 
+            "TEAM NAME"
+        ].item()
 
         team_full_names[team_key] = team_full_name
         

@@ -14,11 +14,6 @@ def get_team_roster(url: str) -> DataFrameMap:
 
     roster = roster[["TEAM NAME", "TEAM TRID"]]
 
-    roster.set_index(
-        keys="TEAM TRID",
-        inplace=True
-    )
-
     return DataFrameMap(
         error=None,
         content=roster
