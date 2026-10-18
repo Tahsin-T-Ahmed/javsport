@@ -10,10 +10,18 @@ def render(
         sport_title=sport_title
     )
 
-    if st.session_state[sport_key]["file_requirements"]["fulfilled"]:
+    uploaded_files = dict()
+
+    for file_key, file_data in st.session_state[sport_key]["file_requirements"]["data"].items():
+        if file_data is None:
+            continue
+
+        uploaded_files[file_key] = file_data
+
+    if uploaded_files:
         table_list.render(
             title=f"Uploaded {sport_title} Data",
-            dataframes_dict=st.session_state[sport_key]["file_requirements"]["data"],
+            dataframes_dict=uploaded_files,
             collapse=True,
             hide_index=True,
             height="auto"
