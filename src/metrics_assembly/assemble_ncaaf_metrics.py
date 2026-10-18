@@ -18,6 +18,12 @@ def assemble_ncaaf_metrics(
         for leaderboard_key, leaderboard in leaderboards_dict.items():
             team_row = leaderboard[team_name == leaderboard["TEAM NAME"]]
 
+            if team_row.empty:
+                return DataFrameMap(
+                    error=f"{team_name} is missing data for {leaderboard_key}",
+                    content=None
+                )
+
             if "win_trends" == leaderboard_key:
                 team_total_games = team_row[["WINS", "LOSSES", "TIES"]].sum().sum()
                 metrics.loc["total_games", team_column_key] = str(team_total_games)
