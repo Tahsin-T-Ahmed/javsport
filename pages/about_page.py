@@ -1,4 +1,4 @@
-from src.components import footer, header
+from src.components import footer
 import streamlit as st
 
 st.set_page_config(
@@ -56,10 +56,13 @@ lcol, rcol = st.columns(2)
 
 with lcol:
     with st.container(border=True):
-        header.render("Javy")
-        st.caption(
-            body="\"Haa-Vee\"",
-            text_alignment="center"
+        st.markdown("""
+            <div style='display:flex; justify-content: space-evenly; align-items: center'>
+                <span style='font-size: 2em; color: violet;'>Javy</span>
+                <span style='font-size: 1em; color: gray'>(\"Haa-Vee\")</span>
+            </div>
+            """,
+            unsafe_allow_html=True
         )
         st.markdown(
             body=":orange[Sports-Betting Connoisseur]",
@@ -81,10 +84,13 @@ with lcol:
 
 with rcol:
     with st.container(border=True):
-        header.render("Tazy")
-        st.caption(
-            body="\"Tay-Zee\"",
-            text_alignment="center"
+        st.markdown("""
+            <div style='display:flex; justify-content: space-evenly; align-items: center'>
+                <span style='font-size: 2em; color: violet;'>Tazy</span>
+                <span style='font-size: 1em; color: gray'>(\"Tay-Zee\")</span>
+            </div>
+            """,
+            unsafe_allow_html=True
         )
         st.markdown(
             body=":orange[Software Developer]",
