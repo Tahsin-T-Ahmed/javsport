@@ -126,7 +126,11 @@ def render(
             hide_index=True
         )
 
-        if st.button(f"Submit {sport_title} {file_label}"):
+        if st.button(
+            label=f":material/upload: Submit {sport_title} {file_label} :material/upload:",
+            type="primary",
+            width="stretch"
+        ):
         
             st.session_state[sport_key]["file_requirements"]["data"][file_key] = (
                 st.session_state[sport_key]["file_requirements"]["buffer"][file_key]
