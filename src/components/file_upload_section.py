@@ -7,12 +7,7 @@ def render(
     sport_title: str,
     required_files_list: list[RequiredFileMap]
 ):
-    header.render("UPLOAD FILES FOR RESULTS")
-    st.markdown(
-        body="Click :yellow[SUBMIT FILES] at the bottom when finished",
-        text_alignment="center",
-        anchors=False
-    )
+    header.render("SUBMIT FILES FOR RESULTS")
     
     for req_file_idx, req_file_map in enumerate(required_files_list):
         if st.session_state[sport_key]["file_requirements"]["data"][req_file_map["file_key"]] is not None:
