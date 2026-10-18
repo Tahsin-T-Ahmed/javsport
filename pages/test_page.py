@@ -1,8 +1,8 @@
 import streamlit as st
 
 import datetime
-from src.data_collection.builders.make_win_trends import make_win_trends
+from src.data_collection.scrapers.scan_ncaaf_dfei import scan_ncaaf_dfei
 
-make_win_trends(
-    record_url="https://www.teamrankings.com/ncf/trends/win_trends/"
-)["content"]
+dfei = scan_ncaaf_dfei("https://bcftoys.com/2026-dfei")["content"]
+
+st.write(dfei)
