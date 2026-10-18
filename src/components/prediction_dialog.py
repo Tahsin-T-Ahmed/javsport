@@ -32,6 +32,9 @@ def render(
     team_full_names = dict()
 
     for team_key, team_name in team_names.items():
+        if not any(win_trends["TEAM NAME"].str.contains(team_name)):
+            continue
+        
         team_trid = win_trends.loc[
             team_name == win_trends["TEAM NAME"],
             "TEAM TRID"
@@ -43,9 +46,16 @@ def render(
         ].item()
 
         team_full_names[team_key] = team_full_name
+
+    dialog_label = f":red[{match_idx+1}/{st.session_state[sport_key]["schedule"]["data"].shape[0]}:] "
+    dialog_label += f":orange[{display_time}] "
+
+    dialog_label += f":violet[{team_full_names['a'] if 'a' in team_full_names else team_names['a']}] "
+    dialog_label += f"{'at' if team_b_is_home else 'vs'} "
+    dialog_label += f":violet[{team_full_names['b'] if 'b' in team_full_names else team_names['b']}]"
         
     with st.expander(
-        label=f":red[{match_idx+1}/{st.session_state[sport_key]["schedule"]["data"].shape[0]}:] :orange[{display_time}] :violet[{team_full_names['a']}] {'at' if team_b_is_home else 'vs'} :violet[{team_full_names['b']}]",
+        label=dialog_label,
         expanded=True,
         type="default"
     ):
