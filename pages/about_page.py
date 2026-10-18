@@ -1,4 +1,4 @@
-from src.components import footer
+from src.components import footer, founder_intro
 import streamlit as st
 
 st.set_page_config(
@@ -56,58 +56,24 @@ lcol, rcol = st.columns(2)
 
 with lcol:
     with st.container(border=True):
-        st.markdown("""
-            <div style='display:flex; justify-content: space-evenly; align-items: center'>
-                <span style='font-size: 2em; color: violet;'>Javy</span>
-                <span style='font-size: 1em; color: gray'>(\"Haa-Vee\")</span>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            body=":orange[Sports-Betting Connoisseur]",
-            text_alignment="center",
-            anchors=False
-        )
-
-        st.image(
-            image="./img/javy.png",
-            width="stretch",
-            caption="Celebrating Tampa Bay's win over NY Yankees"
-        )
-
-        st.markdown(
-            body="Contact: dbookmvp7@gmail.com",
-            text_alignment="center",
-            anchors=False
+        founder_intro.render(
+            name="Javy",
+            pronunciation="Haa-Vee",
+            role="Sports-Betting Connoisseur",
+            img_path="./img/javy.png",
+            img_caption="Celebrating Tampa Bay's win over NY Yankees",
+            contact="dbookmvp7@gmail.com"
         )
 
 with rcol:
     with st.container(border=True):
-        st.markdown("""
-            <div style='display:flex; justify-content: space-evenly; align-items: center'>
-                <span style='font-size: 2em; color: violet;'>Tazy</span>
-                <span style='font-size: 1em; color: gray'>(\"Tay-Zee\")</span>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            body=":orange[Software Developer]",
-            text_alignment="center",
-            anchors=False
-        )
-
-        st.image(
-            image="./img/tahsin.png",
-            width="stretch",
-            caption="Makin' all kinds of gains (all kinds)"
-        )
-
-        st.markdown(
-            body="Contact: tahsin.t.ahmed@gmail.com",
-            text_alignment="center",
-            anchors=False
+        founder_intro.render(
+            name="Tazy",
+            pronunciation="Tay-Zee",
+            role="Software Developer",
+            img_path="./img/tahsin.png",
+            img_caption="Makin' all kinds of gains (all kinds)",
+            contact="tahsin.t.ahmed@gmail.com"
         )
 
 footer.render()
