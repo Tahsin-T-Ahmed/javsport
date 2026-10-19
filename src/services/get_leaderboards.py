@@ -22,7 +22,12 @@ def get_leaderboards(
     if win_trends_url:
         n_leaderboards += 1
 
-    if win_trends_url:
+        if progress_bar:
+            progress_bar.progress(
+                value = loading_progress/n_leaderboards,
+                text=f"Loading {sport_title} :green[Win-Trends]..."
+            )
+        
         wl_map = make_tr_win_trends(win_trends_url)
 
         if wl_map["error"]:
@@ -33,20 +38,22 @@ def get_leaderboards(
 
         win_trends = wl_map["content"]
 
-        if progress_bar:        
-            progress_bar.progress(
-                value = loading_progress/n_leaderboards,
-                text=f"Loading {sport_title} Win-Trends..."
-            )
-
         leaderboards_dict["win_trends"] = win_trends
         loading_progress += 1
 
     for leaderboard_key, leaderboard_url in leaderboard_urls_dict.items():
         if progress_bar:
+            leaderboard_label = None
+
+            match(leaderboard_key):
+                case "dfei":
+                    leaderboard_label = leaderboard_key.upper()
+                case _:
+                    leaderboard_label = ' '.join([word.capitalize() for word in leaderboard_key.split('_')])
+            
             progress_bar.progress(
                 value=loading_progress/n_leaderboards,
-                text=f"Loading {sport_title} :green[{' '.join([word.capitalize() for word in leaderboard_key.split('_')])}]..."
+                text=f"Loading {sport_title} :green[{leaderboard_label}]..."
             )
 
         url_parsed = urlparse(leaderboard_url)
