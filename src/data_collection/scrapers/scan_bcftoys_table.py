@@ -2,7 +2,7 @@ import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.scrapers.get_soup import get_soup
 
-def scan_ncaaf_dfei(url: str) -> DataFrameMap:
+def scan_bcftoys_table(url: str) -> DataFrameMap:
     soup_map = get_soup(url)
 
     if soup_map["error"]:
@@ -13,14 +13,16 @@ def scan_ncaaf_dfei(url: str) -> DataFrameMap:
 
     soup = soup_map["content"]
 
-    dfei_df = pd.DataFrame()
-
     rows = soup.find_all("tr")
     if not rows:
         return DataFrameMap(
             error=f"ERROR (DFEI-Scanner): Failed to scan ROWS from URL ({url})",
             content=None
-        )
+        )    
+
+    columns = None
+
+    bcf_table = None
 
     for row in rows:
         cells = row.find_all("td")
@@ -31,14 +33,19 @@ def scan_ncaaf_dfei(url: str) -> DataFrameMap:
             continue
 
         if "TEAM" == cells[1].text.strip().upper():
-            continue
+            if columns:
+                continue
 
-        new_row_idx = dfei_df.shape[0]
+            columns = [cell.text for cell in cells]
+            bcf_table = pd.DataFrame(columns=columns)
 
-        dfei_df.loc[new_row_idx, "TEAM NAME"] = cells[1].text
-        dfei_df.loc[new_row_idx, "DFEI"] = cells[4].text
+        new_row_idx = bcf_table.shape[0]
+
+        bcf_table.loc[new_row_idx, :] = [str(cell.text) for cell in cells]
+
+    bcf_table = bcf_table.loc[:, ~bcf_table.columns.duplicated(keep=False)]
 
     return DataFrameMap(
         error=None,
-        content=dfei_df
+        content=bcf_table
     )

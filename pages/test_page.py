@@ -1,8 +1,8 @@
 import streamlit as st
 
 import datetime
-from src.data_collection.builders.make_cfb_leaderboard import make_cfb_leaderboard
+from src.data_collection.builders.make_ncaaf_dfei import make_ncaaf_dfei
 
-fdpg = make_cfb_leaderboard("https://cfbstats.com/2026/leader/national/team/offense/split01/category13/sort01.html")["content"]
+fdpg = make_ncaaf_dfei("https://bcftoys.com/2026-dfei")["content"]
 
 st.write(fdpg)

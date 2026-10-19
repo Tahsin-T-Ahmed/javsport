@@ -1,8 +1,8 @@
 from src.data_collection.data_maps import DataFrameMap
-from src.data_collection.scrapers.scan_ncaaf_dfei import scan_ncaaf_dfei
+from src.data_collection.scrapers.scan_bcftoys_table import scan_bcftoys_table
 
 def make_ncaaf_dfei(url: str) -> DataFrameMap:
-    dfei_map = scan_ncaaf_dfei(url)
+    dfei_map = scan_bcftoys_table(url)
 
     if dfei_map["error"]:
         return DataFrameMap(
