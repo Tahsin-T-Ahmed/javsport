@@ -29,11 +29,17 @@ def assemble_ncaaf_metrics(
                 metrics.loc["total_games", team_column_key] = str(team_total_games)
                 continue
 
-            target_column = "AWAY"
-            if "b" == team_key and team_b_is_home:
-                target_column = "HOME"
-                
-            metrics.loc[leaderboard_key, team_column_key] = str(team_row[target_column].item())
+            if (
+                leaderboard.columns.str.contains("HOME")
+                and
+                leaderboard.columns.str.contains("AWAY")
+            ):
+                target_column = "AWAY"
+                if "b" == team_key and team_b_is_home:
+                    target_column = "HOME"
+                    
+                metrics.loc[leaderboard_key, team_column_key] = str(team_row[target_column].item())
+                continue
 
     return DataFrameMap(
         error=None,

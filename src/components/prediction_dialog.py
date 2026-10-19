@@ -6,13 +6,13 @@ import streamlit as st
 
 def render(
     sport_key: str,
-    league_average: float,
     match_row: pd.Series,
     match_idx: int,
     leaderboards: dict[str, pd.DataFrame],
     team_roster: pd.DataFrame,
     uploaded_files: dict[str, pd.DataFrame],
     metrics_assembler: callable,
+    league_average: float | None = None,
 ):
     win_trends = leaderboards["win_trends"]
     

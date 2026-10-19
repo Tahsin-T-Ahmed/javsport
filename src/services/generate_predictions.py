@@ -19,21 +19,26 @@ def generate_predictions(
         case "NBA" | "NCAAB" | "WNBA":
             league_points_df_name = "points_per_game"
 
-        case "NFL" | "NCAAF":
+        case "NFL":
             league_points_df_name = "touchdowns_per_game"
+        case "NCAAF":
+            league_points_df_name = None
             
         case _:
             st.error(f"Invalid SPORT KEY {sport_key}")
             return
 
-    league_average = (
-        st.session_state
-        [sport_key]
-        ["leaderboards"]
-        [league_points_df_name]
-        ["OVERALL"]
-        .mean()
-    )
+    league_average = None
+
+    if league_points_df_name:
+        league_average = (
+            st.session_state
+            [sport_key]
+            ["leaderboards"]
+            [league_points_df_name]
+            ["OVERALL"]
+            .mean()
+        )
 
     for match_idx, match_row in schedule.iterrows():
         prediction_dialog.render(
