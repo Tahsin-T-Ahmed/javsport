@@ -1,6 +1,6 @@
 import datetime
 from src.data_collection.data_maps import DictMap
-from src.data_collection.builders.make_leaderboard import make_leaderboard
+from src.data_collection.builders.make_tr_leaderboard import make_tr_leaderboard
 from src.data_collection.builders.make_ncaaf_dfei import make_ncaaf_dfei
 from src.data_collection.builders.make_tr_win_trends import make_tr_win_trends
 from streamlit.delta_generator import DeltaGenerator
@@ -55,7 +55,7 @@ def get_leaderboards(
 
         match(site_name):
             case "teamrankings":
-                leaderboard_map = make_leaderboard(
+                leaderboard_map = make_tr_leaderboard(
                     leaderboard_url=leaderboard_url,
                     timestamp=timestamp
                 )

@@ -2,7 +2,7 @@ import datetime
 from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.scrapers.scan_tr_table import scan_tr_table
 
-def make_leaderboard(
+def make_tr_leaderboard(
     leaderboard_url: str,
     timestamp: datetime.datetime
 ) -> DataFrameMap:
