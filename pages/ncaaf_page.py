@@ -4,14 +4,16 @@ from src.data_collection.data_maps import RequiredFileMap
 from src.metrics_assembly.assemble_ncaaf_metrics import assemble_ncaaf_metrics
 from src.services.get_moneyline import get_moneyline
 
+timestamp = datetime.now()
+
 sport_wagers_page.render(
-    timestamp=datetime.now(),
+    timestamp=timestamp,
     sport_name="NCAAF",
     sport_subheader="College Football",
     sport_icon=":material/sports_football:",
     schedule_url="https://www.teamrankings.com/ncf/schedules/season/?week=0",
     leaderboard_urls_dict=dict(
-        dfei="https://bcftoys.com/2026-dfei",
+        dfei=f"https://bcftoys.com/{timestamp.year}-dfei",
         field_goal_attempts_per_game="https://www.teamrankings.com/college-football/stat/field-goal-attempts-per-game",
         giveaways_per_game="https://www.teamrankings.com/college-football/stat/giveaways-per-game",
         punt_attempts_per_game="https://www.teamrankings.com/college-football/stat/punt-attempts-per-game",
