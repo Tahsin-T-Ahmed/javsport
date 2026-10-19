@@ -12,8 +12,6 @@ def make_ncaaf_dfei(url: str) -> DataFrameMap:
 
     dfei_df = dfei_map["content"]
 
-    dfei_df["DFEI"] = dfei_df["DFEI"].astype(float)
-
     return DataFrameMap(
         error=None,
         content=dfei_df
