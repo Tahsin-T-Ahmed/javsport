@@ -1,8 +1,8 @@
 from src.data_collection.data_maps import DataFrameMap
-from src.data_collection.scrapers.scan_table import scan_table
+from src.data_collection.scrapers.scan_tr_table import scan_tr_table
 
 def make_win_trends(record_url: str) -> DataFrameMap:
-    wintrends_map = scan_table(record_url)
+    wintrends_map = scan_tr_table(record_url)
     if wintrends_map["error"]:
         return DataFrameMap(
             error=wintrends_map["error"],

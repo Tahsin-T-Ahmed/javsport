@@ -1,8 +1,8 @@
 from src.data_collection.data_maps import DataFrameMap
-from src.data_collection.scrapers.scan_table import scan_table
+from src.data_collection.scrapers.scan_tr_table import scan_tr_table
 
 def make_team_roster(url: str) -> DataFrameMap:
-    table_map = scan_table(url=url)
+    table_map = scan_tr_table(url=url)
 
     if table_map["error"]:
         return DataFrameMap(

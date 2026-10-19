@@ -1,6 +1,6 @@
 import datetime
 from src.data_collection.data_maps import DataFrameMap
-from src.data_collection.scrapers.scan_table import scan_table
+from src.data_collection.scrapers.scan_tr_table import scan_tr_table
 
 def make_leaderboard(
     leaderboard_url: str,
@@ -9,7 +9,7 @@ def make_leaderboard(
     year, month, day = f"{timestamp.year:04d}", f"{timestamp.month:02d}", f"{timestamp.day:02d}"
     date_str = f"{year}-{month}-{day}"
 
-    leaderboard_map = scan_table(f"{leaderboard_url}?date={date_str}")
+    leaderboard_map = scan_tr_table(f"{leaderboard_url}?date={date_str}")
     if leaderboard_map["error"]:
         return DataFrameMap(
             error=leaderboard_map["error"],
