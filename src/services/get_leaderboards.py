@@ -1,8 +1,8 @@
-from datetime import datetime
+import datetime
 from src.data_collection.data_maps import DictMap
 from src.data_collection.builders.make_leaderboard import make_leaderboard
 from src.data_collection.builders.make_ncaaf_dfei import make_ncaaf_dfei
-from src.data_collection.builders.make_win_trends import make_win_trends
+from src.data_collection.builders.make_tr_win_trends import make_tr_win_trends
 from streamlit.delta_generator import DeltaGenerator
 from urllib.parse import urlparse
 
@@ -22,7 +22,7 @@ def get_leaderboards(
         n_leaderboards += 1
 
     if win_trends_url:
-        wl_map = make_win_trends(win_trends_url)
+        wl_map = make_tr_win_trends(win_trends_url)
 
         if wl_map["error"]:
             return DictMap(
