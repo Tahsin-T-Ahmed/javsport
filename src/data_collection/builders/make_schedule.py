@@ -1,7 +1,7 @@
 import datetime
 import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
-from src.data_collection.scrapers.scan_table_at_date import scan_table_at_date
+from src.data_collection.scrapers.scan_tr_table_at_date import scan_tr_table_at_date
 from src.data_collection.parsers.parse_teams import parse_teams
 
 import streamlit as st
@@ -13,7 +13,7 @@ def make_schedule(
     year, month, day = f"{timestamp.year:04d}", f"{timestamp.month:02d}", f"{timestamp.day:02d}"
     date_str = f"{year}-{month}-{day}"
 
-    schedule_map = scan_table_at_date(
+    schedule_map = scan_tr_table_at_date(
         url=schedule_url,
         timestamp=timestamp
     )
