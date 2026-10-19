@@ -2,7 +2,7 @@ import pandas as pd
 from src.data_collection.scrapers.get_soup import get_soup
 from src.data_collection.data_maps import DataFrameMap
 
-def scan_cfb_table(url: str) -> DataFrameMap:
+def scan_cfbstats_table(url: str) -> DataFrameMap:
     soup_map = get_soup(url)
 
     if soup_map["error"]:

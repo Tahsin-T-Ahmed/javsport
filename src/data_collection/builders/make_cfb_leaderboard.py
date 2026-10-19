@@ -1,8 +1,8 @@
 from src.data_collection.data_maps import DataFrameMap
-from src.data_collection.scrapers.scan_cfb_table import scan_cfb_table
+from src.data_collection.scrapers.scan_cfbstats_table import scan_cfbstats_table
 
 def make_cfb_leaderboard(url: str) -> DataFrameMap:
-    leaderboard_map = scan_cfb_table(url)
+    leaderboard_map = scan_cfbstats_table(url)
     
     if leaderboard_map["error"]:
         return DataFrameMap(
