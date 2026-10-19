@@ -1,8 +1,9 @@
 import datetime
 from src.data_collection.data_maps import DictMap
+from src.data_collection.builders.make_cfbstats_leaderboard import make_cfbstats_leaderboard
 from src.data_collection.builders.make_tr_leaderboard import make_tr_leaderboard
-from src.services.get_ncaaf_dfei import get_ncaaf_dfei
 from src.data_collection.builders.make_tr_win_trends import make_tr_win_trends
+from src.services.get_ncaaf_dfei import get_ncaaf_dfei
 from streamlit.delta_generator import DeltaGenerator
 from urllib.parse import urlparse
 
@@ -62,6 +63,11 @@ def get_leaderboards(
 
             case "bcftoys":
                 leaderboard_map = get_ncaaf_dfei(
+                    url=leaderboard_url
+                )
+
+            case "cfbstats":
+                leaderboard_map = make_cfbstats_leaderboard(
                     url=leaderboard_url
                 )
             
