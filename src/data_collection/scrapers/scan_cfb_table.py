@@ -23,18 +23,18 @@ def scan_cfb_table(url: str) -> DataFrameMap:
     headers = rows[0].find_all("th")
     columns = [header.text for header in headers]
 
-    fdpg_df = pd.DataFrame(columns=columns)
+    cfb_table = pd.DataFrame(columns=columns)
 
     for row_idx, row in enumerate(rows):
         cells = row.find_all("td")
         if not cells:
             continue
 
-        new_row_idx = fdpg_df.shape[0]
+        new_row_idx = cfb_table.shape[0]
 
-        fdpg_df.loc[new_row_idx, :] = [str(cell.text) for cell in cells]
+        cfb_table.loc[new_row_idx, :] = [str(cell.text) for cell in cells]
 
     return DataFrameMap(
         error=None,
-        content=fdpg_df
+        content=cfb_table
     )
