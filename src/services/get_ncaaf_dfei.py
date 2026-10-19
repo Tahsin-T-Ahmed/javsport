@@ -12,6 +12,15 @@ def get_ncaaf_dfei(url: str) -> DataFrameMap:
 
     dfei_df = dfei_map["content"]
 
+    dfei_df.rename(
+        columns={
+            "Team": "TEAM BCF NAME"
+        },
+        inplace=True
+    )
+
+    dfei_df = dfei_df[["TEAM BCF NAME", "DFEI"]]
+
     return DataFrameMap(
         error=None,
         content=dfei_df
