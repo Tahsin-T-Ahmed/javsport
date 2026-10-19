@@ -1,6 +1,7 @@
 from datetime import datetime
 from src.data_collection.data_maps import DictMap
 from src.data_collection.builders.make_leaderboard import make_leaderboard
+from src.data_collection.builders.make_ncaaf_dfei import make_ncaaf_dfei
 from src.data_collection.builders.make_win_trends import make_win_trends
 from streamlit.delta_generator import DeltaGenerator
 from urllib.parse import urlparse
@@ -48,7 +49,7 @@ def get_leaderboards(
             )
 
         url_parsed = urlparse(leaderboard_url)
-        site_name = url_parsed.netloc.split(".")[1]
+        site_name = url_parsed.netloc.split(".")[-2]
 
         leaderboard_map = None
 
@@ -58,6 +59,12 @@ def get_leaderboards(
                     leaderboard_url=leaderboard_url,
                     timestamp=timestamp
                 )
+
+            case "bcftoys":
+                leaderboard_map = make_ncaaf_dfei(
+                    url=leaderboard_url
+                )
+            
             case _:
                 return DictMap(
                     error=f"ERROR (Leaderboards-Getter): Invalid URL for leaderboard ({leaderboard_url})",
