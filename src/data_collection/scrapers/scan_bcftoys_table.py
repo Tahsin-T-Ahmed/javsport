@@ -38,6 +38,7 @@ def scan_bcftoys_table(url: str) -> DataFrameMap:
 
             columns = [cell.text for cell in cells]
             bcf_table = pd.DataFrame(columns=columns)
+            continue
 
         new_row_idx = bcf_table.shape[0]
 
