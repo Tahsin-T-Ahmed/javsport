@@ -8,7 +8,9 @@ def assemble_ncaaf_metrics(
     uploaded_files_dict: dict[str, pd.DataFrame]
 ) -> DataFrameMap:
     moneyline_df = uploaded_files_dict["moneyline"]
+    bcftoys_glossary = pd.read_csv("./src/glossaries/ncaaf/teams_bcftoys.csv")
     cfbstats_glossary = pd.read_csv("./src/glossaries/ncaaf/teams_cfbstats.csv")
+    
     metrics = pd.DataFrame()
 
     for team_key, team_name in team_names_dict.items():
@@ -21,7 +23,17 @@ def assemble_ncaaf_metrics(
             metric = None
             match(leaderboard_key):
                 case "dfei":
-                    pass
+                    team_bcf_name = bcftoys_glossary.loc[
+                        team_name == bcftoys_glossary["TEAMRANKINGS"].str.strip(),
+                        "BCFTOYS"
+                    ].item()
+
+                    team_dfei = leaderboard.loc[
+                        team_bcf_name == leaderboard["TEAM BCF NAME"],
+                        "DFEI"
+                    ].item()
+
+                    metric = str(team_dfei)
 
                 case "first_downs":
                     team_cfb_name = cfbstats_glossary.loc[
