@@ -15,7 +15,7 @@ sport_wagers_page.render(
     leaderboard_urls_dict=dict(
         dfei=f"https://bcftoys.com/{timestamp.year}-dfei",
         field_goal_attempts_per_game="https://www.teamrankings.com/college-football/stat/field-goal-attempts-per-game",
-        first_downs=f"https://cfbstats.com/{timestamp.year}/leader/national/team/offense/split01/category13/sort01.html",
+        first_downs_per_game=f"https://cfbstats.com/{timestamp.year}/leader/national/team/offense/split01/category13/sort01.html",
         giveaways_per_game="https://www.teamrankings.com/college-football/stat/giveaways-per-game",
         punt_attempts_per_game="https://www.teamrankings.com/college-football/stat/punt-attempts-per-game",
         yards_per_game="https://www.teamrankings.com/college-football/stat/yards-per-game"

@@ -35,7 +35,7 @@ def assemble_ncaaf_metrics(
 
                     metric = str(team_dfei)
 
-                case "first_downs":
+                case "first_downs_per_game":
                     team_cfb_name = cfbstats_glossary.loc[
                         team_name == cfbstats_glossary["TEAMRANKINGS"].str.strip(),
                         "CFBSTATS"

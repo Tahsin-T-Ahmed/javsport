@@ -78,8 +78,6 @@ def render(
             return
 
         metrics_df = metrics_map["content"]
-        st.write(metrics_df)
-        return
 
         team_win_chances = dict()
 
