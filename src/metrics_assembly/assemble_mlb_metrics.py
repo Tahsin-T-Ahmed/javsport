@@ -50,8 +50,6 @@ def assemble_mlb_metrics(
 
         metrics.loc["team_name", team_column_key] = team_name
 
-        import streamlit as st
-
         for leaderboard_key, leaderboard in leaderboards_dict.items():
             team_row = leaderboard[team_name == leaderboard["TEAM NAME"]]
 
