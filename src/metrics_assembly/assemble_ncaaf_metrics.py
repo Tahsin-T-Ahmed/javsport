@@ -18,6 +18,7 @@ def assemble_ncaaf_metrics(
         metrics.loc["team_name", team_column_key] = team_name
 
         for leaderboard_key, leaderboard in leaderboards_dict.items():
+            metric = None
             match(leaderboard_key):
                 case "dfei":
                     pass
@@ -33,13 +34,35 @@ def assemble_ncaaf_metrics(
                         "PER GAME"
                     ].item()
 
-                    metrics.loc["First Downs Per Game", team_column_key] = first_downs_per_game
-                case _:
+                    metric = str(first_downs_per_game)
+
+                case (
+                    "field_goal_attempts_per_game" |
+                    "giveaways_per_game" |
+                    "punt_attempts_per_game" |
+                    "yards_per_game"
+                ):
+                    target_column = "AWAY"
+                    if "b" == team_key and team_b_is_home:
+                        target_column = "HOME"
+
+                    metric = leaderboard.loc[
+                        team_name == leaderboard["TEAM NAME"],
+                        target_column
+                    ].item()
+
+                    metric = str(metric)
+
+                case "win_trends":
                     continue
+                
+                case _:
                     return DataFrameMap(
                         error=f"Unrecognized leaderboard key: {leaderboard_key}",
                         content=None
                     )
+
+            metrics.loc[leaderboard_key, team_column_key] = metric
 
     return DataFrameMap(
         error=None,
