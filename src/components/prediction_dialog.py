@@ -91,6 +91,7 @@ def render(
             if team_a_win_chance_map["error"]:
                 st.error(team_a_win_chance_map["error"])
                 return
+            
             team_win_chances["a"] = team_a_win_chance_map["content"] 
             team_win_chances["b"] = 1 - team_win_chances["a"]
 
