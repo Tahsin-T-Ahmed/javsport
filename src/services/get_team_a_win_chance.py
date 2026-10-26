@@ -1,12 +1,12 @@
 import requests
 import pandas as pd
-from src.data_collection.data_maps import FloatMap
+from src.data_collection.data_maps import StringMap
 
 def get_team_a_win_chance(
     sport_key: str,
     metrics_df: pd.DataFrame,
-    league_average: float | str
-) -> FloatMap:
+    league_average: float | str | None = None
+) -> StringMap:
     api_url = f"http://127.0.0.1:5000/{sport_key}/predict-team-a-win-chance"
     
     metrics_json = metrics_df.to_json()
@@ -22,14 +22,14 @@ def get_team_a_win_chance(
     )
 
     if 200 != response.status_code:
-        return FloatMap(
+        return StringMap(
             error=f"ERROR: Invalid status code {response.status_code} from URL {api_url}",
             content=None
         )
 
-    team_a_win_chance = float(response.text)
+    team_a_win_chance = response.text
 
-    return FloatMap(
+    return StringMap(
         error=None,
         content=team_a_win_chance
     )
