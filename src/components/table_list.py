@@ -20,7 +20,7 @@ def render(
                 data=df,
                 label=f"{' '.join([
                     term.capitalize()
-                    if term not in ["dfei", "siera"]
+                    if term not in ["dfei", "ofei", "siera"]
                     else term.upper()
                     for term in df_key.split('_')
                 ])}",
