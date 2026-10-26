@@ -11,9 +11,6 @@ class DataFrameMap(JavSportDataMap):
 class DictMap(JavSportDataMap):
     content: dict | None
 
-class FloatMap(JavSportDataMap):
-    content: float | None
-
 class SoupMap(JavSportDataMap):
     content: BeautifulSoup | None
 
