@@ -91,9 +91,16 @@ def render(
             if team_a_win_chance_map["error"]:
                 st.error(team_a_win_chance_map["error"])
                 return
+
+            team_a_win_chance = team_a_win_chance_map["content"]
+
+        try:
+            team_win_chances["a"] = float(team_a_win_chance)
+        except Exception as e:
+            st.write(f":red[{team_a_win_chance}] (not a real number) for :violet[{team_names['a']}]")
+            return
             
-            team_win_chances["a"] = team_a_win_chance_map["content"] 
-            team_win_chances["b"] = 1 - team_win_chances["a"]
+        team_win_chances["b"] = 1 - team_win_chances["a"]
 
         winning_team_key = None
 
