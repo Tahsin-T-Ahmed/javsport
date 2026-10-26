@@ -4,6 +4,7 @@ from src.data_collection.builders.make_cfbstats_leaderboard import make_cfbstats
 from src.data_collection.builders.make_tr_leaderboard import make_tr_leaderboard
 from src.data_collection.builders.make_tr_win_trends import make_tr_win_trends
 from src.services.get_ncaaf_dfei import get_ncaaf_dfei
+from src.services.get_ncaaf_ofei import get_ncaaf_ofei
 from streamlit.delta_generator import DeltaGenerator
 from urllib.parse import urlparse
 
@@ -46,7 +47,7 @@ def get_leaderboards(
             leaderboard_label = None
 
             match(leaderboard_key):
-                case "dfei":
+                case "dfei" | "ofei":
                     leaderboard_label = leaderboard_key.upper()
                 case _:
                     leaderboard_label = ' '.join([word.capitalize() for word in leaderboard_key.split('_')])
@@ -67,12 +68,23 @@ def get_leaderboards(
                     leaderboard_url=leaderboard_url,
                     timestamp=timestamp
                 )
-
+            
             case "bcftoys":
-                leaderboard_map = get_ncaaf_dfei(
-                    url=leaderboard_url
-                )
-
+                match(leaderboard_key):
+                    case "dfei":
+                        leaderboard_map = get_ncaaf_dfei(
+                            url=leaderboard_url
+                        )
+                    case "ofei":
+                        leaderboard_map = get_ncaaf_ofei(
+                            url=leaderboard_url
+                        )
+                    case _:
+                        return DictMap(
+                            error=f"ERROR (Leaderboards-Getter): Invalid leaderboard-key ({leaderboard_key})",
+                            content=None
+                        )
+            
             case "cfbstats":
                 leaderboard_map = make_cfbstats_leaderboard(
                     url=leaderboard_url
