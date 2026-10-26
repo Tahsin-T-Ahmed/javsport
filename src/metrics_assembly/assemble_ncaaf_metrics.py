@@ -22,18 +22,18 @@ def assemble_ncaaf_metrics(
         for leaderboard_key, leaderboard in leaderboards_dict.items():
             metric = None
             match(leaderboard_key):
-                case "dfei":
+                case "dfei" | "ofei":
                     team_bcf_name = bcftoys_glossary.loc[
                         team_name == bcftoys_glossary["TEAMRANKINGS"].str.strip(),
                         "BCFTOYS"
                     ].item()
 
-                    team_dfei = leaderboard.loc[
+                    score = leaderboard.loc[
                         team_bcf_name == leaderboard["TEAM BCF NAME"],
-                        "DFEI"
+                        leaderboard_key.upper()
                     ].item()
 
-                    metric = str(team_dfei)
+                    metric = str(score)
 
                 case "first_downs_per_game":
                     team_cfb_name = cfbstats_glossary.loc[
