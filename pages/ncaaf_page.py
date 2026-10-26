@@ -18,6 +18,7 @@ sport_wagers_page.render(
         first_downs_per_game=f"https://cfbstats.com/{timestamp.year}/leader/national/team/offense/split01/category13/sort01.html",
         giveaways_per_game="https://www.teamrankings.com/college-football/stat/giveaways-per-game",
         punt_attempts_per_game="https://www.teamrankings.com/college-football/stat/punt-attempts-per-game",
+        ofei=f"https://bcftoys.com/{timestamp.year}-ofei",
         yards_per_game="https://www.teamrankings.com/college-football/stat/yards-per-game"
     ),
     win_trends_url="https://www.teamrankings.com/ncf/trends/win_trends/",
