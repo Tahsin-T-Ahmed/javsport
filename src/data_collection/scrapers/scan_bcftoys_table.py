@@ -16,7 +16,7 @@ def scan_bcftoys_table(url: str) -> DataFrameMap:
     rows = soup.find_all("tr")
     if not rows:
         return DataFrameMap(
-            error=f"ERROR (DFEI-Scanner): Failed to scan ROWS from URL ({url})",
+            error=f"ERROR (BCFTOYS-Scanner): Failed to scan ROWS from URL ({url})",
             content=None
         )    
 
