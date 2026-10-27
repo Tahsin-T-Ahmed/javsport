@@ -35,7 +35,10 @@ def assemble_ncaaf_metrics(
 
                     metric = str(score)
 
-                case "first_downs_per_game":
+                case "first_downs_per_game_away":
+                    if "b" == team_key and team_b_is_home:
+                        continue
+
                     team_cfb_name = cfbstats_glossary.loc[
                         team_name == cfbstats_glossary["TEAMRANKINGS"].str.strip(),
                         "CFBSTATS"
@@ -46,7 +49,36 @@ def assemble_ncaaf_metrics(
                         "PER GAME"
                     ].item()
 
-                    metric = str(first_downs_per_game)
+                    metrics.loc[
+                        "first_downs_per_game",
+                        team_column_key
+                    ] = str(first_downs_per_game)
+
+                    continue
+
+                case "first_downs_per_game_home":
+                    if "a" == team_key:
+                        continue
+
+                    if not team_b_is_home:
+                        continue
+                    
+                    team_cfb_name = cfbstats_glossary.loc[
+                        team_name == cfbstats_glossary["TEAMRANKINGS"].str.strip(),
+                        "CFBSTATS"
+                    ].item()
+
+                    first_downs_per_game = leaderboard.loc[
+                        team_cfb_name == leaderboard["TEAM CFB NAME"],
+                        "PER GAME"
+                    ].item()
+
+                    metrics.loc[
+                        "first_downs_per_game",
+                        team_column_key
+                    ] = str(first_downs_per_game)
+
+                    continue
 
                 case (
                     "field_goal_attempts_per_game" |
