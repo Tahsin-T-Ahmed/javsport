@@ -2,6 +2,11 @@ import pandas as pd
 import requests
 import streamlit as st
 
+from src.data_collection.scrapers.scan_bcftoys_table import scan_bcftoys_table
+
+mytable = scan_bcftoys_table("https://bcftoys.com/2026-ofei")["content"]
+st.write(mytable)
+
 session_state_view = st.empty()
 
 metrics_df = pd.DataFrame()
