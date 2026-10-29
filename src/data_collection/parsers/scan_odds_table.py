@@ -102,12 +102,6 @@ def scan_odds_table(
     if "" in odds_df.columns:
         odds_df.drop(columns="", inplace=True)
 
-    if progress_bar:
-        progress_bar.status(
-            label="Complete! :green[:material/check:]",
-            state="complete"
-        )
-
     return DataFrameMap(
         error=None,
         content=odds_df
