@@ -3,6 +3,7 @@ import numpy as np
 from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.parsers.scan_odds_table import scan_odds_table
 from src.utils.convert_moneyline import convert_moneyline
+from src.utils.get_formatted_date import get_formatted_date
 from streamlit.delta_generator import DeltaGenerator
 from streamlit.typing import UploadedFile
 
@@ -24,6 +25,14 @@ def get_moneyline(
         )
 
     moneyline_df = odds_map["content"]
+
+    date_f = get_formatted_date(timestamp)
+
+    if moneyline_df.empty:
+        return DataFrameMap(
+            error=f"ERROR (Moneyline-Retriever): No moneyline data found for {date_f}",
+            content=None
+        )
 
     if "MONEY LINE" not in moneyline_df.columns:
         return DataFrameMap(
