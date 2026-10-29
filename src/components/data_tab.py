@@ -46,5 +46,6 @@ def render(
             dataframes_dict=st.session_state[sport_key]["leaderboards"],
             collapse=True,
             hide_index=True,
-            height=300
+            height=300,
+            sport_title=sport_title
         )

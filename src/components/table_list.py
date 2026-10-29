@@ -6,7 +6,8 @@ def render(
     title: str | None = None,
     collapse: bool = False,
     hide_index: bool = False,
-    height: int | str = "auto"
+    height: int | str = "auto",
+    sport_title: str | None = None
 ):
     with st.expander(
         label=f":violet[{title}]",
@@ -18,7 +19,7 @@ def render(
         for df_key, df in dataframes_dict.items():
             table.render(
                 data=df,
-                label=f"{' '.join([
+                label=f"{f'{sport_title} ' if sport_title else ''}{' '.join([
                     term.capitalize()
                     if term not in ["dfei", "ofei", "siera"]
                     else term.upper()
