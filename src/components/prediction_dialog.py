@@ -33,7 +33,7 @@ def render(
 
     for team_key, team_name in team_names.items():
         if not any(win_trends["TEAM NAME"].str.contains(team_name)):
-            continue
+            return
         
         team_trid = win_trends.loc[
             team_name == win_trends["TEAM NAME"],
