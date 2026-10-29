@@ -3,6 +3,7 @@ from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
 from src.metrics_assembly.assemble_nfl_metrics import assemble_nfl_metrics
 from src.services.get_moneyline import get_moneyline
+from src.services.get_nfl_dave import get_nfl_dave
 
 sport_wagers_page.render(
     timestamp=datetime.now(),
@@ -28,6 +29,13 @@ sport_wagers_page.render(
             source_url="https://www.teamrankings.com/nfl/odds/",
             file_parser=get_moneyline,
             guide_type="webpage"
+        ),
+        RequiredFileMap(
+            file_label="DAVE",
+            file_key="dave",
+            file_type="csv",
+            source_url="https://ftnfantasy.com/stats/nfl/dave",
+            file_parser=get_nfl_dave
         )
     ],
     metrics_assembler=assemble_nfl_metrics
