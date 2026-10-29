@@ -10,7 +10,7 @@ def render(
     )
 
     n_games = schedule_df.shape[0]
-    schedule_caption = f"{n_games} game{'s' if 1 != n_games else ''} scheduled"
+    schedule_caption = f"{n_games} {sport_title} game{'s' if 1 != n_games else ''} scheduled"
 
     table.render(
         data=schedule_df,
