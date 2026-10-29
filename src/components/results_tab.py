@@ -30,5 +30,6 @@ def render(
 
     predictions_section.render(
         sport_key=sport_key,
+        sport_title=sport_title,
         metrics_assembler=metrics_assembler
     )

@@ -6,9 +6,10 @@ import streamlit as st
 
 def render(
     sport_key: str,
+    sport_title: str,
     metrics_assembler: callable
 ):
-    header.render("PREDICTIONS")
+    header.render(f"{sport_title} PREDICTIONS")
 
     generate_predictions(
         sport_key=sport_key,
