@@ -94,23 +94,6 @@ def render(
 
             team_a_win_chance = team_a_win_chance_map["content"]
 
-        try:
-            team_win_chances["a"] = float(team_a_win_chance)
-        except Exception as e:
-            st.write(f":red[{team_a_win_chance}] (not a real number) for :violet[{team_names['a']}]")
-            return
-            
-        team_win_chances["b"] = 1 - team_win_chances["a"]
-
-        winning_team_key = None
-
-        if team_win_chances["a"] > team_win_chances["b"]:
-            winning_team_key = "a"
-        elif team_win_chances["b"] > team_win_chances["a"]:
-            winning_team_key = "b"
-        else:
-            winning_team_key = None
-
         metrics_display_df = metrics_df.copy()        
         metrics_display_df.rename(
             index=lambda row: (
@@ -127,6 +110,32 @@ def render(
         metrics_display_header = metrics_display_df.iloc[0, :]
         metrics_display_df.columns = metrics_display_header
         metrics_display_df = metrics_display_df.iloc[1:, :]
+
+        try:
+            team_win_chances["a"] = float(team_a_win_chance)
+        except Exception as e:
+            st.write(f":red[{team_a_win_chance}] (not a real number) for :violet[{team_names['a']}]")
+
+            table.render(
+                data=metrics_display_df,
+                label="Team Stats",
+                collapse=True,
+                height="content",
+                expanded=True
+            )
+
+            return
+            
+        team_win_chances["b"] = 1 - team_win_chances["a"]
+
+        winning_team_key = None
+
+        if team_win_chances["a"] > team_win_chances["b"]:
+            winning_team_key = "a"
+        elif team_win_chances["b"] > team_win_chances["a"]:
+            winning_team_key = "b"
+        else:
+            winning_team_key = None
 
         team_moneylines = dict()
         for team_key, team_name in team_names.items():
