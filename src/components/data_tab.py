@@ -10,6 +10,15 @@ def render(
         sport_title=sport_title
     )
 
+    if "predictions" in st.session_state[sport_key]:
+        table.render(
+            data=st.session_state[sport_key]["predictions"],
+            label="Predictions Table",
+            height="auto",
+            collapse=True,
+            hide_index=True
+        )
+
     uploaded_files = dict()
 
     for file_key, file_data in st.session_state[sport_key]["file_requirements"]["data"].items():
