@@ -99,7 +99,7 @@ def render(
             index=lambda row: (
                 " ".join([
                     term.capitalize()
-                    if term not in ["ip", "siera", "dfei", "ofei"]
+                    if term not in ["ip", "siera", "dfei", "ofei", "dave"]
                     else term.upper()
                     for term in row.split("_")
                 ])
