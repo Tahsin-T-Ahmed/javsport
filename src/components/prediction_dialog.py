@@ -151,13 +151,15 @@ def render(
             anchors=False
         )
 
-        st.write(f"JavSport's confidence: :violet[{np.round(team_win_chances[winning_team_key]*100, 2)}%]")
-        st.write(f"While the Market says: :orange[{np.round(team_moneylines[winning_team_key]*100, 2)}%]")
+        win_confidence = np.round(team_win_chances[winning_team_key]*100, 2)
 
-        edge = np.round(
-            (team_win_chances[winning_team_key] - team_moneylines[winning_team_key])*100,
-            2
-        )
+        st.write(f"JavSport's confidence: :violet[{win_confidence}%]")
+
+        market_odds = np.round(team_moneylines[winning_team_key]*100, 2)
+        st.write(f"While the Market says: :orange[{market_odds}%]")
+
+        edge_raw = (team_win_chances[winning_team_key] - team_moneylines[winning_team_key])
+        edge = np.round(edge_raw*100, 2)
 
         if np.abs(edge) >= 0.5:
             edge_color = None
@@ -178,3 +180,15 @@ def render(
             height="content",
             expanded=False
         )
+
+        if "predictions" not in st.session_state[sport_key]:
+            st.session_state[sport_key]["predictions"] = pd.DataFrame()
+
+        pred_df = st.session_state[sport_key]["predictions"]
+
+        pred_df.loc[match_idx, "CONFIDENCE"] = win_confidence
+        pred_df.loc[match_idx, "MARKET ODDS"] = market_odds
+        pred_df.loc[match_idx, "EDGE"] = edge
+        pred_df.loc[match_idx, "WINNER"] = team_full_names[winning_team_key]
+        pred_df.loc[match_idx, "OPPONENT"] = team_full_names[[key for key in team_full_names if key != winning_team_key][0]]
+        pred_df.loc[match_idx, "TIME"] = display_time

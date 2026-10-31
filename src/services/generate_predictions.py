@@ -1,4 +1,4 @@
-from src.components import prediction_dialog
+from src.components import prediction_dialog, table
 import streamlit as st
 
 def generate_predictions(
@@ -51,3 +51,15 @@ def generate_predictions(
             uploaded_files=uploaded_files,
             metrics_assembler=metrics_assembler
         )
+
+    if "predictions" not in st.session_state[sport_key]:
+        return
+
+    st.divider()
+
+    table.render(
+        data=st.session_state[sport_key]["predictions"],
+        label="Predictions Table",
+        height="auto",
+        hide_index=True
+    )
