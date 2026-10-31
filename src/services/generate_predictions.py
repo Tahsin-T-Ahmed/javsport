@@ -18,10 +18,8 @@ def generate_predictions(
 
         case "NBA" | "NCAAB" | "WNBA":
             league_points_df_name = "points_per_game"
-
-        case "NFL":
-            league_points_df_name = "touchdowns_per_game"
-        case "NCAAF":
+        
+        case "NCAAF" | "NFL":
             league_points_df_name = None
             
         case _:
