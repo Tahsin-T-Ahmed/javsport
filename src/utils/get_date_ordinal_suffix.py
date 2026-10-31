@@ -3,7 +3,7 @@ def get_date_ordinal_suffix(number: int) -> str:
     day_of_month = number
 
     match(number):
-        case 1 | 21: 
+        case 1 | 21 | 31: 
             ordinal_suffix = "st"
         case 2 | 22:
             ordinal_suffix = "nd"
