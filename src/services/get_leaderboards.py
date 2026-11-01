@@ -2,7 +2,7 @@ import datetime
 from src.data_collection.data_maps import DictMap
 from src.data_collection.builders.make_cfbstats_leaderboard import make_cfbstats_leaderboard
 from src.data_collection.builders.make_tr_leaderboard import make_tr_leaderboard
-from src.data_collection.builders.make_tr_win_trends import make_tr_win_trends
+from src.services.get_win_trends import get_win_trends
 from src.services.get_ncaaf_dfei import get_ncaaf_dfei
 from src.services.get_ncaaf_ofei import get_ncaaf_ofei
 from streamlit.delta_generator import DeltaGenerator
@@ -29,7 +29,7 @@ def get_leaderboards(
                 text=f"Loading {sport_title} :green[Win-Trends]..."
             )
         
-        wl_map = make_tr_win_trends(win_trends_url)
+        wl_map = get_win_trends(win_trends_url)
 
         if wl_map["error"]:
             return DictMap(
