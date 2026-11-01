@@ -22,8 +22,6 @@ def assemble_nfl_metrics(
             team_row = leaderboard[team_name == leaderboard["TEAM NAME"]]
 
             if "win_trends" == leaderboard_key:
-                team_total_games = team_row[["WINS", "LOSSES", "TIES"]].sum().sum()
-                metrics.loc["total_games", team_column_key] = str(team_total_games)
                 continue
 
             target_column = "AWAY"

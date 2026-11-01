@@ -30,15 +30,18 @@ def render(
     )
 
     team_full_names = dict()
+    team_win_trends = dict()
 
     for team_key, team_name in team_names.items():
         if not any(win_trends["TEAM NAME"].str.contains(team_name)):
             return
-        
-        team_trid = win_trends.loc[
+
+        team_record_row = win_trends.loc[
             team_name == win_trends["TEAM NAME"],
-            "TEAM TRID"
-        ].item()
+            :
+        ]
+        
+        team_trid = team_record_row["TEAM TRID"].item()
 
         team_full_name = team_roster.loc[
             team_trid == team_roster["TEAM TRID"], 
@@ -46,6 +49,12 @@ def render(
         ].item()
 
         team_full_names[team_key] = team_full_name
+
+        wins = team_record_row["WINS"].astype(int).item()
+        losses = team_record_row["LOSSES"].astype(int).item()
+        ties = team_record_row["TIES"].astype(int).item()
+
+        team_win_trends[team_key] = f"{wins}-{losses}-{ties}"
 
     dialog_label = f":red[{match_idx+1}/{st.session_state[sport_key]["schedule"]["data"].shape[0]}:] "
     dialog_label += f":orange[{display_time}] "
@@ -94,7 +103,10 @@ def render(
 
             team_a_win_chance = team_a_win_chance_map["content"]
 
-        metrics_display_df = metrics_df.copy()        
+        metrics_df.loc["record", "TEAM A"] = team_win_trends["a"]
+        metrics_df.loc["record", "TEAM B"] = team_win_trends["b"]
+
+        metrics_display_df = metrics_df.copy()
         metrics_display_df.rename(
             index=lambda row: (
                 " ".join([
