@@ -38,17 +38,23 @@ def render(
         icon=sport_icon
     )
 
-    sport_page_body.render(
-        sport_key=sport_key,
-        sport_title=sport_title,
-        schedule_url=schedule_url,
-        timestamp=timestamp,
-        required_files_list=required_files_list,
-        leaderboard_urls_dict=leaderboard_urls_dict,
-        team_roster_url=team_roster_url,
-        win_trends_url=win_trends_url,
-        metrics_assembler=metrics_assembler
-    )
+    page_tabs = st.tabs(["Wagers", "Outcomes"])
+
+    with page_tabs[0]:
+        sport_page_body.render(
+            sport_key=sport_key,
+            sport_title=sport_title,
+            schedule_url=schedule_url,
+            timestamp=timestamp,
+            required_files_list=required_files_list,
+            leaderboard_urls_dict=leaderboard_urls_dict,
+            team_roster_url=team_roster_url,
+            win_trends_url=win_trends_url,
+            metrics_assembler=metrics_assembler
+        )
+
+    with page_tabs[1]:
+        st.write("Outcomes Tab Here")
 
     if sport_key in st.session_state and "schedule" in st.session_state[sport_key]:
 
