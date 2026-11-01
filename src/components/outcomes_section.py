@@ -32,5 +32,6 @@ def render(
 
     table.render(
         data=outcomes,
+        label=f"{sport_title} Outcomes",
         hide_index=True
     )

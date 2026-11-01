@@ -2,6 +2,7 @@ import datetime
 from src.components import (
     delay_disclaimer,
     footer,
+    outcomes_section,
     page_header_banner,
     sport_page_body
 )
@@ -53,7 +54,10 @@ def render(
         )
 
     with page_tabs[1]:
-        st.write("Outcomes Tab Here")
+        outcomes_section.render(
+            sport_title=sport_title,
+            win_trends_url=win_trends_url
+        )
 
     if sport_key in st.session_state and "schedule" in st.session_state[sport_key]:
 
