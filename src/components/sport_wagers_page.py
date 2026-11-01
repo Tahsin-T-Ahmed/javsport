@@ -6,7 +6,6 @@ from src.components import (
     sport_page_body
 )
 from src.data_collection.data_maps import RequiredFileMap
-from src.services.get_schedule import get_schedule
 from src.services.load_schedule import load_schedule
 import streamlit as st
 
