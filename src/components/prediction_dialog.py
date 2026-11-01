@@ -54,7 +54,7 @@ def render(
         losses = team_record_row["LOSSES"].astype(int).item()
         ties = team_record_row["TIES"].astype(int).item()
 
-        team_win_trends[team_key] = f"{wins}-{losses}-{ties}"
+        team_win_trends[team_key] = f"{wins}W-{losses}L-{ties}T"
 
     dialog_label = f":red[{match_idx+1}/{st.session_state[sport_key]["schedule"]["data"].shape[0]}:] "
     dialog_label += f":orange[{display_time}] "
@@ -204,3 +204,4 @@ def render(
         pred_df.loc[match_idx, "WINNER"] = team_full_names[winning_team_key]
         pred_df.loc[match_idx, "OPPONENT"] = team_full_names[[key for key in team_full_names if key != winning_team_key][0]]
         pred_df.loc[match_idx, "TIME"] = display_time
+        pred_df.loc[match_idx, "WINNER RECORD"] = team_win_trends[winning_team_key]
