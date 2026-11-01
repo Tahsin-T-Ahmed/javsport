@@ -6,7 +6,7 @@ def render(
     sport_title: str,
     win_trends_url: str
 ):
-    header.render(f"{sport_title} Outcomes")
+    header.render(f"{sport_title} OUTCOMES")
 
     file = None
 
