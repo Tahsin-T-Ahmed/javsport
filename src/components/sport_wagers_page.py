@@ -22,6 +22,7 @@ def render(
     team_roster_url: str,
     win_trends_url: str | None = None,
     required_files_list: list[RequiredFileMap] | None = None,
+    winner_picks_url: str | None = None
 ):
     sport_title, sport_key = sport_name.upper(), sport_name.lower()
 
@@ -55,7 +56,8 @@ def render(
 
     with page_tabs[1]:
         outcomes_section.render(
-            sport_title=sport_title
+            sport_title=sport_title,
+            winner_picks_url=winner_picks_url
         )
 
     if sport_key in st.session_state and "schedule" in st.session_state[sport_key]:

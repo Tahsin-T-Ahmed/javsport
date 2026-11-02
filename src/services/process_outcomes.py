@@ -5,7 +5,8 @@ from src.services.get_win_trends import get_win_trends
 from streamlit.typing import UploadedFile
 
 def process_outcomes(
-    file: UploadedFile
+    file: UploadedFile,
+    winner_picks_url: str | None
 ) -> DataFrameMap:
     file_raw = pd.read_csv(file)
 

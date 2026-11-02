@@ -3,7 +3,8 @@ from src.services.process_outcomes import process_outcomes
 import streamlit as st
 
 def render(
-    sport_title: str
+    sport_title: str,
+    winner_picks_url: str | None
 ):
     header.render(f"{sport_title} OUTCOMES")
 
@@ -19,7 +20,8 @@ def render(
         return
 
     outcomes_map = process_outcomes(
-        file=file
+        file=file,
+        winner_picks_url=winner_picks_url
     )
 
     if outcomes_map["error"]:
