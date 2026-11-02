@@ -1,14 +1,16 @@
 from src.data_collection.data_maps import StringMap
 
 def parse_teams(title: str) -> StringMap:
+    title_terms = title.strip().split(" ")
+    
     title_splitter = None
-    if "@" in title:
+    if "@" in title_terms:
         title_splitter = "@"
-    elif "at" in title:
+    elif "at" in title_terms:
         title_splitter = "at"
-    elif "vs." in title:
+    elif "vs." in title_terms:
         title_splitter = "vs."
-    elif "vs" in title:
+    elif "vs" in title_terms:
         title_splitter = "vs"
     else:
         return StringMap(
