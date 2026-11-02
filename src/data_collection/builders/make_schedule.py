@@ -46,7 +46,7 @@ def make_schedule(
 
     schedule.dropna(subset=["TITLE_LINK"], inplace=True)
 
-    schedule = schedule[["TITLE", "TIME", "TEAM A", "TEAM B"]]
+    schedule = schedule[["TITLE", "TIME", "TEAM A", "TEAM B", "TITLE_LINK"]]
 
     schedule["TEAM B IS HOME"] = schedule.apply(
         func=lambda row: True if "@" in row["TITLE"] or " at " in row["TITLE"] else False,
