@@ -1,10 +1,14 @@
 import streamlit as st
 
-import pandas as pd
-from src.data_collection.scrapers.scan_tr_table import scan_tr_table
+from src.services.process_outcomes import process_outcomes
 
-winner_picks = scan_tr_table(
-    url="https://www.teamrankings.com/nfl-win-picks/"
-)["content"]
+file = st.file_uploader("Upload Wagers File")
 
-st.write(winner_picks)
+if file:
+
+    outcomes = process_outcomes(
+        file=file,
+        winner_picks_url=None
+    )["content"]
+
+    st.write(outcomes)
