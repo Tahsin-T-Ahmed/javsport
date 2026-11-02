@@ -6,8 +6,13 @@ file = st.file_uploader("Upload Wagers File")
 
 if file:
 
-    winner_picks = make_winner_picks(
+    winner_picks_map = make_winner_picks(
         url="https://www.teamrankings.com/nfl-win-picks/"
-    )["content"]
+    )
 
-    st.write(winner_picks)
+    if winner_picks_map["error"]:
+        st.error(winner_picks_map["error"])
+    else:
+
+        winner_picks = winner_picks_map["content"]
+        st.write(winner_picks)

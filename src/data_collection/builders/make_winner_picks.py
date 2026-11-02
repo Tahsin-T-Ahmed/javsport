@@ -12,6 +12,15 @@ def make_winner_picks(url):
 
     winner_picks = winner_picks_map["content"]
 
+    necessary_columns = ["DAY", "STATUS", "TR PICK", "OPP/GAME"]
+
+    for column in necessary_columns:
+        if not any(winner_picks.columns.str.contains(column)):
+            return DataFrameMap(
+                error=f"No '{column}' column at webpage {url}",
+                content=None
+            )
+
     winner_picks.rename(
         columns={
             "DAY": "DATE",
