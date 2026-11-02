@@ -14,7 +14,7 @@ with cols[0]:
 
 day = None
 with cols[1]:
-    month = st.number_input(
+    day = st.number_input(
         label="Day",
         min_value=1,
         max_value=31
