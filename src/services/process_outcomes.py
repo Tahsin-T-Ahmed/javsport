@@ -5,8 +5,7 @@ from src.services.get_win_trends import get_win_trends
 from streamlit.typing import UploadedFile
 
 def process_outcomes(
-    file: UploadedFile,
-    win_trends_url: str
+    file: UploadedFile
 ) -> DataFrameMap:
     file_raw = pd.read_csv(file)
 
@@ -15,18 +14,6 @@ def process_outcomes(
             error=f"ERROR (Outcomes-Processor): 'WINNER RECORD' column not found",
             content=None
         )
-
-    wintrends_map = get_win_trends(
-        url=win_trends_url
-    )
-
-    if wintrends_map["error"]:
-        return DataFrameMap(
-            error=wintrends_map["error"],
-            content=None
-        )
-
-    win_trends = wintrends_map["content"]
 
     return DataFrameMap(
         error=None,

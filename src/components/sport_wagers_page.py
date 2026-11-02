@@ -55,8 +55,7 @@ def render(
 
     with page_tabs[1]:
         outcomes_section.render(
-            sport_title=sport_title,
-            win_trends_url=win_trends_url
+            sport_title=sport_title
         )
 
     if sport_key in st.session_state and "schedule" in st.session_state[sport_key]:
