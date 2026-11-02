@@ -5,7 +5,7 @@ def make_winner_picks(
     url: str,
     month: int | str,
     day: int | str
-):
+) -> DataFrameMap:
     winner_picks_map = scan_tr_table(url=url)
 
     if winner_picks_map["error"]:
