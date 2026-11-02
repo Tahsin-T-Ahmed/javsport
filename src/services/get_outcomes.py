@@ -22,3 +22,8 @@ def get_outcomes(
             )
 
         winner_picks = winner_picks_map["content"]
+
+    return DataFrameMap(
+        error=None,
+        content=winner_picks
+    )
