@@ -1,5 +1,6 @@
 import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
+from src.data_collection.scrapers.get_soup import get_soup
 from src.services.get_win_trends import get_win_trends
 from streamlit.typing import UploadedFile
 
@@ -8,6 +9,12 @@ def process_outcomes(
     win_trends_url: str
 ) -> DataFrameMap:
     file_raw = pd.read_csv(file)
+
+    if "WINNER RECORD" not in file_raw.columns:
+        return DataFrameMap(
+            error=f"ERROR (Outcomes-Processor): 'WINNER RECORD' column not found",
+            content=None
+        )
 
     wintrends_map = get_win_trends(
         url=win_trends_url
