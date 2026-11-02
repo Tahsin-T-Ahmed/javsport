@@ -1,11 +1,10 @@
 import streamlit as st
 
-import datetime
-from src.data_collection.builders.make_schedule import make_schedule
+import pandas as pd
+from src.data_collection.scrapers.scan_tr_table import scan_tr_table
 
-schedule = make_schedule(
-    schedule_url="https://www.teamrankings.com/ncb/schedules/season/?week=0",
-    timestamp=datetime.datetime.now()
+winner_picks = scan_tr_table(
+    url="https://www.teamrankings.com/nfl-win-picks/"
 )["content"]
 
-st.write(schedule)
+st.write(winner_picks)
