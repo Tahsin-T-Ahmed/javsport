@@ -9,12 +9,6 @@ def process_outcomes(
 ) -> DataFrameMap:
     file_raw = pd.read_csv(file)
 
-    if "WINNER RECORD" not in file_raw.columns:
-        return DataFrameMap(
-            error=f"ERROR (Outcomes-Processor): 'WINNER RECORD' column not found",
-            content=None
-        )
-
     winner_picks = get_outcomes(
         winner_picks_url=winner_picks_url
     )
