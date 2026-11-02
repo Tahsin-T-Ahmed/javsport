@@ -44,6 +44,8 @@ def make_schedule(
         schedule["TEAMS PARSED"].str.split("--javsport-team-separator-str--", expand=True)
     )
 
+    schedule.dropna(subset=["TITLE_LINK"], inplace=True)
+
     schedule = schedule[["TITLE", "TIME", "TEAM A", "TEAM B"]]
 
     schedule["TEAM B IS HOME"] = schedule.apply(
