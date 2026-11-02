@@ -16,10 +16,18 @@ def get_team_a_win_chance(
         metrics_json=metrics_json
     )
 
-    response = requests.get(
-        url=api_url,
-        params=params
-    )
+    response = None
+
+    try:
+        response = requests.get(
+            url=api_url,
+            params=params
+        )
+    except Exception as e:
+        return StringMap(
+            error=f":material/cloud_off: ERROR: Failed to connect to Predictions API",
+            content=None
+        )
 
     if 200 != response.status_code:
         return StringMap(
