@@ -1,5 +1,5 @@
 import datetime
-from src.components import table
+from src.components import table, upload_dialog_caption
 import streamlit as st
 
 def render(
@@ -56,18 +56,9 @@ def render(
         caption_container = st.empty()
 
         with caption_container:
-            if guide_type:
-                guide_desc = "Instructions: "
-                
-                match(guide_type):
-                    case "webpage":
-                        guide_desc += ":orange[:material/download_2: Download & Save :material/save:] the full :green[webpage :material/web:]"
-                    case "spreadsheet":
-                        guide_desc += ":orange[:material/content_copy: Copy/Paste] the :green[ENTIRE table :material/table:] (with :blue[links :material/link_2:]) into a :green[spreadsheet :material/view_list:]"
-                    case _:
-                        guide_desc = "Please consult JavSport admins on how to process this data"
-                
-                st.caption(guide_desc)
+            upload_dialog_caption.render(
+                guide_type=guide_type
+            )
 
         if not file:
             st.session_state[sport_key]["file_requirements"]["buffer"][file_key] = None
