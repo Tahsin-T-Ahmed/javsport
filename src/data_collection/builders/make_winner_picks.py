@@ -37,6 +37,14 @@ def make_winner_picks(
         lambda text: " ".join(text.split(" ")[1:])
     )
 
+    winner_picks[["MONTH", "DAY"]] = winner_picks["DATE"].str.split("/", expand=True)
+
+    winner_picks = winner_picks[
+        (int(month) == winner_picks["MONTH"].astype(int))
+        &
+        (int(day) == winner_picks["DAY"].astype(int))
+    ]
+
     winner_picks = winner_picks[["DATE", "STATUS", "TR PICK", "OPPONENT"]]
 
     return DataFrameMap(
