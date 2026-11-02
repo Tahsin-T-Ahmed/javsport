@@ -1,14 +1,13 @@
 import streamlit as st
 
-from src.services.process_outcomes import process_outcomes
+from src.data_collection.builders.make_winner_picks import make_winner_picks
 
 file = st.file_uploader("Upload Wagers File")
 
 if file:
 
-    outcomes = process_outcomes(
-        file=file,
-        winner_picks_url=None
+    winner_picks = make_winner_picks(
+        url="https://www.teamrankings.com/nfl-win-picks/"
     )["content"]
 
-    st.write(outcomes)
+    st.write(winner_picks)
