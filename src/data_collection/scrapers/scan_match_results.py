@@ -6,7 +6,7 @@ def scan_match_results(
     url: str
 ) -> DataFrameMap:
     url = f"{url}/box-score"
-    
+
     soup_map = get_soup(url)
 
     if soup_map["error"]:
@@ -48,8 +48,20 @@ def scan_match_results(
                 content=None
             )
 
-        for header, cell in zip(headers, cells):
-            match_results.loc[row_idx, header] = cell.text.strip()
+        for cell_idx, cell in enumerate(cells):
+            header = None
+            cell_content = None
+
+            if 0 == cell_idx:
+                header = "TEAM NAME"
+                cell_content = cell.find("a").text.strip()
+            else:            
+                header = headers[cell_idx]
+                cell_content = cell.text.strip()
+            
+            match_results.loc[row_idx, header] = cell_content
+
+        match_results.drop("", axis=1, inplace=True)
 
     return DataFrameMap(
         error=None,
