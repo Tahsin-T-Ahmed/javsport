@@ -6,6 +6,8 @@ def get_schedule(
     timestamp: datetime.datetime,
     schedule_url: str
 ) -> DictMap:
+    schedule_dict = dict()
+
     schedule_raw_map = make_schedule(
         schedule_url=schedule_url,
         timestamp=timestamp
@@ -18,6 +20,7 @@ def get_schedule(
         )
 
     schedule = schedule_raw_map["content"]
+    schedule_dict["data"] = schedule
 
     if schedule.empty:
         return DictMap(
@@ -41,10 +44,7 @@ def get_schedule(
 
     schedule_display = schedule_display[["TIME", "TEAM A", "TEAM B", "HOME TEAM"]]
 
-    schedule_dict = dict(
-        data=schedule,
-        display=schedule_display
-    )
+    schedule_dict["display"] = schedule_display
 
     return DictMap(
         error=None,
