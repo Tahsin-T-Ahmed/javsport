@@ -208,3 +208,4 @@ def render(
         pred_df.loc[match_idx, "TIME"] = display_time
         pred_df.loc[match_idx, "WINNER RECORD"] = team_win_trends[winning_team_key]
         pred_df.loc[match_idx, "MATCH URL"] = match_url_full
+        pred_df.loc[match_idx, "TIMESTAMP"] = match_row["TIME"]
