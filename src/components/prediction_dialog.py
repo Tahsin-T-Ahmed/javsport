@@ -15,6 +15,8 @@ def render(
     league_average: float | None = None,
 ):
     win_trends = leaderboards["win_trends"]
+
+    match_url_full = f"http://www.teamrankings.com{match_row['MATCH URL']}"
     
     team_names = dict(
         a=match_row["TEAM A"],
@@ -205,3 +207,4 @@ def render(
         pred_df.loc[match_idx, "OPPONENT"] = team_full_names[[key for key in team_full_names if key != winning_team_key][0]]
         pred_df.loc[match_idx, "TIME"] = display_time
         pred_df.loc[match_idx, "WINNER RECORD"] = team_win_trends[winning_team_key]
+        pred_df.loc[match_idx, "MATCH URL"] = match_url_full
