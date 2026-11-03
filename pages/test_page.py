@@ -1,18 +1,18 @@
 import streamlit as st
 
 import pandas as pd
-from src.data_collection.builders.make_scoreboard import make_scoreboard
+from src.services.get_match_winner import get_match_winner
 from src.services.get_outcomes import get_outcomes
 
 match_url = st.text_input("Enter Match URL:")
 if st.button("Confirm URL"):
-    scoreboard_map = make_scoreboard(match_url)
+    winner_map = get_match_winner(match_url)
 
-    if scoreboard_map["error"]:
-        st.error(scoreboard_map["error"])
+    if winner_map["error"]:
+        st.error(winner_map["error"])
     else:
-        scoreboard = scoreboard_map["content"]
-        st.write(scoreboard)
+        winner = winner_map["content"]
+        st.write(winner)
     
 
 file = st.file_uploader("Upload Wagers File")
