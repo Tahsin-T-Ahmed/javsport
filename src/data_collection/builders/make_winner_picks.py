@@ -28,7 +28,8 @@ def make_winner_picks(
     winner_picks.rename(
         columns={
             "DAY": "DATE",
-            "OPP/GAME": "OPPONENT"
+            "OPP/GAME": "OPPONENT",
+            "TR PICK_LINK": "MATCH URL"
         },
         inplace=True
     )
@@ -45,7 +46,7 @@ def make_winner_picks(
         (int(day) == winner_picks["DAY"].astype(int))
     ]
 
-    winner_picks = winner_picks[["DATE", "STATUS", "TR PICK", "OPPONENT"]]
+    winner_picks = winner_picks[["DATE", "STATUS", "TR PICK", "OPPONENT", "MATCH URL"]]
 
     return DataFrameMap(
         error=None,
