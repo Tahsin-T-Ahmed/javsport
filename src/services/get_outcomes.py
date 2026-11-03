@@ -10,12 +10,10 @@ def get_outcomes(
     winner_picks_url: str | None
 ) -> DataFrameMap:
     file_raw = pd.read_csv(file)
-    
-    winner_picks_url_adjusted = f"{winner_picks_url}?range=last-21-days"
 
     winner_picks_map = get_winner_picks(
         file=file,
-        winner_picks_url=winner_picks_url_adjusted,
+        winner_picks_url=winner_picks_url,
         month=month,
         day=day
     )

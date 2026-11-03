@@ -8,9 +8,11 @@ def get_winner_picks(
     month: int | str,
     day: int | str,
 ) -> DataFrameMap:
-    if winner_picks_url:
+    if winner_picks_url:    
+        winner_picks_url_adjusted = f"{winner_picks_url}?range=last-21-days"
+
         winner_picks_map = make_winner_picks(
-            url=winner_picks_url,
+            url=winner_picks_url_adjusted,
             month=month,
             day=day
         )
