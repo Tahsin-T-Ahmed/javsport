@@ -1,36 +1,22 @@
 import streamlit as st
 
+import pandas as pd
 from src.services.get_outcomes import get_outcomes
 
 cols = st.columns(2)
-
-month = None
-with cols[0]:
-    month = st.number_input(
-        label="Month",
-        min_value=1,
-        max_value=12
-    )
-
-day = None
-with cols[1]:
-    day = st.number_input(
-        label="Day",
-        min_value=1,
-        max_value=31
-    )
 
 
 file = st.file_uploader("Upload Wagers File")
 
 if file:
+    st.write(pd.read_csv(file))
     if st.button(":material/upload: Submit"):
-        outcomes = get_outcomes(
-            file=file,
-            winner_picks_url="https://www.teamrankings.com/nfl-win-picks/",
-            month=month,
-            day=day
-        )
+        with st.spinner("Loading outcomes..."):
+            outcomes = get_outcomes(
+                file=file,
+                winner_picks_url="https://www.teamrankings.com/nfl-win-picks/",
+                # winner_picks_url=None,
+            )
 
         if outcomes["error"]:
             st.error(outcomes["error"])

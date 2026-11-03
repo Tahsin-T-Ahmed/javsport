@@ -2,9 +2,7 @@ from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.scrapers.scan_tr_table import scan_tr_table
 
 def make_winner_picks(
-    url: str,
-    month: int | str,
-    day: int | str
+    url: str
 ) -> DataFrameMap:
     winner_picks_map = scan_tr_table(url=url)
 
@@ -40,12 +38,6 @@ def make_winner_picks(
     )
 
     winner_picks[["MONTH", "DAY"]] = winner_picks["DATE"].str.split("/", expand=True)
-
-    winner_picks = winner_picks[
-        (int(month) == winner_picks["MONTH"].astype(int))
-        &
-        (int(day) == winner_picks["DAY"].astype(int))
-    ]
 
     winner_picks = winner_picks[["DATE", "STATUS", "FAVORITE", "OPPONENT", "MATCH URL"]]
 

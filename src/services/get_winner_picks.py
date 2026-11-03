@@ -4,17 +4,13 @@ from streamlit.typing import UploadedFile
 
 def get_winner_picks(
     file: UploadedFile,
-    winner_picks_url: str | None,
-    month: int | str,
-    day: int | str,
+    winner_picks_url: str | None
 ) -> DataFrameMap:
     if winner_picks_url:    
         winner_picks_url_adjusted = f"{winner_picks_url}?range=last-21-days"
 
         winner_picks_map = make_winner_picks(
             url=winner_picks_url_adjusted,
-            month=month,
-            day=day
         )
 
         if winner_picks_map["error"]:
