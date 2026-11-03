@@ -29,6 +29,7 @@ def make_winner_picks(
         columns={
             "DAY": "DATE",
             "OPP/GAME": "OPPONENT",
+            "TR PICK": "FAVORITE",
             "TR PICK_LINK": "MATCH URL"
         },
         inplace=True
@@ -46,7 +47,12 @@ def make_winner_picks(
         (int(day) == winner_picks["DAY"].astype(int))
     ]
 
-    winner_picks = winner_picks[["DATE", "STATUS", "TR PICK", "OPPONENT", "MATCH URL"]]
+    winner_picks = winner_picks[["DATE", "STATUS", "FAVORITE", "OPPONENT", "MATCH URL"]]
+
+    winner_picks.reset_index(
+        drop=True,
+        inplace=True
+    )
 
     return DataFrameMap(
         error=None,
