@@ -1,6 +1,6 @@
 import streamlit as st
 
-from src.services.process_outcomes import process_outcomes
+from src.services.get_outcomes import get_outcomes
 
 cols = st.columns(2)
 
@@ -25,7 +25,7 @@ file = st.file_uploader("Upload Wagers File")
 
 if file:
     if st.button(":material/upload: Submit"):
-        outcomes = process_outcomes(
+        outcomes = get_outcomes(
             file=file,
             winner_picks_url="https://www.teamrankings.com/nfl-win-picks/",
             month=month,

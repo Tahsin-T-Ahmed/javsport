@@ -3,7 +3,7 @@ from src.data_collection.data_maps import DataFrameMap
 from src.services.get_winner_picks import get_winner_picks
 from streamlit.typing import UploadedFile
 
-def process_outcomes(
+def get_outcomes(
     file: UploadedFile,
     month: int | str,
     day: int | str,

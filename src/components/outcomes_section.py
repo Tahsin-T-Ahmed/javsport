@@ -1,5 +1,5 @@
 from src.components import header, table
-from src.services.process_outcomes import process_outcomes
+from src.services.get_outcomes import get_outcomes
 import streamlit as st
 
 def render(
@@ -19,7 +19,7 @@ def render(
     if not file:
         return
 
-    outcomes_map = process_outcomes(
+    outcomes_map = get_outcomes(
         file=file,
         winner_picks_url=winner_picks_url
     )
