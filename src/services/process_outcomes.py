@@ -1,6 +1,6 @@
 import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
-from src.services.get_outcomes import get_outcomes
+from src.services.get_winner_picks import get_winner_picks
 from streamlit.typing import UploadedFile
 
 def process_outcomes(
@@ -13,7 +13,7 @@ def process_outcomes(
     
     winner_picks_url_adjusted = f"{winner_picks_url}?range=last-21-days"
 
-    winner_picks_map = get_outcomes(
+    winner_picks_map = get_winner_picks(
         file=file,
         winner_picks_url=winner_picks_url_adjusted,
         month=month,
