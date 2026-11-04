@@ -8,12 +8,14 @@ def get_outcomes(
     file: UploadedFile,
     winner_picks_url: str | None,
     win_trends_df: pd.DataFrame | None,
+    team_roster_df: pd.DataFrame | None,
     progress_bar: DeltaGenerator | None = None
 ) -> DataFrameMap:
     winners_map = get_winners(
         file=file,
         winner_picks_url=winner_picks_url,
         win_trends_df=win_trends_df,
+        team_roster_df=team_roster_df,
         progress_bar=progress_bar
     )
 
