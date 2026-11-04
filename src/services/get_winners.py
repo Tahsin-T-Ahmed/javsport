@@ -17,8 +17,28 @@ def get_winners(
         lambda x: None
     )
 
-    # wagers = wagers[["TRUE VICTOR", "WINNER", "OPPONENT", "CONFIDENCE", "MARKET ODDS", "EDGE", "MATCH URL"]]
+    if winner_picks_url:
+        winner_picks_map = get_winner_picks(winner_picks_url)
 
+        if winner_picks_map["error"]:
+            return DataFrameMap(
+                error=winner_picks_map["error"],
+                content=None
+            )
+
+        winner_picks = winner_picks_map["content"]
+
+        winner_picks["MATCH URL"] = winner_picks["MATCH URL"].apply(
+            lambda url_path: f"https://www.teamrankings.com{url_path}"
+        )
+
+        # THIS IS TEMPORARY. REMOVE AFTER TESTING WIN-PICKS
+        return DataFrameMap(
+            error=None,
+            content=winner_picks
+        )
+
+    wagers = wagers[["TRUE VICTOR", "WINNER", "OPPONENT", "CONFIDENCE", "MARKET ODDS", "EDGE", "MATCH URL"]]
     remaining_wagers = wagers[wagers["TRUE VICTOR"].isnull()]
 
     for wager_idx, wager_row in remaining_wagers.iterrows():
