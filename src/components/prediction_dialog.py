@@ -161,7 +161,7 @@ def render(
             ).item()
 
         st.markdown(
-            body=f"##### :orange[:material/trophy:] JavSport thinks :violet[{team_names[winning_team_key]}] will win :orange[:material/trophy:]",
+            body=f"##### :orange[:material/trophy:] JavSport thinks :violet[{team_full_names[winning_team_key]}] will win :orange[:material/trophy:]",
             anchors=False
         )
 
