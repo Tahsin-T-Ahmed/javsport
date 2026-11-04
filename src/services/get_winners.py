@@ -8,10 +8,18 @@ from streamlit.typing import UploadedFile
 def get_winners(
     file: UploadedFile,
     winner_picks_url: str | None,
+    win_trends_df: pd.DataFrame | None,
     progress_bar: DeltaGenerator | None = None
 ) -> DataFrameMap:
     wagers = pd.read_csv(file)
     n_wagers = wagers.shape[0]
+
+    # TESTING WIN_TRENDS_DF, REMOVE AFTER FINISHED
+    if win_trends_df is not None:
+        return DataFrameMap(
+            error=None,
+            content=win_trends_df
+        )
 
     wagers["TRUE VICTOR"] = wagers["WINNER"].apply(
         lambda x: None
