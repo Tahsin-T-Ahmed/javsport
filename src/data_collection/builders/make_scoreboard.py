@@ -19,6 +19,8 @@ def make_scoreboard(url: str) -> DataFrameMap:
         inplace=True
     )
 
+    scoreboard["SCORE"] = scoreboard["SCORE"].astype(float)
+
     scoreboard = scoreboard[["TEAM NAME", "SCORE"]]
 
     return DataFrameMap(
