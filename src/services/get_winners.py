@@ -15,13 +15,6 @@ def get_winners(
     wagers = pd.read_csv(file)
     n_wagers = wagers.shape[0]
 
-    # TESTING TEAM_ROSTER PARAM-ARG, REMOVE WHEN FINISHED
-    if team_roster_df is not None:
-        return DataFrameMap(
-            error=None,
-            content=team_roster_df
-        )
-
     wagers["TRUE VICTOR"] = wagers["WINNER"].apply(
         lambda x: None
     )
@@ -39,12 +32,6 @@ def get_winners(
 
         winner_picks["MATCH URL"] = winner_picks["MATCH URL"].apply(
             lambda url_path: f"https://www.teamrankings.com{url_path}"
-        )
-
-        # THIS IS TEMPORARY. REMOVE AFTER TESTING WIN-PICKS
-        return DataFrameMap(
-            error=None,
-            content=winner_picks
         )
 
     wagers = wagers[["TRUE VICTOR", "WINNER", "OPPONENT", "CONFIDENCE", "MARKET ODDS", "EDGE", "MATCH URL"]]
@@ -65,7 +52,7 @@ def get_winners(
         else:
             true_victor = victor_map["content"]
 
-        remaining_wagers.loc[wager_idx, "TRUE VICTOR"] = true_victor
+        wagers.loc[wager_idx, "TRUE VICTOR"] = true_victor
 
     if progress_bar:
         progress_bar.status(
@@ -75,5 +62,5 @@ def get_winners(
 
     return DataFrameMap(
         error=None,
-        content=remaining_wagers
+        content=wagers
     )
