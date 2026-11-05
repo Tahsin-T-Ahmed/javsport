@@ -27,7 +27,16 @@ def get_outcomes(
 
     winners = winners_map["content"]
 
+    outcomes = winners
+
+    outcomes["OUTCOME"] = outcomes.apply(
+        lambda row: "RIGHT" if row["WINNER"] == row["TRUE VICTOR"] else "WRONG",
+        axis=1
+    )
+
+    outcomes = outcomes[["OUTCOME", "WINNER", "OPPONENT", "CONFIDENCE", "MARKET ODDS", "EDGE"]]
+
     return DataFrameMap(
         error=None,
-        content=winners
+        content=outcomes
     )
