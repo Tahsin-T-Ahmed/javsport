@@ -20,6 +20,18 @@ def get_winners(
     )
 
     if winner_picks_url:
+        if not win_trends_df:
+            return DataFrameMap(
+                error=f"ERROR (Winners-Getter): Missing Win-Trends DataFrame",
+                content=None
+            )
+
+        if not team_roster_df:
+            return DataFrameMap(
+                error=f"ERROR (Winners-Getter): Missing Team-Roster DataFrame",
+                content=None
+            )
+        
         winner_picks_map = get_winner_picks(winner_picks_url)
 
         if winner_picks_map["error"]:
