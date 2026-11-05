@@ -29,12 +29,19 @@ def get_outcomes(
 
     outcomes = winners
 
+    outcomes.rename(
+        columns={
+            "WINNER": "CHOSEN TEAM"
+        },
+        inplace=True
+    )
+
     outcomes["OUTCOME"] = outcomes.apply(
-        lambda row: "RIGHT" if row["WINNER"] == row["TRUE VICTOR"] else "WRONG",
+        lambda row: "RIGHT" if row["CHOSEN TEAM"] == row["TRUE VICTOR"] else "WRONG",
         axis=1
     )
 
-    outcomes = outcomes[["OUTCOME", "WINNER", "OPPONENT", "CONFIDENCE", "MARKET ODDS", "EDGE"]]
+    outcomes = outcomes[["OUTCOME", "CHOSEN TEAM", "OPPONENT", "CONFIDENCE", "MARKET ODDS", "EDGE"]]
 
     return DataFrameMap(
         error=None,
