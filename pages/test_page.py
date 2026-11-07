@@ -52,4 +52,4 @@ if (
             outcomes = outcomes_map["content"]
             outcomes_container.write(outcomes)
 
-            loading_container.empty()
+            # loading_container.empty()

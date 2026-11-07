@@ -20,13 +20,13 @@ def get_winners(
     )
 
     if winner_picks_url:
-        if not win_trends_df:
+        if win_trends_df is None:
             return DataFrameMap(
                 error=f"ERROR (Winners-Getter): Missing Win-Trends DataFrame",
                 content=None
             )
 
-        if not team_roster_df:
+        if team_roster_df is None:
             return DataFrameMap(
                 error=f"ERROR (Winners-Getter): Missing Team-Roster DataFrame",
                 content=None
@@ -46,7 +46,13 @@ def get_winners(
             lambda url_path: f"https://www.teamrankings.com{url_path}"
         )
 
-    wagers = wagers[["TRUE VICTOR", "WINNER", "OPPONENT", "CONFIDENCE", "MARKET ODDS", "EDGE", "MATCH URL"]]
+        for wager_idx, wager_row in wagers.iterrows():
+            winpick_status = winner_picks.loc[
+                winner_picks["MATCH URL"] == wager_row["MATCH URL"],
+                "STATUS"
+            ].item().strip().upper()
+
+    # wagers = wagers[["TRUE VICTOR", "WINNER", "OPPONENT", "CONFIDENCE", "MARKET ODDS", "EDGE", "MATCH URL"]]
     remaining_wagers = wagers[wagers["TRUE VICTOR"].isnull()]
 
     for wager_idx, wager_row in remaining_wagers.iterrows():
