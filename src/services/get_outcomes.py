@@ -7,8 +7,6 @@ from streamlit.typing import UploadedFile
 def get_outcomes(
     file: UploadedFile,
     winner_picks_url: str | None,
-    win_trends_df: pd.DataFrame | None,
-    team_roster_df: pd.DataFrame | None,
     progress_bar: DeltaGenerator | None = None
 ) -> DataFrameMap:
     wagers = pd.read_csv(file)
@@ -31,13 +29,6 @@ def get_outcomes(
         winner_picks["MATCH URL"] = winner_picks["MATCH URL"].apply(
             lambda url_path: f"https://www.teamrankings.com{url_path}"
         )
-
-
-
-
-
-
-        import streamlit as st
 
         for wager_idx, wager_row in wagers.iterrows():
             winpick_row = winner_picks[
