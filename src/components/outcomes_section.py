@@ -24,7 +24,10 @@ def render(
     outcomes = None
 
     with loading_container.container():
-        with st.spinner("Loading Outcomes..."):
+        with st.spinner(
+            text="Loading Outcomes...",
+            show_time=True
+        ):
             progress_bar = st.progress(
                 value=0.0
             )
