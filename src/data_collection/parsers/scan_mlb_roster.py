@@ -58,7 +58,7 @@ def scan_mlb_roster(
 
     if progress_bar:
         progress_bar.status(
-            label=":green[Complete! :material/check:]",
+            label=":green[:material/check:] Roster-Scan Complete!",
             state="complete"
         )
 

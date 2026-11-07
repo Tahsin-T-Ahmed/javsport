@@ -59,7 +59,7 @@ def scan_mlb_probables(
 
     if progress_bar:
         progress_bar.status(
-            label="Complete! :green[:material/check:]",
+            label=":green[:material/check:] Probables-Scan Complete!",
             state="complete"
         )
 

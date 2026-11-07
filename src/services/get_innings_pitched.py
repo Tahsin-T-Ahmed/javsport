@@ -29,7 +29,7 @@ def get_innings_pitched(
 
     if progress_bar:
         progress_bar.status(
-            label="IP Scan Complete! :green[:material/check:]",
+            label=":green[:material/check:] IP Scan Complete!",
             state="complete"
         )
 

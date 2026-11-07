@@ -74,7 +74,7 @@ def get_outcomes(
 
     if progress_bar:
         progress_bar.status(
-            label="Outcomes Loaded!",
+            label=":green[:material/check:] Outcomes Loaded!",
             state="complete"
         )
 

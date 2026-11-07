@@ -29,7 +29,7 @@ def get_siera(
 
     if progress_bar:
         progress_bar.status(
-            label="SIERA Scan Complete! :green[:material/check:]",
+            label=":green[:material/check:] SIERA Scan Complete!",
             state="complete"
         )
 
