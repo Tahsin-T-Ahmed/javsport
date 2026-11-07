@@ -37,5 +37,6 @@ sport_wagers_page.render(
             file_parser=get_nfl_dave
         )
     ],
-    metrics_assembler=assemble_nfl_metrics
+    metrics_assembler=assemble_nfl_metrics,
+    winner_picks_url="https://www.teamrankings.com/nfl-win-picks/"
 )

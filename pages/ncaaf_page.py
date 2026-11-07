@@ -34,5 +34,6 @@ sport_wagers_page.render(
             guide_type="webpage"
         )
     ],
-    metrics_assembler=assemble_ncaaf_metrics
+    metrics_assembler=assemble_ncaaf_metrics,
+    winner_picks_url="https://www.teamrankings.com/college-football-win-picks/"
 )
