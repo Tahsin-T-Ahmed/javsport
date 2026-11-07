@@ -12,6 +12,7 @@ def get_outcomes(
     progress_bar: DeltaGenerator | None = None
 ) -> DataFrameMap:
     wagers = pd.read_csv(file)
+    n_wagers = wagers.shape[0]
 
     wagers["STATUS"] = wagers["WINNER"].apply(
         lambda x: None
@@ -33,6 +34,12 @@ def get_outcomes(
         )
 
         for wager_idx, wager_row in wagers.iterrows():
+            if progress_bar:
+                progress_bar.progress(
+                    text=f"Processing :violet[{wager_row['WINNER']}] vs :red[{wager_row['OPPONENT']}...]",
+                    value=wager_idx/n_wagers
+                )
+
             winpick_row = winner_picks[
                 winner_picks["MATCH URL"] == wager_row["MATCH URL"]
             ]
@@ -46,6 +53,12 @@ def get_outcomes(
     wagers_to_scrape = wagers[wagers["STATUS"].isnull()]
 
     for wager_idx, wager_row in wagers_to_scrape.iterrows():
+        if progress_bar:
+            progress_bar.progress(
+                text=f"Processing :violet[{wager_row['WINNER']}] vs :red[{wager_row['OPPONENT']}...]",
+                value=wager_idx/n_wagers
+            )
+            
         winning_team_map = get_match_winner(wager_row["MATCH URL"])
 
         if winning_team_map["error"]:
@@ -58,6 +71,12 @@ def get_outcomes(
             wagers.loc[wager_idx, "STATUS"] = "RIGHT"
         else:
             wagers.loc[wager_idx, "STATUS"] = "WRONG"
+
+    if progress_bar:
+        progress_bar.status(
+            label="Outcomes Loaded!",
+            state="complete"
+        )
 
     return DataFrameMap(
         error=None,

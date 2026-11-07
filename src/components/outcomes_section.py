@@ -19,16 +19,32 @@ def render(
     if not file:
         return
 
-    outcomes_map = get_outcomes(
-        file=file,
-        winner_picks_url=winner_picks_url
-    )
+    loading_container = st.empty()
 
-    if outcomes_map["error"]:
-        st.error(outcomes_map["error"])
+    outcomes = None
+
+    with loading_container.container():
+        with st.spinner("Loading Outcomes..."):
+            progress_bar = st.progress(
+                value=0.0
+            )
+
+            outcomes_map = get_outcomes(
+                file=file,
+                winner_picks_url=winner_picks_url,
+                progress_bar=progress_bar
+            )
+
+            if outcomes_map["error"]:
+                st.error(outcomes_map["error"])
+                return
+
+            outcomes = outcomes_map["content"]
+
+    if outcomes is None:
         return
 
-    outcomes = outcomes_map["content"]
+    loading_container.empty()
 
     table.render(
         data=outcomes,
