@@ -47,8 +47,16 @@ def get_outcomes(
             if winpick_row.empty:
                 continue
 
-            winpick_status = winpick_row["STATUS"]
-            wagers.loc[wager_idx, "STATUS"] = winpick_status.item().upper()
+            winpick_status = winpick_row["STATUS"].item().strip().upper()
+            winpick_favorite = winpick_row["FAVORITE"].item().strip().upper()
+            javsport_winner = wager_row["WINNER"].item().strip().upper()
+
+            if javsport_winner == winpick_favorite:
+                wagers.loc[wager_idx, "STATUS"] = winpick_status.item().upper()
+                continue
+
+            if "RIGHT" == winpick_status:
+                wagers.loc[wager_idx, "STATUS"] = "WRONG"
 
     wagers_to_scrape = wagers[wagers["STATUS"].isnull()]
 
