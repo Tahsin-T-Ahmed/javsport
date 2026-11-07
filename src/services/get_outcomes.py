@@ -43,21 +43,21 @@ def get_outcomes(
             winpick_status = winpick_row["STATUS"]
             wagers.loc[wager_idx, "STATUS"] = winpick_status.item().upper()
 
-        remaining_wagers = wagers[wagers["STATUS"].isnull()]
+    wagers_to_scrape = wagers[wagers["STATUS"].isnull()]
 
-        for wager_idx, wager_row in remaining_wagers.iterrows():
-            winning_team_map = get_match_winner(wager_row["MATCH URL"])
+    for wager_idx, wager_row in wagers_to_scrape.iterrows():
+        winning_team_map = get_match_winner(wager_row["MATCH URL"])
 
-            if winning_team_map["error"]:
-                st.error(winning_team_map["error"])
-                continue
+        if winning_team_map["error"]:
+            st.error(winning_team_map["error"])
+            continue
 
-            winning_team = winning_team_map["content"].strip()
+        winning_team = winning_team_map["content"].strip()
 
-            if wager_row["WINNER"] == winning_team:
-                wagers.loc[wager_idx, "STATUS"] = "RIGHT"
-            else:
-                wagers.loc[wager_idx, "STATUS"] = "WRONG"
+        if wager_row["WINNER"] == winning_team:
+            wagers.loc[wager_idx, "STATUS"] = "RIGHT"
+        else:
+            wagers.loc[wager_idx, "STATUS"] = "WRONG"
 
     return DataFrameMap(
         error=None,
