@@ -56,7 +56,10 @@ def render(
 
     with page_tabs[1]:
         outcomes_section.render(
+            sport_key=sport_key,
             sport_title=sport_title,
+            team_roster_url=team_roster_url,
+            win_trends_url=win_trends_url,
             winner_picks_url=winner_picks_url
         )
 
