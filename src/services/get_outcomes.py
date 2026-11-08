@@ -9,6 +9,8 @@ from streamlit.typing import UploadedFile
 def get_outcomes(
     file: UploadedFile,
     winner_picks_url: str | None,
+    team_roster_df: pd.DataFrame,
+    win_trends_df: pd.DataFrame,
     progress_bar: DeltaGenerator | None = None
 ) -> DataFrameMap:
     wagers = pd.read_csv(file)
@@ -49,10 +51,21 @@ def get_outcomes(
 
             winpick_status = winpick_row["STATUS"].item().strip().upper()
             winpick_favorite = winpick_row["FAVORITE"].item().strip().upper()
-            javsport_winner = wager_row["WINNER"].item().strip().upper()
 
-            if javsport_winner == winpick_favorite:
-                wagers.loc[wager_idx, "STATUS"] = winpick_status.item().upper()
+            javsport_winner_fullname = wager_row["WINNER"].strip().upper()
+            
+            javsport_winner_trid = team_roster_df.loc[
+                wager_row["WINNER"] == team_roster_df["TEAM NAME"],
+                "TEAM TRID"
+            ].item()
+
+            javsport_winner_shortname = win_trends_df.loc[
+                javsport_winner_trid == win_trends_df["TEAM TRID"],
+                "TEAM NAME"
+            ].item().strip().upper()
+
+            if javsport_winner_shortname == winpick_favorite:
+                wagers.loc[wager_idx, "STATUS"] = winpick_status
                 continue
 
             if "RIGHT" == winpick_status:
