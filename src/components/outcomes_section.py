@@ -83,5 +83,6 @@ def render(
     table.render(
         data=outcomes,
         label=f"{sport_title} Outcomes",
+        height="auto",
         hide_index=True
     )
