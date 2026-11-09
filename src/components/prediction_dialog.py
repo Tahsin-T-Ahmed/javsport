@@ -16,7 +16,7 @@ def render(
 ):
     win_trends = leaderboards["win_trends"]
 
-    match_url_full = f"http://www.teamrankings.com{match_row['MATCH URL']}"
+    match_url_full = f"https://www.teamrankings.com{match_row['MATCH URL']}"
     
     team_names = dict(
         a=match_row["TEAM A"],
