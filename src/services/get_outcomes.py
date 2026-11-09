@@ -20,6 +20,8 @@ def get_outcomes(
         lambda x: None
     )
 
+    completed_wagers = 0
+
     if winner_picks_url:
         winner_picks_map = get_winner_picks(winner_picks_url)
 
@@ -39,7 +41,7 @@ def get_outcomes(
             if progress_bar:
                 progress_bar.progress(
                     text=f"Processing :violet[{wager_row['WINNER']}] vs :red[{wager_row['OPPONENT']}...]",
-                    value=wager_idx/n_wagers
+                    value=completed_wagers/n_wagers
                 )
 
             winpick_row = winner_picks[
@@ -64,12 +66,18 @@ def get_outcomes(
                 "TEAM NAME"
             ].item().strip().upper()
 
-            if javsport_winner_shortname == winpick_favorite:
-                wagers.loc[wager_idx, "STATUS"] = winpick_status
-                continue
+            outcome = None
 
-            if "RIGHT" == winpick_status:
-                wagers.loc[wager_idx, "STATUS"] = "WRONG"
+            if javsport_winner_shortname == winpick_favorite:
+                outcome = winpick_status
+            else:
+                if "RIGHT" == winpick_status:
+                    outcome = "WRONG"
+
+            wagers.loc[wager_idx, "STATUS"] = outcome
+
+            if outcome:
+                completed_wagers += 1
 
     wagers_to_scrape = wagers[wagers["STATUS"].isnull()]
 
@@ -77,7 +85,7 @@ def get_outcomes(
         if progress_bar:
             progress_bar.progress(
                 text=f"Processing :violet[{wager_row['WINNER']}] vs :red[{wager_row['OPPONENT']}...]",
-                value=wager_idx/n_wagers
+                value=completed_wagers/n_wagers
             )
             
         winning_team_map = get_match_winner(wager_row["MATCH URL"])
@@ -88,10 +96,15 @@ def get_outcomes(
 
         winning_team = winning_team_map["content"].strip()
 
+        outcome = None
+
         if wager_row["WINNER"] == winning_team:
-            wagers.loc[wager_idx, "STATUS"] = "RIGHT"
+            outcome = "RIGHT"
         else:
-            wagers.loc[wager_idx, "STATUS"] = "WRONG"
+            outcome = "WRONG"
+
+        wagers.loc[wager_idx, "STATUS"] = outcome
+        completed_wagers += 1
 
     if progress_bar:
         progress_bar.status(
