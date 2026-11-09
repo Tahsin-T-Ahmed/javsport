@@ -200,12 +200,11 @@ def render(
 
         pred_df = st.session_state[sport_key]["predictions"]
 
-        pred_df.loc[match_idx, "WINNER"] = team_full_names[winning_team_key]
+        pred_df.loc[match_idx, "JS PICK"] = team_full_names[winning_team_key]
         pred_df.loc[match_idx, "OPPONENT"] = team_full_names[[key for key in team_full_names if key != winning_team_key][0]]
         pred_df.loc[match_idx, "TIME"] = display_time
         pred_df.loc[match_idx, "CONFIDENCE"] = win_confidence
         pred_df.loc[match_idx, "MARKET ODDS"] = market_odds
         pred_df.loc[match_idx, "EDGE"] = edge
-        pred_df.loc[match_idx, "WINNER RECORD"] = team_win_trends[winning_team_key]
         pred_df.loc[match_idx, "MATCH URL"] = match_url_full
         pred_df.loc[match_idx, "TIMESTAMP"] = match_row["TIME"]
