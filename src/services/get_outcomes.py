@@ -52,7 +52,7 @@ def get_outcomes(
                 continue
 
             winpick_status = winpick_row["STATUS"].item().strip().upper()
-            tr_pick = winpick_row["TR PICK"].item().strip().upper()
+            market_pick = winpick_row["MARKET PICK"].item().strip().upper()
 
             javsport_winner_fullname = wager_row["JAVSPORT PICK"].strip().upper()
             
@@ -68,7 +68,7 @@ def get_outcomes(
 
             outcome = None
 
-            if javsport_winner_shortname == tr_pick:
+            if javsport_winner_shortname == market_pick:
                 outcome = winpick_status
             else:
                 if "RIGHT" == winpick_status:

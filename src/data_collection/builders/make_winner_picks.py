@@ -27,6 +27,7 @@ def make_winner_picks(
         columns={
             "DAY": "DATE",
             "OPP/GAME": "OPPONENT",
+            "TR PICK": "MARKET PICK",
             "TR PICK_LINK": "MATCH URL"
         },
         inplace=True
@@ -38,7 +39,7 @@ def make_winner_picks(
 
     winner_picks[["MONTH", "DAY"]] = winner_picks["DATE"].str.split("/", expand=True)
 
-    winner_picks = winner_picks[["DATE", "STATUS", "TR PICK", "OPPONENT", "MATCH URL"]]
+    winner_picks = winner_picks[["DATE", "STATUS", "MARKET PICK", "OPPONENT", "MATCH URL"]]
 
     winner_picks.reset_index(
         drop=True,
