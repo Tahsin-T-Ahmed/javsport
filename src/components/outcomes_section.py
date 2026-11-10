@@ -1,10 +1,14 @@
-from src.components import header, table
+from src.components import page_header_banner, table
 from src.services.get_outcomes import get_outcomes
 import streamlit as st
 
 def render():
-    header.render("OUTCOMES")
-
+    page_header_banner.render(
+        title="Outcomes",
+        subheader="Game Aftermaths",
+        icon=":material/sports_score:"
+    )
+    
     file = None
 
     with st.container(border=True):

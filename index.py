@@ -57,7 +57,8 @@ wnba_page = st.Page(
 outcomes_page = st.Page(
     page="./pages/outcomes_page.py",
     title="Outcomes",
-    url_path="/outcomes"
+    url_path="outcomes",
+    icon=":material/trophy:"
 )
 
 test_page = st.Page(
