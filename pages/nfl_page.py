@@ -22,8 +22,8 @@ sport_wagers_page.render(
     team_roster_url="https://www.teamrankings.com/nfl/teams/",
     required_files_list=[
         RequiredFileMap(
-            file_label="Moneyline",
-            file_key="moneyline",
+            file_label="Odds",
+            file_key="market_odds",
             file_type="mhtml",
             source_url="https://www.teamrankings.com/nfl/odds/",
             file_parser=get_moneyline,

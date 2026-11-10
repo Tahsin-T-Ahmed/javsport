@@ -151,11 +151,11 @@ def render(
         else:
             winning_team_key = None
 
-        team_moneylines = dict()
+        team_odds = dict()
         for team_key, team_name in team_names.items():
-            team_moneylines[team_key] = (
-                uploaded_files["moneyline"].loc[
-                    team_name == uploaded_files["moneyline"]["TEAM"],
+            team_odds[team_key] = (
+                uploaded_files["market_odds"].loc[
+                    team_name == uploaded_files["market_odds"]["TEAM"],
                     "PROBABILITY"
                 ]
             ).item()
@@ -169,16 +169,16 @@ def render(
 
         st.write(f"JavSport's confidence: :violet[{win_confidence}%]")
 
-        market_odds = np.round(team_moneylines[winning_team_key]*100, 2)
+        market_odds = np.round(team_odds[winning_team_key]*100, 2)
         st.write(f"While the Market says: :orange[{market_odds}%]")
 
-        edge_raw = (team_win_chances[winning_team_key] - team_moneylines[winning_team_key])
+        edge_raw = (team_win_chances[winning_team_key] - team_odds[winning_team_key])
         edge = np.round(edge_raw*100, 2)
 
         if np.abs(edge) >= 0.5:
             edge_color = None
 
-            if team_win_chances[winning_team_key] < team_moneylines[winning_team_key]:
+            if team_win_chances[winning_team_key] < team_odds[winning_team_key]:
                 edge_color = "red"
             else:
                 edge_color = "green"

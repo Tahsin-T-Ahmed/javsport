@@ -7,7 +7,7 @@ def assemble_ncaaf_metrics(
     leaderboards_dict: dict[str, pd.DataFrame],
     uploaded_files_dict: dict[str, pd.DataFrame]
 ) -> DataFrameMap:
-    moneyline_df = uploaded_files_dict["moneyline"]
+    odds_df = uploaded_files_dict["market_odds"]
     bcftoys_glossary = pd.read_csv("./src/glossaries/ncaaf/teams_bcftoys.csv")
     cfbstats_glossary = pd.read_csv("./src/glossaries/ncaaf/teams_cfbstats.csv")
     
