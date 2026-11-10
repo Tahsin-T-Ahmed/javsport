@@ -16,7 +16,7 @@ def get_outcomes(
     wagers = pd.read_csv(file)
     n_wagers = wagers.shape[0]
 
-    wagers["STATUS"] = wagers["JS PICK"].apply(
+    wagers["STATUS"] = wagers["JAVSPORT PICK"].apply(
         lambda x: None
     )
 
@@ -40,7 +40,7 @@ def get_outcomes(
         for wager_idx, wager_row in wagers.iterrows():
             if progress_bar:
                 progress_bar.progress(
-                    text=f"Processing :violet[{wager_row['JS PICK']}] vs :red[{wager_row['OPPONENT']}...]",
+                    text=f"Processing :violet[{wager_row['JAVSPORT PICK']}] vs :red[{wager_row['OPPONENT']}...]",
                     value=completed_wagers/n_wagers
                 )
 
@@ -54,10 +54,10 @@ def get_outcomes(
             winpick_status = winpick_row["STATUS"].item().strip().upper()
             tr_pick = winpick_row["TR PICK"].item().strip().upper()
 
-            javsport_winner_fullname = wager_row["JS PICK"].strip().upper()
+            javsport_winner_fullname = wager_row["JAVSPORT PICK"].strip().upper()
             
             javsport_winner_trid = team_roster_df.loc[
-                wager_row["JS PICK"] == team_roster_df["TEAM NAME"],
+                wager_row["JAVSPORT PICK"] == team_roster_df["TEAM NAME"],
                 "TEAM TRID"
             ].item()
 
@@ -84,7 +84,7 @@ def get_outcomes(
     for wager_idx, wager_row in wagers_to_scrape.iterrows():
         if progress_bar:
             progress_bar.progress(
-                text=f"Processing :violet[{wager_row['JS PICK']}] vs :red[{wager_row['OPPONENT']}...]",
+                text=f"Processing :violet[{wager_row['JAVSPORT PICK']}] vs :red[{wager_row['OPPONENT']}...]",
                 value=completed_wagers/n_wagers
             )
             
@@ -98,7 +98,7 @@ def get_outcomes(
 
         outcome = None
 
-        if wager_row["JS PICK"] == winning_team:
+        if wager_row["JAVSPORT PICK"] == winning_team:
             outcome = "RIGHT"
         else:
             outcome = "WRONG"
