@@ -68,6 +68,5 @@ sport_wagers_page.render(
             guide_type="spreadsheet"
         )
     ],
-    metrics_assembler=assemble_mlb_metrics,
-    winner_picks_url="https://www.teamrankings.com/mlb-win-picks/"
+    metrics_assembler=assemble_mlb_metrics
 )

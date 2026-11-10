@@ -29,6 +29,5 @@ sport_wagers_page.render(
             guide_type="webpage"
         )
     ],
-    metrics_assembler=assemble_nba_metrics,
-    winner_picks_url="https://www.teamrankings.com/nba-win-picks/"
+    metrics_assembler=assemble_nba_metrics
 )

@@ -29,6 +29,5 @@ sport_wagers_page.render(
             guide_type="webpage"
         )
     ],
-    metrics_assembler=assemble_ncaab_metrics,
-    winner_picks_url="https://www.teamrankings.com/ncaa-basketball-win-picks/"
+    metrics_assembler=assemble_ncaab_metrics
 )

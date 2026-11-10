@@ -18,7 +18,6 @@ if file:
 
         outcomes_map = get_outcomes(
             file=file,
-            winner_picks_url="https://www.teamrankings.com/nfl-win-picks/",
             progress_bar=progress_bar
             # winner_picks_url=None,
         )
