@@ -54,6 +54,12 @@ wnba_page = st.Page(
     icon=":material/sports_basketball:"
 )
 
+outcomes_page = st.Page(
+    page="./pages/outcomes_page.py",
+    title="Outcomes",
+    url_path="/outcomes"
+)
+
 test_page = st.Page(
     page="./pages/test_page.py",
     title="Dev-Test",
@@ -68,6 +74,7 @@ pages = [
     ncaaf_page,
     nfl_page,
     wnba_page,
+    outcomes_page,
     about_page,
     test_page
 ]

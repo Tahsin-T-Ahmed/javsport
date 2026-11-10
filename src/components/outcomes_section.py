@@ -2,17 +2,14 @@ from src.components import header, table
 from src.services.get_outcomes import get_outcomes
 import streamlit as st
 
-def render(
-    sport_key: str,
-    sport_title: str
-):
-    header.render(f"{sport_title} OUTCOMES")
+def render():
+    header.render("OUTCOMES")
 
     file = None
 
     with st.container(border=True):
         file = st.file_uploader(
-            label=f"Upload :orange[{sport_title}] Wagers :green[Spreadsheet :material/view_list:]",
+            label=f"Upload Wagers :green[Spreadsheet :material/view_list:]",
             type="csv"
         )
 
@@ -50,7 +47,7 @@ def render(
 
     table.render(
         data=outcomes,
-        label=f"{sport_title} Outcomes",
+        label="Outcomes",
         height="auto",
         hide_index=True
     )
