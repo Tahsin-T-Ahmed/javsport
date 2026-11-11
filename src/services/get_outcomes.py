@@ -1,6 +1,6 @@
 import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
-from src.services.get_match_winner import get_match_winner
+from src.data_collection.builders.make_scoreboard import make_scoreboard
 import streamlit as st
 from streamlit.delta_generator import DeltaGenerator
 from streamlit.typing import UploadedFile
@@ -9,12 +9,10 @@ def get_outcomes(
     file: UploadedFile,
     progress_bar: DeltaGenerator | None = None
 ) -> DataFrameMap:
+    errors = []
+
     wagers = pd.read_csv(file)
     n_wagers = wagers.shape[0]
-
-    wagers["STATUS"] = wagers["JAVSPORT PICK"].apply(
-        lambda x: None
-    )
 
     for wager_idx, wager_row in wagers.iterrows():
         if progress_bar:
@@ -22,23 +20,30 @@ def get_outcomes(
                 text=f"Processing :violet[{wager_row['JAVSPORT PICK']}] vs :red[{wager_row['OPPONENT']}...]",
                 value=wager_idx/n_wagers
             )
-            
-        winning_team_map = get_match_winner(wager_row["MATCH URL"])
 
-        if winning_team_map["error"]:
-            st.error(winning_team_map["error"])
+        scoreboard_map = make_scoreboard(wager_row["MATCH URL"])
+
+        if scoreboard_map["error"]:
+            errors.append(scoreboard_map["error"])
             continue
 
-        winning_team = winning_team_map["content"].strip()
+        scoreboard = scoreboard_map["content"]
 
-        outcome = None
+        pick_score_match = scoreboard.loc[
+            wager_row["JAVSPORT PICK"] == scoreboard["TEAM NAME"],
+            "SCORE"
+        ]
 
-        if wager_row["JAVSPORT PICK"] == winning_team:
-            outcome = "RIGHT"
-        else:
-            outcome = "WRONG"
+        opponent_score_match = scoreboard.loc[
+            wager_row["OPPONENT"] == scoreboard["TEAM NAME"],
+            "SCORE"
+        ]
 
-        wagers.loc[wager_idx, "STATUS"] = outcome
+        if pick_score_match.empty or opponent_score_match.empty:
+            continue
+
+        wagers.loc[wager_idx, "PICK SCORE"] = pick_score_match.item()
+        wagers.loc[wager_idx, "OPP SCORE"] = opponent_score_match.item()
 
     if progress_bar:
         progress_bar.status(
@@ -47,6 +52,6 @@ def get_outcomes(
         )
 
     return DataFrameMap(
-        error=None,
+        error=errors,
         content=wagers
     )
