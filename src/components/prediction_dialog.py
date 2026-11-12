@@ -167,10 +167,10 @@ def render(
 
         win_confidence = np.round(team_win_chances[winning_team_key]*100, 2)
 
-        st.write(f"JavSport's confidence: :violet[{win_confidence}%]")
+        st.write(f":violet[{win_confidence:02.02f}%] confidence")
 
         market_odds = np.round(team_odds[winning_team_key]*100, 2)
-        st.write(f"While the Market says: :orange[{market_odds}%]")
+        st.write(f":orange[{market_odds:02.02f}%] on the market")
 
         edge_raw = (team_win_chances[winning_team_key] - team_odds[winning_team_key])
         edge = np.round(edge_raw*100, 2)
@@ -183,7 +183,7 @@ def render(
             else:
                 edge_color = "green"
 
-            st.write(f"Edge against the Market: :{edge_color}[{'+' if edge > 0 else ''}{edge}%]")
+            st.write(f":{edge_color}[{'+' if edge > 0 else ''}{edge}%] difference")
         else:
             st.caption("Predictions are similar")
         
