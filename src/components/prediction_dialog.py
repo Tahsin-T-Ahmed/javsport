@@ -208,3 +208,17 @@ def render(
         pred_df.loc[match_idx, "EDGE"] = edge
         pred_df.loc[match_idx, "MATCH URL"] = match_url_full
         pred_df.loc[match_idx, "TIMESTAMP"] = match_row["TIME"]
+
+        for stat_name, stat_val in metrics_display_df.iterrows():
+            for team_key in team_names:
+                team_role = None
+
+                if team_key == winning_team_key:
+                    team_role = "PICK"
+                else:
+                    team_role = "OPPONENT"
+
+                pred_df.loc[
+                    match_idx,
+                    f"{team_role} {stat_name}".upper()
+                ] = stat_val[team_names[team_key]]
