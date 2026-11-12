@@ -31,6 +31,7 @@ def render(
         table_list.render(
             title=f"Uploaded {sport_title} Data",
             dataframes_dict=uploaded_files,
+            sport_title=sport_title,
             collapse=True,
             hide_index=True,
             height="auto"
