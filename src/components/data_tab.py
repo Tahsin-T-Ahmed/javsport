@@ -13,7 +13,7 @@ def render(
     if "predictions" in st.session_state[sport_key]:
         table.render(
             data=st.session_state[sport_key]["predictions"],
-            label="Predictions Table",
+            label=f"{sport_title} Predictions",
             height="auto",
             collapse=True,
             hide_index=True
