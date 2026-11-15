@@ -44,17 +44,24 @@ def scan_match_results(
         cells = row.find_all("td")
         if not cells:
             return DataFrameMap(
-                error=f"ERROR (Match-Results-Scanner): Failed to scan CELLS of row from URL {url}",
+                error=f"ERROR (Match-Results-Scanner): Failed to scan CELLS of row (#{row_idx+1}) from URL {url}",
                 content=None
             )
 
         for cell_idx, cell in enumerate(cells):
             header = None
+            
             cell_content = None
-
             if 0 == cell_idx:
                 header = "TEAM NAME"
-                cell_content = cell.find("a").text.strip()
+                cell_link = cell.find("a")
+                if not cell_link:
+                    return DataFrameMap(
+                        error=f"ERROR (Match-Results-Scanner): Failed to scan LINK of cell (#{cell_idx+1}) of row (#{row_idx+1}) from URL {url}",
+                        content=None
+                    )
+                
+                cell_content = cell_link.text.strip()
             else:            
                 header = headers[cell_idx]
                 cell_content = cell.text.strip()
