@@ -24,6 +24,8 @@ def render():
 
     outcomes = None
 
+    errors = list()
+
     with loading_container.container():
         with st.spinner(
             text="Loading Outcomes...",
@@ -39,8 +41,10 @@ def render():
             )
 
             if outcomes_map["error"]:
-                st.error(outcomes_map["error"])
-                return
+                if isinstance(outcomes_map["error"], list):
+                    errors = outcomes_map["error"]
+                else:
+                    errors.append(outcomes_map["error"])
 
             outcomes = outcomes_map["content"]
 
@@ -55,3 +59,9 @@ def render():
         height="auto",
         hide_index=True
     )
+
+    if not errors:
+        return
+
+    for error in errors:
+        st.error(error)
