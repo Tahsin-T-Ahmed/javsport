@@ -216,7 +216,7 @@ def render(
                 if team_key == winning_team_key:
                     team_role = "PICK"
                 else:
-                    team_role = "OPPONENT"
+                    team_role = "OPP"
 
                 pred_df.loc[
                     match_idx,
