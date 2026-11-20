@@ -1,7 +1,6 @@
 from datetime import datetime
 from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
-from src.metrics_assembly.assemble_nfl_metrics import assemble_nfl_metrics
 from src.services.get_moneyline import get_moneyline
 from src.services.get_nfl_dave import get_nfl_dave
 
@@ -36,6 +35,5 @@ sport_wagers_page.render(
             source_url="https://ftnfantasy.com/stats/nfl/dave",
             file_parser=get_nfl_dave
         )
-    ],
-    metrics_assembler=assemble_nfl_metrics
+    ]
 )

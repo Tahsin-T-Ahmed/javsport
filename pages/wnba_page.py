@@ -1,7 +1,6 @@
 from datetime import datetime
 from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
-from src.metrics_assembly.assemble_wnba_metrics import assemble_wnba_metrics
 from src.services.get_moneyline import get_moneyline
 
 sport_wagers_page.render(
@@ -28,6 +27,5 @@ sport_wagers_page.render(
             file_parser=get_moneyline,
             guide_type="webpage"
         )
-    ],
-    metrics_assembler=assemble_wnba_metrics
+    ]
 )

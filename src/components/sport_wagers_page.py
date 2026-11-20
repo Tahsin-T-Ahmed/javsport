@@ -8,6 +8,7 @@ from src.components import (
 )
 from src.data_collection.data_maps import RequiredFileMap
 from src.services.load_schedule import load_schedule
+from src.services.get_metrics_assembler import get_metrics_assembler
 import streamlit as st
 
 @st.fragment
@@ -17,7 +18,6 @@ def render(
     sport_icon: str,
     schedule_url: str,
     leaderboard_urls_dict: dict,
-    metrics_assembler: callable,
     timestamp: datetime.datetime,
     team_roster_url: str,
     win_trends_url: str | None = None,
@@ -37,6 +37,14 @@ def render(
         subheader=sport_subheader,
         icon=sport_icon
     )
+
+    metrics_assembler_map = get_metrics_assembler(sport_key)
+
+    if metrics_assembler_map["error"]:
+        st.error(metrics_assembler_map["error"])
+        return
+
+    metrics_assembler = metrics_assembler_map["content"]
     
     sport_page_body.render(
         sport_key=sport_key,
