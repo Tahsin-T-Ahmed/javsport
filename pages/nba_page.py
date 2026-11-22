@@ -2,6 +2,7 @@ from datetime import datetime
 from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
 from src.services.get_moneyline import get_moneyline
+from src.services.get_nba_team_xpm import get_nba_team_xpm
 
 sport_wagers_page.render(
     timestamp=datetime.now(),
@@ -26,6 +27,14 @@ sport_wagers_page.render(
             file_parser=get_moneyline,
             source_url="https://www.teamrankings.com/nba/odds/",
             guide_type="webpage"
+        ),
+        RequiredFileMap(
+            file_label="Team XPM",
+            file_key="team_xpm",
+            file_type="csv",
+            file_parser=get_nba_team_xpm,
+            source_url="https://www.bball-index.com/nba/team-xpm",
+            guide_type="spreadsheet"
         )
     ]
 )
