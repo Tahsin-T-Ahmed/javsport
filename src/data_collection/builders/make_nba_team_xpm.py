@@ -13,9 +13,15 @@ def make_nba_team_xpm(
             content=None
         )
 
-    xpm = xpm_map["content"]
+    xpm_df = xpm_map["content"]
+
+    xpm_df = xpm_df[[1, 3, 4, 5]]
+
+    column_names = ["TEAM BBI NAME", "XPM OFFENSE", "XPM DEFENSE", "XPM NET"]
+
+    xpm_df.columns = column_names
 
     return DataFrameMap(
         error=None,
-        content=xpm
+        content=xpm_df
     )
