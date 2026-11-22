@@ -3,7 +3,8 @@ from src.data_collection.data_maps import DataFrameMap
 from streamlit.typing import UploadedFile
 
 def get_nba_team_xpm(
-    file: UploadedFile
+    file: UploadedFile,
+    **kwargs
 ) -> DataFrameMap:
     xpm_map = make_nba_team_xpm(file)
 
