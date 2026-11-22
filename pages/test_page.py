@@ -1,6 +1,8 @@
+import datetime
 import streamlit as st
 
 from src.data_collection.builders.make_nba_team_xpm import make_nba_team_xpm
+from src.data_collection.builders.make_tr_leaderboard import make_tr_leaderboard
 
 file = st.file_uploader(
     label="Upload NBA Team-XPM File",
@@ -15,3 +17,15 @@ if file:
     else:
         xpm = xpm_map["content"]
         st.write(xpm)
+
+leaderboard_map = make_tr_leaderboard(
+    leaderboard_url="https://www.teamrankings.com/nba/stat/turnovers-per-game",
+    timestamp=datetime.datetime.now()
+)
+
+if leaderboard_map["error"]:
+    st.error(leaderboard_map["error"])
+else:
+    leaderboard = leaderboard_map["content"]
+
+    st.write(leaderboard)
