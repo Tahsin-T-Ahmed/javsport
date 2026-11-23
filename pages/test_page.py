@@ -1,31 +1,86 @@
-import datetime
+import json
+import requests
 import streamlit as st
 
-from src.data_collection.builders.make_tr_leaderboard import make_tr_leaderboard
-from src.services.get_nba_team_xpm import get_nba_team_xpm
+session_state_view = st.empty()
 
-file = st.file_uploader(
-    label="Upload NBA Team-XPM File",
-    type="csv"
+# league_avg_runs = st.number_input("League Avg Runs")
+
+javsport_params = dict(
+    # league_avg_runs=league_avg_runs
+    metrics_json = {
+        "TEAM A": dict(),
+        "TEAM B": dict()
+    }
 )
 
-if file:
-    xpm_map = get_nba_team_xpm(file)
+columns = st.columns(2)
 
-    if xpm_map["error"]:
-        st.error(xpm_map["error"])
-    else:
-        xpm = xpm_map["content"]
-        st.write(xpm)
+for col_idx, column in enumerate(columns):
+    team_letter = None
+    if 0 == col_idx:
+        team_letter = "a"
+    if 1 == col_idx:
+        team_letter = "b"
 
-    leaderboard_map = make_tr_leaderboard(
-        leaderboard_url="https://www.teamrankings.com/nba/stat/turnovers-per-game",
-        timestamp=datetime.datetime.now()
+    with column:
+
+        st.header(f"TEAM {team_letter.upper()}")
+        
+        fga = st.number_input(
+            label="Field Goals Attempted",
+            key=f"field_goals_attempted_per_game{team_letter}"
+        )
+        fgm = st.number_input(
+            label="Field Goals Made",
+            key=f"field_goals_made_per_game{team_letter}"
+        )
+        ftm = st.number_input(
+            label="Free Throws Made",
+            key=f"free_throws_made_per_game{team_letter}"
+        )
+        tov = st.number_input(
+            label="Turnovers",
+            key=f"turnovers_per_game{team_letter}"
+        )
+        orb = st.number_input(
+            label="Offensive Rebounds",
+            key=f"offensive_rebounds_per_game{team_letter}"
+        )
+        drb = st.number_input(
+            label="Defense Rebounds",
+            key=f"defensive_rebounds_per_game{team_letter}"
+        )
+        xpm_offense = st.number_input(
+            label="XPM Offense",
+            key=f"xpm_offense{team_letter}"
+        )
+        xpm_defense = st.number_input(
+            label="XPM Defense",
+            key=f"xpm_defense{team_letter}"
+        )
+
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"field_goals_attempted_per_game"] = fga
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"field_goals_made_per_game"] = fgm
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"free_throws_made_per_game"] = ftm
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"turnovers_per_game"] = tov
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"offensive_rebounds_per_game"] = orb
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"defensive_rebounds_per_game"] = drb
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"xpm_offense"] = xpm_offense
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"xpm_defense"] = xpm_defense
+
+if st.button("Go"):
+    javsport_params["metrics_json"] = json.dumps(javsport_params["metrics_json"])
+    st.write(javsport_params)
+    javsport_url = f"http://127.0.0.1:5000/nba/predict-team-a-win-chance"
+
+    response = requests.get(
+        url=javsport_url,
+        params=javsport_params
     )
 
-    if leaderboard_map["error"]:
-        st.error(leaderboard_map["error"])
+    if 200 == response.status_code:
+        st.write(response.text)
     else:
-        leaderboard = leaderboard_map["content"]
-
-        st.write(leaderboard)
+        st.error("Invalid response received")
+        st.html(response.text)
