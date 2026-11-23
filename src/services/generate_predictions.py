@@ -1,4 +1,4 @@
-from src.components import prediction_dialog, table
+from src.components import prediction_dialog
 import streamlit as st
 
 def generate_predictions(
@@ -16,10 +16,7 @@ def generate_predictions(
         case "MLB":
             league_points_df_name = "runs_per_game"
 
-        case "NBA" | "NCAAB" | "WNBA":
-            league_points_df_name = "points_per_game"
-        
-        case "NCAAF" | "NFL":
+        case "NBA" | "NCAAB" | "WNBA" | "NCAAF" | "NFL":
             league_points_df_name = None
             
         case _:
