@@ -11,15 +11,16 @@ sport_wagers_page.render(
     sport_icon=":material/sports_basketball:",
     schedule_url="https://www.teamrankings.com/nba/schedules/season/?week=0",
     leaderboard_urls_dict=dict(
+        defensive_rebounds_per_game="https://www.teamrankings.com/nba/stat/defensive-rebounds-per-game",
         field_goals_attempted_per_game="https://www.teamrankings.com/nba/stat/field-goals-attempted-per-game",
         field_goals_made_per_game="https://www.teamrankings.com/nba/stat/field-goals-made-per-game",
         free_throws_made_per_game="https://www.teamrankings.com/nba/stat/free-throws-made-per-game",
-        points_per_game="https://www.teamrankings.com/nba/stat/points-per-game",
-        three_pointers_made_per_game="https://www.teamrankings.com/nba/stat/three-pointers-made-per-game"
+        offensive_rebounds_per_game="https://www.teamrankings.com/nba/stat/offensive-rebounds-per-game",
+        turnovers_per_game="https://www.teamrankings.com/nba/stat/turnovers-per-game"
     ),
     win_trends_url="https://www.teamrankings.com/nba/trends/win_trends/",
     team_roster_url="https://www.teamrankings.com/nba/teams/",
-    required_files_list=[        
+    required_files_list=[
         RequiredFileMap(
             file_label="Odds",
             file_key="market_odds",
