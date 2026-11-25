@@ -25,9 +25,9 @@ def make_nba_team_xpm(
 
     xpm_df["TEAM TR NAME"] = xpm_df["TEAM BBI NAME"].apply(
         lambda bbi_name: bbi_glossary.loc[
-            bbi_name == bbi_glossary["BASKETBALLINDEX"],
+            bbi_name.strip() == bbi_glossary["BASKETBALLINDEX"].str.strip(),
             "TEAMRANKINGS"
-        ].item()
+        ].item().strip()
     )
 
     return DataFrameMap(
