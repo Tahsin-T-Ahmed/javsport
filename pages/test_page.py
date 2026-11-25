@@ -1,6 +1,6 @@
 import streamlit as st
 
-from src.data_collection.builders.make_wnba_team_lebron import make_wnba_team_lebron
+from src.services.get_wnba_team_lebron import get_wnba_team_lebron
 from src.services.get_win_trends import get_win_trends
 
 file = st.file_uploader(
@@ -9,7 +9,7 @@ file = st.file_uploader(
 )
 
 if file:
-    wleb_map = make_wnba_team_lebron(file)
+    wleb_map = get_wnba_team_lebron(file)
 
     if wleb_map["error"]:
         st.error(wleb_map["error"])
