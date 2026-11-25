@@ -2,6 +2,7 @@ from datetime import datetime
 from src.components import sport_wagers_page
 from src.data_collection.data_maps import RequiredFileMap
 from src.services.get_moneyline import get_moneyline
+from src.services.get_wnba_team_lebron import get_wnba_team_lebron
 
 sport_wagers_page.render(
     timestamp=datetime.now(),
@@ -26,6 +27,14 @@ sport_wagers_page.render(
             source_url="https://www.teamrankings.com/wnba/odds/",
             file_parser=get_moneyline,
             guide_type="webpage"
+        ),
+        RequiredFileMap(
+            file_label="Team-LEBRON",
+            file_key="team_lebron",
+            file_type="csv",
+            source_url="https://www.bball-index.com/wnba/team-ratings",
+            file_parser=get_wnba_team_lebron,
+            guide_type="spreadsheet"
         )
     ]
 )
