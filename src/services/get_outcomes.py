@@ -39,7 +39,12 @@ def get_outcomes(
             "SCORE"
         ]
 
-        if pick_score_match.empty or opponent_score_match.empty:
+        if pick_score_match.empty:
+            st.write(f"PICK SCORE missing from match #{wager_idx+1}")
+            continue
+        
+        if opponent_score_match.empty:
+            st.write(f"OPP SCORE missing from match #{wager_idx+1}")
             continue
 
         wagers.loc[wager_idx, "PICK SCORE"] = pick_score_match.item()
