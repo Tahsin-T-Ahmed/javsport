@@ -21,6 +21,9 @@ def assemble_ncaaf_metrics(
 
         for leaderboard_key, leaderboard in leaderboards_dict.items():
             metric = None
+
+            stat_name = leaderboard_key
+            
             match(leaderboard_key):
                 case "dfei" | "ofei":
                     team_bcf_name = bcftoys_glossary.loc[
@@ -34,6 +37,12 @@ def assemble_ncaaf_metrics(
                     ].item()
 
                     metric = str(score)
+
+                    if "dfei" == leaderboard_key:
+                        stat_name = "special_defense"
+
+                    if "ofei" == leaderboard_key:
+                        stat_name = "special_offense"
 
                 case "first_downs_per_game_away":
                     if "b" == team_key and team_b_is_home:
@@ -106,7 +115,7 @@ def assemble_ncaaf_metrics(
                         content=None
                     )
 
-            metrics.loc[leaderboard_key, team_column_key] = metric
+            metrics.loc[stat_name, team_column_key] = metric
 
     return DataFrameMap(
         error=None,
