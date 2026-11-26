@@ -36,8 +36,8 @@ def assemble_nba_metrics(
         xpm_offense = xpm_row["XPM OFFENSE"].item()
         xpm_defense = xpm_row["XPM DEFENSE"].item()
 
-        metrics.loc["xpm_offense", team_column_key] = str(xpm_offense)
-        metrics.loc["xpm_defense", team_column_key] = str(xpm_defense)
+        metrics.loc["special_offense", team_column_key] = str(xpm_offense)
+        metrics.loc["special_defense", team_column_key] = str(xpm_defense)
 
     return DataFrameMap(
         error=None,
