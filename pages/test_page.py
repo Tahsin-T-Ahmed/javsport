@@ -1,30 +1,101 @@
+import json
+import requests
 import streamlit as st
 
-from src.services.get_wnba_team_lebron import get_wnba_team_lebron
-from src.services.get_win_trends import get_win_trends
+session_state_view = st.empty()
 
-file = st.file_uploader(
-    label="Upload WNBA Team-LEBRON",
-    type="csv"
+# league_avg_runs = st.number_input("League Avg Runs")
+
+javsport_params = dict(
+    # league_avg_runs=league_avg_runs
+    metrics_json = {
+        "TEAM A": dict(),
+        "TEAM B": dict()
+    }
 )
 
-if file:
-    wleb_map = get_wnba_team_lebron(file)
+columns = st.columns(2)
 
-    if wleb_map["error"]:
-        st.error(wleb_map["error"])
-    else:
-        wleb = wleb_map["content"]
+for col_idx, column in enumerate(columns):
+    team_letter = None
+    if 0 == col_idx:
+        team_letter = "a"
+    if 1 == col_idx:
+        team_letter = "b"
 
-        st.write(wleb)
+    with column:
 
-        wintrends_map = get_win_trends(
-            url="https://www.teamrankings.com/wnba/trends/win_trends/"
+        st.header(f"TEAM {team_letter.upper()}")
+
+        counter = 0
+        
+        first_downs = st.number_input(
+            label="First Downs Per Game",
+            key=f"{counter}{team_letter}"
         )
 
-        if wintrends_map["error"]:
-            st.error(wintrends_map["error"])
-        else:
-            win_trends = wintrends_map["content"]
+        counter += 1
 
-            st.write(win_trends)
+        total_yards = st.number_input(
+            label="Total Yards",
+            key=f"{counter}{team_letter}"
+        )
+
+        counter += 1
+
+        giveaways = st.number_input(
+            label="Giveaways Per Game",
+            key=f"{counter}{team_letter}"
+        )
+
+        counter += 1
+
+        punts = st.number_input(
+            label="Punt Attempts Per Game",
+            key=f"{counter}{team_letter}"
+        )
+
+        counter += 1
+
+        fga = st.number_input(
+            label="Field Goal Attempts Per Game",
+            key=f"{counter}{team_letter}"
+        )
+
+        counter += 1
+
+        dave_off = st.number_input(
+            label="DAVE Offense",
+            key=f"{counter}{team_letter}"
+        )
+
+        counter += 1
+
+        dave_def = st.number_input(
+            label="DAVE Defense",
+            key=f"{counter}{team_letter}"
+        )
+
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"first_downs_per_game"] = first_downs
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"yards_per_game"] = total_yards
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"giveaways_per_game"] = giveaways
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"punt_attempts_per_game"] = punts
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"field_goal_attempts_per_game"] = fga
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"dave_offense"] = dave_off
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"dave_defense"] = dave_def
+
+if st.button("Go"):
+    javsport_params["metrics_json"] = json.dumps(javsport_params["metrics_json"])
+    st.write(javsport_params)
+    javsport_url = f"http://127.0.0.1:5000/nfl/predict-team-a-win-chance"
+
+    response = requests.get(
+        url=javsport_url,
+        params=javsport_params
+    )
+
+    if 200 == response.status_code:
+        st.write(response.text)
+    else:
+        st.error("Invalid response received")
+        st.html(response.text)
