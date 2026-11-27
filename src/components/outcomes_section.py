@@ -2,7 +2,10 @@ from src.components import page_header_banner, table
 from src.services.get_outcomes import get_outcomes
 import streamlit as st
 
-def render():
+def render(
+    sport_key: str,
+    win_trends_url: str
+):
     page_header_banner.render(
         title="Outcomes",
         subheader="Game Aftermaths",
@@ -37,7 +40,9 @@ def render():
 
             outcomes_map = get_outcomes(
                 file=file,
-                progress_bar=progress_bar
+                progress_bar=progress_bar,
+                sport_key=sport_key,
+                win_trends_url=win_trends_url
             )
 
             if outcomes_map["error"]:
