@@ -81,8 +81,8 @@ for col_idx, column in enumerate(columns):
         javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"giveaways_per_game"] = giveaways
         javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"punt_attempts_per_game"] = punts
         javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"field_goal_attempts_per_game"] = fga
-        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"dave_offense"] = dave_off
-        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"dave_defense"] = dave_def
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"special_offense"] = dave_off
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"special_defense"] = dave_def
 
 if st.button("Go"):
     javsport_params["metrics_json"] = json.dumps(javsport_params["metrics_json"])
