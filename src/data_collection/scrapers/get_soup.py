@@ -6,7 +6,7 @@ def get_soup(url: str) -> SoupMap:
     response = requests.get(url)
     if 200 != response.status_code:
         return SoupMap(
-            error=f"ERROR (Request): Invalid response from URL ({url})",
+            error=f"ERROR (Request): Invalid response (code {response.status_code}) from URL ({url})",
             content=None
         )
     
