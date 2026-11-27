@@ -51,13 +51,23 @@ def get_outcomes(
 
         scoreboard = scoreboard_map["content"]
 
+        pick_trid = team_roster.loc[
+            wager_row["JAVSPORT PICK"] == team_roster["TEAM NAME"],
+            "TEAM TRID"
+        ].item()
+
+        opp_trid = team_roster.loc[
+            wager_row["OPPONENT"] == team_roster["TEAM NAME"],
+            "TEAM TRID"
+        ].item()
+
         pick_score_match = scoreboard.loc[
-            wager_row["JAVSPORT PICK"] == scoreboard["TEAM NAME"],
+            pick_trid == scoreboard["TEAM TRID"],
             "SCORE"
         ]
 
         opponent_score_match = scoreboard.loc[
-            wager_row["OPPONENT"] == scoreboard["TEAM NAME"],
+            opp_trid == scoreboard["TEAM TRID"],
             "SCORE"
         ]
 
