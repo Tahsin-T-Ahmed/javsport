@@ -1,4 +1,4 @@
-from src.components import data_tab, results_tab, upload_dialog
+from src.components import data_tab, results_tab
 from src.data_collection.data_maps import RequiredFileMap
 import streamlit as st
 
@@ -8,7 +8,10 @@ def render(
     required_files_list: list[RequiredFileMap],
     metrics_assembler: callable
 ):
-    view_tabs = st.tabs(["Results", "Data"])
+    view_tabs = None
+
+    with st.container(border=True):
+        view_tabs = st.tabs(["Results", "Data"])
 
     with view_tabs[0]:
         results_tab.render(
