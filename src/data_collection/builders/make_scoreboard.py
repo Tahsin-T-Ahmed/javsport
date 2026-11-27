@@ -14,14 +14,19 @@ def make_scoreboard(url: str) -> DataFrameMap:
 
     scoreboard.rename(
         columns={
-            "T": "SCORE"
+            "T": "SCORE",
+            "TEAM URL": "TEAM TRID"
         },
         inplace=True
     )
 
     scoreboard["SCORE"] = scoreboard["SCORE"].astype(float)
 
-    scoreboard = scoreboard[["TEAM NAME", "SCORE"]]
+    scoreboard["TEAM TRID"] = scoreboard["TEAM TRID"].apply(
+        lambda url: url.split("/")[-1]
+    )
+
+    scoreboard = scoreboard[["TEAM NAME", "SCORE", "TEAM TRID"]]
 
     return DataFrameMap(
         error=None,

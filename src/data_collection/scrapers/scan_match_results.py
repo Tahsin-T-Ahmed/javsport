@@ -62,6 +62,7 @@ def scan_match_results(
                     )
                 
                 cell_content = cell_link.text.strip()
+                match_results.loc[row_idx, "TEAM URL"] = cell_link["href"]
             else:            
                 header = headers[cell_idx]
                 cell_content = cell.text.strip()
