@@ -64,15 +64,15 @@ for col_idx, column in enumerate(columns):
 
         counter += 1
 
-        dave_off = st.number_input(
-            label="DAVE Offense",
+        special_off = st.number_input(
+            label="FEI Offense",
             key=f"{counter}{team_letter}"
         )
 
         counter += 1
 
-        dave_def = st.number_input(
-            label="DAVE Defense",
+        special_def = st.number_input(
+            label="FEI Defense",
             key=f"{counter}{team_letter}"
         )
 
@@ -81,13 +81,13 @@ for col_idx, column in enumerate(columns):
         javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"giveaways_per_game"] = giveaways
         javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"punt_attempts_per_game"] = punts
         javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"field_goal_attempts_per_game"] = fga
-        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"special_offense"] = dave_off
-        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"special_defense"] = dave_def
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"special_offense"] = special_off
+        javsport_params["metrics_json"][f"TEAM {team_letter.upper()}"][f"special_defense"] = special_def
 
 if st.button("Go"):
     javsport_params["metrics_json"] = json.dumps(javsport_params["metrics_json"])
     st.write(javsport_params)
-    javsport_url = f"http://127.0.0.1:5000/nfl/predict-team-a-win-chance"
+    javsport_url = f"http://127.0.0.1:5000/ncaaf/predict-team-a-win-chance"
 
     response = requests.get(
         url=javsport_url,
