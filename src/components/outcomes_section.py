@@ -4,7 +4,7 @@ import streamlit as st
 
 def render(
     sport_key: str,
-    win_trends_url: str
+    team_roster_url: str
 ):
     file = None
 
@@ -36,7 +36,7 @@ def render(
                 file=file,
                 progress_bar=progress_bar,
                 sport_key=sport_key,
-                win_trends_url=win_trends_url
+                team_roster_url=team_roster_url
             )
 
             if outcomes_map["error"]:

@@ -1,7 +1,7 @@
 import pandas as pd
 from src.data_collection.data_maps import DataFrameMap
 from src.data_collection.builders.make_scoreboard import make_scoreboard
-from src.services.get_win_trends import get_win_trends
+from src.services.get_team_roster import get_team_roster
 import streamlit as st
 from streamlit.delta_generator import DeltaGenerator
 from streamlit.typing import UploadedFile
@@ -9,7 +9,7 @@ from streamlit.typing import UploadedFile
 def get_outcomes(
     file: UploadedFile,
     sport_key: str,
-    win_trends_url: str,
+    team_roster_url: str,
     progress_bar: DeltaGenerator | None = None
 ) -> DataFrameMap:
     errors = []
@@ -17,24 +17,24 @@ def get_outcomes(
     wagers = pd.read_csv(file)
     n_wagers = wagers.shape[0]
 
-    win_trends = None
+    team_roster = None
 
     if (
         sport_key in st.session_state and
         "leaderboards" in st.session_state[sport_key] and
         "win_trends" in st.session_state[sport_key]["leaderboards"]
     ):
-        win_trends = st.session_state[sport_key]["leaderboards"]["win_trends"]
+        team_roster = st.session_state[sport_key]["leaderboards"]["win_trends"]
     else:
-        wintrends_map = get_win_trends(win_trends_url)
+        team_roster_map = get_team_roster(team_roster_url)
 
-        if wintrends_map["error"]:
+        if team_roster_map["error"]:
             return DataFrameMap(
-                error=wintrends_map["error"],
+                error=team_roster_map["error"],
                 content=None
             )
 
-        win_trends = wintrends_map["content"]
+        team_roster = team_roster_map["content"]
 
     for wager_idx, wager_row in wagers.iterrows():
         if progress_bar:
