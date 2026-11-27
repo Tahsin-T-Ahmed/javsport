@@ -45,8 +45,8 @@ def assemble_nfl_metrics(
             "DEF DAVE"
         ].item()
 
-        metrics.loc["special_offense", team_column_key] = str(float(team_dave_off/100))
-        metrics.loc["special_defense", team_column_key] = str(0 - float(team_dave_def/100))
+        metrics.loc["special_offense", team_column_key] = str(float(team_dave_off/25))
+        metrics.loc["special_defense", team_column_key] = str(0 - float(team_dave_def/25))
 
     return DataFrameMap(
         error=None,
