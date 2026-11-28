@@ -22,9 +22,9 @@ def get_outcomes(
     if (
         sport_key in st.session_state and
         "leaderboards" in st.session_state[sport_key] and
-        "win_trends" in st.session_state[sport_key]["leaderboards"]
+        "team_roster" in st.session_state[sport_key]["leaderboards"]
     ):
-        team_roster = st.session_state[sport_key]["leaderboards"]["win_trends"]
+        team_roster = st.session_state[sport_key]["leaderboards"]["team_roster"]
     else:
         team_roster_map = get_team_roster(team_roster_url)
 
