@@ -38,7 +38,11 @@ def render(
         icon=sport_icon
     )
 
-    wagers_tab, outcomes_tab = st.tabs(["Wagers", "Outcomes"])
+    wagers_tab, outcomes_tab = st.tabs(
+        tabs=["Wagers", "Outcomes"],
+        key="section",
+        bind="query-params"
+    )
 
     with wagers_tab:
 
